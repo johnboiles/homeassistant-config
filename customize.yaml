@@ -113,18 +113,26 @@ group.octoprint:
   homebridge_hidden: true
 sensor.pm25_particles:
   homebridge_sensor_type: air_quality
-sensor.master_bathroom_light_alarm_level_2: {}
-sensor.master_bathroom_light_alarm_type_2: {}
-sensor.master_bathroom_light_burglar: {}
-sensor.master_bathroom_light_sourcenodeid: {}
 sensor.living_room_lamp_power_management:
   hidden: true
 sensor.living_room_lamp_sourcenodeid:
   hidden: true
-sensor.master_bathroom_light_sourcenodeid_2: {}
-sensor.master_bathroom_light_alarm_level: {}
-sensor.master_bathroom_light_alarm_type: {}
-sensor.master_bathroom_light_burglar_2: {}
+sensor.master_bathroom_light_alarm_level_2:
+  hidden: true
+sensor.master_bathroom_light_alarm_type_2:
+  hidden: true
+sensor.master_bathroom_light_burglar:
+  hidden: true
+sensor.master_bathroom_light_sourcenodeid:
+  hidden: true
+sensor.master_bathroom_light_sourcenodeid_2:
+  hidden: true
+sensor.master_bathroom_light_alarm_level:
+  hidden: true
+sensor.master_bathroom_light_alarm_type:
+  hidden: true
+sensor.master_bathroom_light_burglar_2:
+  hidden: true
 sensor.john_boiless_iphone_x_battery_level:
   hidden: true
 sensor.john_boiless_iphone_x_battery_state:
