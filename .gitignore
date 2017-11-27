@@ -1,0 +1,7 @@
+*
+!*.yaml
+!scenes
+!.gitignore
+!Makefile
+secrets.yaml
+known_devices.yaml

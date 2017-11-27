@@ -1,0 +1,89 @@
+octoprint:
+  name: OctoPrint
+  entities:
+    - binary_sensor.octoprint_printing
+    - binary_sensor.octoprint_printing_error
+    - sensor.octoprint_current_state
+    - sensor.octoprint_job_percentage
+
+dev_pi:
+  name: Pi
+  entities:
+    - sensor.cpu_speed
+    - sensor.cpu_use
+    - sensor.cpu_temp
+    - sensor.disk_use_
+    - sensor.ram_free
+    - sensor.ram_use
+    - sensor.since_last_boot
+
+occupancy:
+  name: Family
+  entities:
+    - device_tracker.christiasiphone
+    - device_tracker.johnboiles
+ 
+weather:
+  name: Weather
+  entities:
+    - sun.sun
+    - sensor.dark_sky_summary
+    - sensor.dark_sky_temperature
+    - sensor.dark_sky_daily_low_temperature
+    - sensor.dark_sky_daily_high_temperature
+    - sensor.dark_sky_precip_probability
+    - sensor.dark_sky_nearest_storm_distance
+    - sensor.dark_sky_wind_speed
+    - sensor.dark_sky_wind_speed
+    - sensor.dark_sky_wind_bearing
+
+rtl_433:
+  name: Thermohygrometers
+  entities:
+    - sensor.backyard_humidity
+    - sensor.backyard_temperature
+    - sensor.basement_humidity
+    - sensor.basement_temperature
+    - sensor.bedroom_humidity
+    - sensor.bedroom_temperature
+    - sensor.kitchen_humidity
+    - sensor.kitchen_temperature
+    - sensor.izzy_room_humidity
+    - sensor.izzy_room_temperature
+
+zooz:
+  name: Zooz Z-Wave Plug
+  entities:
+    - sensor.living_room_lamp_energy
+    - sensor.living_room_lamp_voltage
+    - sensor.living_room_lamp_power
+
+peace_lily:
+  name: Peace Lily
+  entities:
+    - sensor.peace_lily_battery
+    - sensor.peace_lily_conductivity
+    - sensor.peace_lily_light_intensity
+    - sensor.peace_lily_moisture
+    - sensor.peace_lily_temperature
+
+dracaena:
+  name: Dracaena
+  entities:
+    - sensor.dracaena_battery
+    - sensor.dracaena_conductivity
+    - sensor.dracaena_light_intensity
+    - sensor.dracaena_moisture
+    - sensor.dracaena_temperature
+
+air_quality:
+  name: Air Quality
+  entities:
+    - sensor.pm1_particles
+    - sensor.pm25_particles
+    - sensor.pm10_particles
+    - sensor.esp8266_temperature
+    - sensor.esp8266_humidity
+    - sensor.esp8266_co2
+    - sensor.esp8266_rzero
+    - sensor.esp8266_mhz19_co2

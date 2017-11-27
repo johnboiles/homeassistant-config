@@ -1,0 +1,131 @@
+group.dev_pi:
+  homebridge_hidden: true
+group.occupancy:
+  homebridge_hidden: true
+group.weather:
+  homebridge_hidden: true
+sensor.dark_sky_daily_low_temperature:
+  homebridge_hidden: true
+sensor.dark_sky_daily_high_temperature:
+  homebridge_hidden: true
+sensor.dark_sky_temperature:
+  homebridge_hidden: true
+sensor.living_room_lamp_alarm_level:
+  hidden: true
+sensor.living_room_lamp_alarm_type:
+  hidden: true
+sensor.living_room_lamp_current:
+  hidden: true
+sensor.living_room_lamp_exporting:
+  hidden: true
+sensor.living_room_lamp_interval:
+  hidden: true
+sensor.living_room_lamp_interval_2:
+  hidden: true
+sensor.living_room_lamp_interval_3:
+  hidden: true
+sensor.living_room_lamp_interval_4:
+  hidden: true
+sensor.living_room_lamp_previous_reading:
+  hidden: true
+sensor.living_room_lamp_previous_reading_2:
+  hidden: true
+sensor.living_room_lamp_previous_reading_3:
+  hidden: true
+sensor.living_room_lamp_previous_reading_4:
+  hidden: true
+group.rtl_433:
+  homebridge_hidden: true
+switch.twitter_laptop_wol:
+  homebridge_hidden: true
+group.zooz:
+  homebridge_hidden: true
+group.light:
+  homebridge_hidden: true
+sensor.johnboiles_battery_level:
+  hidden: true
+sensor.johnboiles_battery_state:
+  hidden: true
+group.peace_lily:
+  homebridge_hidden: true
+group.dracaena:
+  homebridge_hidden: true
+group.air_quality:
+  homebridge_hidden: true
+cover.garage_door:
+  homebridge_cover_type: garage_door
+light.master_bath_light_level_2:
+  hidden: true
+  homebridge_hidden: true
+sensor.master_bath_light_alarm_level_2:
+  hidden: true
+sensor.master_bath_light_alarm_type_2:
+  hidden: true
+sensor.master_bath_light_sourcenodeid_2:
+  hidden: true
+sensor.master_bath_light_burglar_2:
+  hidden: true
+group.all_automations:
+  homebridge_hidden: true
+group.all_covers:
+  homebridge_hidden: true
+group.all_lights:
+  homebridge_hidden: true
+light.master_bathroom_light_level:
+  homebridge_name: Master Bathroom Light
+group.all_switches:
+  homebridge_hidden: true
+group.all_devices:
+  homebridge_hidden: true
+light.bedroom_light_level:
+  homebridge_name: Bedroom Light
+device_tracker.christiasiphone:
+  homebridge_hidden: true
+switch.dehumidifier_switch:
+  homebridge_name: Dehumidifier
+light.dining_room_light_level:
+  homebridge_name: Dining Room Light
+sensor.esp8266_co2:
+  homebridge_hidden: true
+device_tracker.johnboiles:
+  homebridge_hidden: true
+light.kitchen_hallway_light_level:
+  homebridge_name: Hallway Light
+light.kitchen_island_light_level:
+  homebridge_name: Kitchen Island Light
+light.kitchen_light_level:
+  homebridge_name: Kitchen Light
+switch.living_room_lamp_switch:
+  homebridge_name: Living Room Lamp
+light.living_room_light_level:
+  homebridge_name: Living Room Light
+switch.master_bathroom_fan_switch:
+  homebridge_name: Master Bathroom Fan
+light.master_bathroom_light_level_2:
+  hidden: true
+automation.notify_me_when_a_3d_print_finishes:
+  homebridge_hidden: true
+automation.turn_off_common_space_lights_with_a_triple_tap:
+  homebridge_hidden: true
+switch.porch_light_switch:
+  homebridge_name: Porch Light
+group.octoprint:
+  homebridge_hidden: true
+sensor.pm25_particles:
+  homebridge_sensor_type: air_quality
+sensor.master_bathroom_light_alarm_level_2: {}
+sensor.master_bathroom_light_alarm_type_2: {}
+sensor.master_bathroom_light_burglar: {}
+sensor.master_bathroom_light_sourcenodeid: {}
+sensor.living_room_lamp_power_management:
+  hidden: true
+sensor.living_room_lamp_sourcenodeid:
+  hidden: true
+sensor.master_bathroom_light_sourcenodeid_2: {}
+sensor.master_bathroom_light_alarm_level: {}
+sensor.master_bathroom_light_alarm_type: {}
+sensor.master_bathroom_light_burglar_2: {}
+sensor.john_boiless_iphone_x_battery_level:
+  hidden: true
+sensor.john_boiless_iphone_x_battery_state:
+  hidden: true

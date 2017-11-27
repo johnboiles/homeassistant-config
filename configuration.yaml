@@ -1,0 +1,286 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret home_latitude
+  longitude: !secret home_longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: !secret home_elevation
+  # metric for Metric, imperial for Imperial
+  unit_system: imperial
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/Los_Angeles
+  customize: !include customize.yaml
+
+octoprint:
+  host: octopi.local
+  api_key: !secret octoprint_api_key
+  bed: true
+
+binary_sensor:
+  - platform: octoprint
+    monitored_conditions:
+      - Printing
+      - Printing Error
+
+script: !include scripts.yaml
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+# Enables some ios features
+ios:
+
+http:
+  # Uncomment this to add a password (recommended!)
+  api_password: !secret http_api_password
+  # Uncomment this if you are using SSL or running in Docker etc
+  base_url: !secret http_base_url
+  ssl_certificate: !secret http_ssl_certificate
+  ssl_key: !secret http_ssl_key
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+discovery:
+  ignore:
+    - apple_tv
+
+cover:
+  - platform: mqtt
+    name: Garage Door
+    friendly_name: Garage
+    state_topic: "garage/door"
+    command_topic: "garage/button"
+    payload_open: "OPEN"
+    payload_close: "OPEN"
+    payload_stop: "OPEN"
+    state_open: "OPENED"
+    state_closed: "CLOSED"
+    optimistic: false
+    retain: false
+    value_template: '{{ value }}'
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time.
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+sensor:
+  - platform: darksky
+    api_key: !secret darksky_api_key
+    monitored_conditions:
+      - summary
+      - temperature
+      - temperature_min
+      - temperature_max
+      - precip_probability
+      - nearest_storm_distance
+      - wind_speed
+      - wind_bearing
+
+  - platform: command_line
+    name: CPU Temp
+    command: "/bin/cat /sys/class/thermal/thermal_zone0/temp"
+    unit_of_measurement: "ºC"
+    value_template: '{{ value | multiply(0.001) | round(2) }}'
+
+  - platform: command_line
+    name: CPU Speed
+    command: "/usr/bin/vcgencmd measure_clock arm | sed 's/.*=//'"
+    unit_of_measurement: "MHz"
+    value_template: '{{ value | multiply(0.000001) | round(0) }}'
+
+  - platform: systemmonitor
+    resources:
+    - type: disk_use_percent
+      arg: /
+    - type: memory_free
+    - type: memory_use_percent
+    - type: processor_use
+    - type: since_last_boot
+
+  - platform: mqtt
+    state_topic: 'rtl_433/raw'
+    name: 'Bedroom Temperature'
+    unit_of_measurement: '°F'
+    expire_after: 600
+    value_template: '{{ value_json.temperature_F if value_json.channel == 2 else states.sensor.bedroom_temperature.state }}'
+
+  - platform: mqtt
+    state_topic: 'rtl_433/raw'
+    name: 'Bedroom Humidity'
+    unit_of_measurement: '%'
+    expire_after: 600
+    value_template: '{{ value_json.humidity if value_json.channel == 2 else states.sensor.bedroom_humidity.state}}'
+
+  - platform: mqtt
+    state_topic: 'rtl_433/raw'
+    name: 'Kitchen Temperature'
+    unit_of_measurement: '°F'
+    expire_after: 600
+    value_template: '{{ value_json.temperature_F if value_json.channel == 4 else states.sensor.kitchen_temperature.state}}'
+
+  - platform: mqtt
+    state_topic: 'rtl_433/raw'
+    name: 'Kitchen Humidity'
+    unit_of_measurement: '%'
+    expire_after: 600
+    value_template: '{{ value_json.humidity if value_json.channel == 4 else states.sensor.kitchen_humidity.state}}'
+
+  - platform: mqtt
+    state_topic: 'rtl_433/raw'
+    name: 'Basement Temperature'
+    unit_of_measurement: '°F'
+    expire_after: 600
+    value_template: '{{ value_json.temperature_F if value_json.channel == 5 else states.sensor.basement_temperature.state}}'
+
+  - platform: mqtt
+    state_topic: 'rtl_433/raw'
+    name: 'Basement Humidity'
+    unit_of_measurement: '%'
+    expire_after: 600
+    value_template: '{{ value_json.humidity if value_json.channel == 5 else states.sensor.basement_humidity.state}}'
+
+  - platform: mqtt
+    state_topic: 'rtl_433/raw'
+    name: 'Backyard Temperature'
+    unit_of_measurement: '°F'
+    expire_after: 600
+    value_template: '{{ value_json.temperature_F if value_json.channel == 6 else states.sensor.backyard_temperature.state}}'
+
+  - platform: mqtt
+    state_topic: 'rtl_433/raw'
+    name: 'Backyard Humidity'
+    unit_of_measurement: '%'
+    expire_after: 600
+    value_template: '{{ value_json.humidity if value_json.channel == 6 else states.sensor.backyard_humidity.state}}'
+
+  - platform: mqtt
+    state_topic: 'rtl_433/raw'
+    name: 'Izzy Room Temperature'
+    unit_of_measurement: '°F'
+    expire_after: 600
+    value_template: '{{ value_json.temperature_F if value_json.channel == 7 else states.sensor.izzy_room_temperature.state}}'
+
+  - platform: mqtt
+    state_topic: 'rtl_433/raw'
+    name: 'Izzy Room Humidity'
+    unit_of_measurement: '%'
+    expire_after: 600
+    value_template: '{{ value_json.humidity if value_json.channel == 7 else states.sensor.izzy_room_humidity.state}}'
+
+  - platform: mqtt
+    state_topic: 'homeassistant/sensor/esp8266/particulate/state'
+    name: 'PM1 Particles'
+    qos: 0
+    unit_of_measurement: 'PM'
+    expire_after: 600
+    value_template: '{{ value_json["data"][0]["value"] | round(1) }}'
+
+  - platform: mqtt
+    state_topic: 'homeassistant/sensor/esp8266/particulate/state'
+    name: 'PM2.5 Particles'
+    qos: 0
+    unit_of_measurement: 'PM'
+    expire_after: 600
+    value_template: '{{ value_json["data"][1]["value"] | round(1) }}'
+
+  - platform: mqtt
+    state_topic: 'homeassistant/sensor/esp8266/particulate/state'
+    name: 'PM10 Particles'
+    qos: 0
+    unit_of_measurement: 'PM'
+    expire_after: 600
+    value_template: '{{ value_json["data"][2]["value"] | round(1) }}'
+
+  - platform: miflora
+    mac: 'C4:7C:8D:62:73:AC'
+    name: Peace Lily
+    monitored_conditions:
+      - moisture
+      - temperature
+      - light
+      - conductivity
+      - battery
+
+  - platform: miflora
+    mac: 'C4:7C:8D:62:6C:D2'
+    name: Dracaena
+    monitored_conditions:
+      - moisture
+      - temperature
+      - light
+      - conductivity
+      - battery
+
+  - platform: octoprint
+    name: OctoPrint
+    monitored_conditions:
+      - Current State
+      - Job Percentage
+
+switch:
+  - platform: wake_on_lan
+    name: "Twitter Laptop WOL"
+    mac_address: "F4-5C-89-A3-A7-73"
+    host: tw-mbp-jboiles.local
+
+# Text to speech
+tts:
+  platform: google
+
+group: !include groups.yaml
+automation: !include automations.yaml
+
+zwave:
+  usb_path: /dev/ttyACM0
+  network_key: !secret zwave_network_key
+  config_path: /etc/openzwave
+  device_config:
+    light.master_bedroom_dimmer_level:
+      refresh_value: true
+      delay: 3
+    light.living_room_light_level:
+      refresh_value: true
+      delay: 3
+    light.dining_room_light_level:
+      refresh_value: true
+      delay: 3
+    light.kitchen_light_level:
+      refresh_value: true
+      delay: 3
+    light.kitchen_island_level:
+      refresh_value: true
+      delay: 3
+
+device_tracker:
+  - platform: netgear
+    host: 10.0.0.1
+    username: admin
+    password: !secret router_password
+    track_new_devices: false
+
+mqtt:
+#  broker: localhost
+  client_id: home-assistant
+  discovery: true
+  discovery_prefix: homeassistant
+

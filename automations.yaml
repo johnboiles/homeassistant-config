@@ -1,0 +1,25 @@
+- id: octoprint
+  alias: Notify me when a 3d print finishes
+  trigger:
+  - entity_id: binary_sensor.octoprint_printing
+    from: 'on'
+    platform: state
+    to: 'off'
+  action:
+  - data:
+      message: 3D print has finished
+    service: notify.ios_john_boiless_iphone_x
+- action:
+  - data:
+      entity_id: group.all_lights
+    service: light.turn_off
+  alias: Turn off common space lights with a triple tap
+  condition: []
+  id: '1508091928849'
+  trigger:
+  - event_data:
+      entity_id: zwave.dining_room_light
+      scene_data: 4
+      scene_id: 2
+    event_type: zwave.scene_activated
+    platform: event
