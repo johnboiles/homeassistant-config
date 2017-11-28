@@ -101,6 +101,7 @@ light.kitchen_light_level:
   homebridge_name: Kitchen Light
 switch.living_room_lamp_switch:
   homebridge_name: Living Room Lamp
+  icon: mdi:lightbulb
 light.living_room_light_level:
   homebridge_name: Living Room Light
 switch.master_bathroom_fan_switch:
