@@ -19,3 +19,7 @@ deploy:
 deploy-zwave:
 	$(info Deploying HA config to $(REMOTE_HOST).)
 	rsync -av --rsync-path="sudo -u homeassistant rsync" $(BASE_DIR)/*.xml $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/
+
+.PHONY: pull-remote
+pull-remote:
+	rsync -av --include='*yaml' --include='scenes' --include='zwcfg*.xml' --exclude='*' $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/ ./
