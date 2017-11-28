@@ -38,6 +38,7 @@ group.rtl_433:
   homebridge_hidden: true
 switch.twitter_laptop_wol:
   homebridge_hidden: true
+  icon: mdi:laptop-mac
 group.zooz:
   homebridge_hidden: true
 group.light:
@@ -54,6 +55,7 @@ group.air_quality:
   homebridge_hidden: true
 cover.garage_door:
   homebridge_cover_type: garage_door
+  icon: mdi:garage
 light.master_bath_light_level_2:
   hidden: true
   homebridge_hidden: true
@@ -106,6 +108,7 @@ light.living_room_light_level:
   homebridge_name: Living Room Light
 switch.master_bathroom_fan_switch:
   homebridge_name: Master Bathroom Fan
+  icon: mdi:fan
 light.master_bathroom_light_level_2:
   hidden: true
 automation.notify_me_when_a_3d_print_finishes:
@@ -114,6 +117,7 @@ automation.turn_off_common_space_lights_with_a_triple_tap:
   homebridge_hidden: true
 switch.porch_light_switch:
   homebridge_name: Porch Light
+  icon: mdi:lightbulb
 group.octoprint:
   homebridge_hidden: true
 sensor.pm25_particles:
@@ -142,3 +146,5 @@ sensor.john_boiless_iphone_x_battery_level:
   hidden: true
 sensor.john_boiless_iphone_x_battery_state:
   hidden: true
+switch.3d_printer_switch:
+  icon: mdi:printer-3d
