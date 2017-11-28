@@ -67,13 +67,17 @@ sensor.master_bath_light_burglar_2:
   hidden: true
 group.all_automations:
   homebridge_hidden: true
+  hidden: false
 group.all_covers:
   homebridge_hidden: true
+  hidden: false
 group.all_lights:
   homebridge_hidden: true
+  hidden: false
 light.master_bathroom_light_level:
   homebridge_name: Master Bathroom Light
 group.all_switches:
+  hidden: false
   homebridge_hidden: true
 group.all_devices:
   homebridge_hidden: true

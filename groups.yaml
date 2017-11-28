@@ -1,6 +1,36 @@
+default_view:
+  view: yes
+  icon: mdi:home
+  entities:
+    - group.occupancy
+    - group.all_covers
+    - group.all_lights
+    - group.all_switches
+
+sensors:
+  name: Sensors
+  view: true
+  entities:
+    - group.octoprint
+    - group.dev_pi
+    - group.weather
+    - group.zwave
+    - group.air_quality
+    - group.rtl_433
+    - group.peace_lily
+    - group.dracaena
+    - group.zooz
+
+settings:
+  view: yes
+  name: Settings
+  entities:
+    - group.all_automations
+
 octoprint:
   name: OctoPrint
   entities:
+    - switch.3d_printer_switch
     - binary_sensor.octoprint_printing
     - binary_sensor.octoprint_printing_error
     - sensor.octoprint_current_state
@@ -22,6 +52,7 @@ occupancy:
   entities:
     - device_tracker.christiasiphone
     - device_tracker.johnboiles
+    - device_tracker.john_boiless_iphone_x
  
 weather:
   name: Weather
