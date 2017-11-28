@@ -13,4 +13,9 @@ remote-test:
 .PHONY: deploy
 deploy:
 	$(info Deploying HA config to $(REMOTE_HOST).)
-	rsync -av --exclude=venv --exclude=*.log --rsync-path="sudo -u homeassistant rsync" $(BASE_DIR)/* $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/
+	rsync -av --rsync-path="sudo -u homeassistant rsync" $(BASE_DIR)/*.yaml $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/
+
+.PHONY: deploy-zwave
+deploy-zwave:
+	$(info Deploying HA config to $(REMOTE_HOST).)
+	rsync -av --rsync-path="sudo -u homeassistant rsync" $(BASE_DIR)/*.xml $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/
