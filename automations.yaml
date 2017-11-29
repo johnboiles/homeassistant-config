@@ -22,12 +22,44 @@
   - data:
       entity_id: switch.master_bathroom_fan_switch
     service: switch.turn_off
-  alias: Turn off common space lights with a triple tap
+  alias: Turn off all lights in the house with a triple tap down in the dining room
   condition: []
   id: '1508091928849'
   trigger:
   - event_data:
       entity_id: zwave.dining_room_light
+      scene_data: 4
+      scene_id: 2
+    event_type: zwave.scene_activated
+    platform: event
+- action:
+  - data:
+      entity_id: light.kitchen_light_level
+    service: light.turn_off
+  - data:
+      entity_id: light.kitchen_island_light_level
+    service: light.turn_off
+  - data:
+      entity_id: light.dining_room_light_level
+    service: light.turn_off
+  - data:
+      entity_id: light.living_room_light_level
+    service: light.turn_off
+  - data:
+      entity_id: light.kitchen_hallway_light_level
+    service: light.turn_off
+  - data:
+      entity_id: switch.christmas_tree_switch
+    service: switch.turn_off
+  - data:
+      entity_id: switch.living_room_lamp_switch
+    service: switch.turn_off
+  alias: Turn off common space lights with a triple tap down in the kitchen
+  condition: []
+  id: 'common-space-lights-kitchen'
+  trigger:
+  - event_data:
+      entity_id: zwave.kitchen_light
       scene_data: 4
       scene_id: 2
     event_type: zwave.scene_activated
