@@ -13,6 +13,15 @@
   - data:
       entity_id: group.all_lights
     service: light.turn_off
+  - data:
+      entity_id: switch.christmas_tree_switch
+    service: switch.turn_off
+  - data:
+      entity_id: switch.living_room_lamp_switch
+    service: switch.turn_off
+  - data:
+      entity_id: switch.master_bathroom_fan_switch
+    service: switch.turn_off
   alias: Turn off common space lights with a triple tap
   condition: []
   id: '1508091928849'
@@ -23,7 +32,7 @@
       scene_id: 2
     event_type: zwave.scene_activated
     platform: event
-- alias: 'HomeSeer Switch Fix On'
+- alias: HomeSeer Switch Fix On
   trigger:
     platform: event
     event_type: zwave.scene_activated
@@ -31,10 +40,11 @@
       scene_id: 1
       scene_data: 0
   action:
-    - service: switch.turn_on
-      data_template:
-        entity_id: '{{"switch." + trigger.event.data.entity_id.split(".")[1] + "_switch" }}'
-- alias: 'HomeSeer Switch Fix Off'
+  - service: switch.turn_on
+    data_template:
+      entity_id: '{{"switch." + trigger.event.data.entity_id.split(".")[1] + "_switch"
+        }}'
+- alias: HomeSeer Switch Fix Off
   trigger:
     platform: event
     event_type: zwave.scene_activated
@@ -42,6 +52,7 @@
       scene_id: 2
       scene_data: 0
   action:
-    - service: switch.turn_off
-      data_template:
-        entity_id: '{{"switch." + trigger.event.data.entity_id.split(".")[1] + "_switch" }}'
+  - service: switch.turn_off
+    data_template:
+      entity_id: '{{"switch." + trigger.event.data.entity_id.split(".")[1] + "_switch"
+        }}'
