@@ -42,8 +42,7 @@
   action:
   - service: switch.turn_on
     data_template:
-      entity_id: '{{"switch." + trigger.event.data.entity_id.split(".")[1] + "_switch"
-        }}'
+      entity_id: '{{"switch." + trigger.event.data.entity_id.split(".")[1] + "_switch"}}'
 - alias: HomeSeer Switch Fix Off
   trigger:
     platform: event
@@ -54,5 +53,60 @@
   action:
   - service: switch.turn_off
     data_template:
-      entity_id: '{{"switch." + trigger.event.data.entity_id.split(".")[1] + "_switch"
-        }}'
+      entity_id: '{{"switch." + trigger.event.data.entity_id.split(".")[1] + "_switch"}}'
+- action:
+  - data:
+      entity_id: switch.christmas_tree_switch
+    service: switch.turn_on
+  alias: Turn on christmas tree lights with double tap up
+  id: 'christmas-tree-double-tap-up'
+  condition: []
+  trigger:
+  - event_data:
+      entity_id: zwave.living_room_light
+      scene_id: 1
+      scene_data: 3
+    event_type: zwave.scene_activated
+    platform: event
+- action:
+  - data:
+      entity_id: switch.christmas_tree_switch
+    service: switch.turn_off
+  alias: Turn off christmas tree lights with double tap down
+  id: 'christmas-tree-double-tap-down'
+  condition: []
+  trigger:
+  - event_data:
+      entity_id: zwave.living_room_light
+      scene_id: 2
+      scene_data: 3
+    event_type: zwave.scene_activated
+    platform: event
+- action:
+  - data:
+      entity_id: switch.living_room_lamp_switch
+    service: switch.turn_on
+  alias: Turn on living room lamp with triple tap up
+  id: 'living-room-lamp-triple-tap-up'
+  condition: []
+  trigger:
+  - event_data:
+      entity_id: zwave.living_room_light
+      scene_id: 1
+      scene_data: 4
+    event_type: zwave.scene_activated
+    platform: event
+- action:
+  - data:
+      entity_id: switch.living_room_lamp_switch
+    service: switch.turn_off
+  alias: Turn off living room lamp with triple tap down
+  id: 'living-room-lamp-triple-tap-down'
+  condition: []
+  trigger:
+  - event_data:
+      entity_id: zwave.living_room_light
+      scene_id: 2
+      scene_data: 4
+    event_type: zwave.scene_activated
+    platform: event
