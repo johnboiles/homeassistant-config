@@ -148,3 +148,17 @@ sensor.john_boiless_iphone_x_battery_state:
   hidden: true
 switch.3d_printer_switch:
   icon: mdi:printer-3d
+group.sensors:
+  homebridge_hidden: true
+automation.homeseer_switch_fix_off:
+  homebridge_hidden: true
+automation.homeseer_switch_fix_on:
+  homebridge_hidden: true
+group.default_view:
+  homebridge_hidden: true
+group.settings:
+  homebridge_hidden: true
+device_tracker.john_boiless_iphone_x:
+  homebridge_hidden: true
+switch.christmas_tree_switch:
+  icon: mdi:pine-tree
