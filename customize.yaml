@@ -87,6 +87,8 @@ light.bedroom_light_level:
   homebridge_name: Bedroom Light
 device_tracker.christiasiphone:
   homebridge_hidden: true
+device_tracker.serenasiphone2:
+  homebridge_hidden: true
 switch.dehumidifier_switch:
   homebridge_name: Dehumidifier
 light.dining_room_light_level:

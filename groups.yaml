@@ -48,11 +48,12 @@ dev_pi:
     - sensor.since_last_boot
 
 occupancy:
-  name: Family
+  name: Who's Home
   entities:
     - device_tracker.christiasiphone
     - device_tracker.johnboiles
     - device_tracker.john_boiless_iphone_x
+    - device_tracker.serenasiphone2
  
 weather:
   name: Weather
