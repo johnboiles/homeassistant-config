@@ -23,6 +23,12 @@ binary_sensor:
       - Printing
       - Printing Error
 
+camera:
+  - platform: mjpeg
+    name: OctoPrint Camera
+    mjpeg_url: http://octopi.local/webcam/?action=stream
+    still_image_url: http://octopi.local/webcam/?action=snapshot
+
 script: !include scripts.yaml
 
 # Enables the frontend

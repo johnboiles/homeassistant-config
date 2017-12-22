@@ -35,6 +35,7 @@ octoprint:
     - binary_sensor.octoprint_printing_error
     - sensor.octoprint_current_state
     - sensor.octoprint_job_percentage
+    - camera.octoprint_camera
 
 dev_pi:
   name: Pi
