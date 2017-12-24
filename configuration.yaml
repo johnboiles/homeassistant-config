@@ -38,6 +38,8 @@ camera:
 
 script: !include scripts.yaml
 
+python_script:
+
 # Enables the frontend
 frontend:
 

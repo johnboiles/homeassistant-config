@@ -62,7 +62,7 @@
             <text id="sensor.floorplan_datetime_message" font-family="AvenirNext-Regular, Avenir Next" font-size="64" font-weight="normal" fill="#008A7B">
                 <tspan x="22" y="79">Dec 24th</tspan>
             </text>
-            <text id="button_movie" font-family="AvenirNext-Regular, Avenir Next" font-size="36" font-weight="normal" fill="#969696">
+            <text id="script.movie_scene" font-family="AvenirNext-Regular, Avenir Next" font-size="36" font-weight="normal" fill="#969696">
                 <tspan x="842" y="262">Movie</tspan>
             </text>
             <text id="button_fan" font-family="AvenirNext-Regular, Avenir Next" font-size="36" font-weight="normal" fill="#969696">
