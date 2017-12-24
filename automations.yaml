@@ -8,6 +8,11 @@
   action:
   - data:
       message: 3D print has finished
+      data:
+        attachment:
+          url: https://house.johnboiles.com:15000/webcam/?action=snapshot
+          content-type: jpeg
+          hide-thumbnail: false
     service: notify.ios_john_boiless_iphone_x
 - action:
   - data:
