@@ -1,6 +1,7 @@
 BASE_DIR=$(shell pwd)
 REMOTE_HOST=pi@house-pi.local
 REMOTE_CONFIG_DIR=/home/homeassistant/.homeassistant
+FLOORPLAN_DIR=$(REMOTE_CONFIG_DIR)/www/custom_ui/floorplan
 
 .PHONY: test
 test:
@@ -23,3 +24,9 @@ deploy-zwave:
 .PHONY: pull-remote
 pull-remote:
 	rsync -av --include='*yaml' --include='scenes' --include='zwcfg*.xml' --exclude='*' $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/ ./
+
+.PHONY: deploy-floorplan
+deploy-floorplan:
+	rsync -av --rsync-path="sudo -u homeassistant rsync" $(BASE_DIR)/ha-floorplan/floorplan.yaml $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/
+	rsync -av --rsync-path="sudo -u homeassistant rsync" $(BASE_DIR)/ha-floorplan/floorplan.svg $(REMOTE_HOST):$(FLOORPLAN_DIR)/
+	rsync -av --rsync-path="sudo -u homeassistant rsync" $(BASE_DIR)/ha-floorplan/floorplan.css $(REMOTE_HOST):$(FLOORPLAN_DIR)/

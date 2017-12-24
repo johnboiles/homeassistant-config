@@ -3,5 +3,10 @@
 !scenes
 !.gitignore
 !Makefile
+!ha-floorplan
+ha-floorplan/*
+!ha-floorplan/floorplan.yaml
+!ha-floorplan/floorplan.svg
+!ha-floorplan/floorplan.css
 secrets.yaml
 known_devices.yaml

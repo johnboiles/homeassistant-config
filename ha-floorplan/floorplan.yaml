@@ -1,0 +1,207 @@
+      name: Boiles Home
+      image: /local/custom_ui/floorplan/floorplan.svg
+      stylesheet: /local/custom_ui/floorplan/floorplan.css
+      
+      # These options are optional
+      warnings:                  # enable warnings (to find out why things might ot be working correctly)
+      # pan_zoom:                  # enable experimental panning / zooming
+      hide_app_toolbar:          # hide the application toolbar (when used as a custom panel)
+      # date_format: DD-MMM-YYYY   # Date format to use in hover-over text
+      
+      #last_motion_entity: sensor.template_last_motion
+      #last_motion_class: last-motion
+
+      groups:
+        - name: Template Messages
+          entities:
+             - sensor.todays_weather_message
+             - sensor.garage_door_message
+             - sensor.floorplan_datetime_message
+
+        - name: Temperature Sensors
+          entities:
+             - sensor.esp8266_temperature
+             - sensor.kitchen_temperature
+             - sensor.izzy_room_temperature
+             - sensor.peace_lily_temperature
+             - sensor.backyard_temperature
+             - sensor.bedroom_temperature
+
+          #text_template: '${entity.state ? entity.state : "unknown"}'
+          # An example of rounding up a number, i.e. a temperature of 90.1 becomes 91
+          text_template: '${ !isNaN(entity.state) ? Math.round(entity.state) : "--"}º'  
+          class_template: '
+            var temp = parseFloat(entity.state.replace("°", ""));
+            if (temp < 10)
+              return "temp-low";
+            else if (temp < 30)
+              return "temp-medium";
+            else
+              return "temp-high";
+            '
+          action:
+
+
+        - name: Humidity Sensors
+          entities:
+             - sensor.esp8266_humidity
+             - sensor.kitchen_humidity
+             - sensor.backyard_humidity
+             - sensor.izzy_room_humidity
+             - sensor.bedroom_humidity
+          #text_template: '${entity.state ? entity.state : "unknown"}'
+          # An example of rounding up a number, i.e. a temperature of 90.1 becomes 91
+          text_template: '${ !isNaN(entity.state) ? Math.round(entity.state) : "--"}%'  
+          class_template: '
+            var temp = parseFloat(entity.state.replace("°", ""));
+            if (temp < 10)
+              return "temp-low";
+            else if (temp < 30)
+              return "temp-medium";
+            else
+              return "temp-high";
+            '
+          action:
+
+        - name: CO2 Sensors
+          entities:
+             - sensor.esp8266_mhz19_co2
+          #text_template: '${entity.state ? entity.state : "unknown"}'
+          # An example of rounding up a number, i.e. a temperature of 90.1 becomes 91
+          text_template: '${ !isNaN(entity.state)  ? Math.round(entity.state) : "--"}ppm'  
+          class_template: '
+            var val = parseFloat(entity.state);
+            if (val < 600)
+              return "co2-low";
+            else if (val < 1000)
+              return "co2-medium";
+            else
+              return "co2-high";
+            '
+
+        - name: Particle Sensors
+          entities:
+             - sensor.pm25_particles
+          #text_template: '${entity.state ? entity.state : "unknown"}'
+          # An example of rounding up a number, i.e. a temperature of 90.1 becomes 91
+          text_template: '${ !isNaN(entity.state) ? Math.round(entity.state) : "--"}'  
+
+        - name: Garage Doors
+          entities:
+            - cover.garage_door
+          states:
+            - state: 'closed'
+              class: 'garage-closed'
+            - state: 'open'
+              class: 'garage-open'
+          action:
+            service: open_cover
+
+        - name: Lights
+          entities:
+             - light.kitchen_light_level
+             - light.living_room_light_level
+             - light.dining_room_light_level
+             - light.kitchen_island_light_level
+             - light.kitchen_hallway_light_level
+             - light.master_bathroom_light_level
+             - light.bedroom_light_level
+          states:
+            - state: 'on'
+              class: 'light-on'
+            - state: 'off'
+              class: 'light-off'
+          action:
+            domain: homeassistant   # This optional parameter allows you to use other services such as homeassistant.toggle like here.
+            service: toggle
+
+        - name: Switches
+          entities:
+             - switch.living_room_lamp_switch
+             - switch.christmas_tree_switch
+             - switch.master_bathroom_fan_switch
+          states:
+            - state: 'on'
+              class: 'switch-on'
+            - state: 'off'
+              class: 'switch-off'
+          action:
+            domain: homeassistant   # This optional parameter allows you to use other services such as homeassistant.toggle like here.
+            service: toggle
+
+        - name: Fans
+          entities:
+             - switch.master_bathroom_fan_switch
+          states:
+            - state: 'on'
+              class: 'fan-on'
+            - state: 'off'
+              class: 'fan-off'
+          action:
+            domain: homeassistant   # This optional parameter allows you to use other services such as homeassistant.toggle like here.
+            service: toggle
+
+        # - name: NVR
+        #   entities:
+        #      - binary_sensor.blue_iris_nvr
+        #   text_template: '${(entity.state === "on") ? "online" : "offline"}'
+        #   states:
+        #     - state: 'off'
+        #       class: 'danger-text'
+        #     - state: 'on'
+        #       class: 'success-text'
+
+        # - name: Alarm Panel
+        #   entities:
+        #      - alarm_control_panel.alarm
+        #   states:
+        #     - state: 'armed_away'
+        #       class: 'alarm-armed'
+        #     - state: 'armed_home'
+        #       class: 'alarm-armed'
+        #     - state: 'disarmed'
+        #       class: 'alarm-disarmed'
+
+        # - name: Binary sensors
+        #   entities:
+        #     - binary_sensor.front_hallway
+        #     - binary_sensor.kitchen
+        #     - binary_sensor.master_bedroom
+        #     - binary_sensor.theatre_room
+        #   states:
+        #     - state: 'off'
+        #       class: 'info-background'
+        #     - state: 'on'
+        #       class: 'warning-background'
+        #   state_transitions:
+        #     - name: On to off
+        #       from_state: 'on'
+        #       to_state: 'off'
+        #       duration: 10
+
+        # - name: Cameras
+        #   entities:
+        #     - camera.hallway
+        #     - camera.driveway
+        #     - camera.front_door
+        #     - camera.backyard
+        #   states:
+        #     - state: 'idle'
+        #       class: 'camera-idle'
+              
+#        - name: thermostat_temp
+#          entities:
+#            - climate.downstairs
+#            - climate.upstairs
+#          text_template: '${entity.attributes.current_temperature ? entity.attributes.current_temperature : "undefined"}'
+
+# The above text_template uses extended attributes from the climate.* objects to get current temperature.
+
+#        - name: text_states
+#          entities:
+#            - sensor.downstairs_thermostat_humidity
+#            - sensor.dark_sky_temperature
+#            - sensor.last_message
+#          text_template: '${entity.state ? entity.state.replace(/\s{2,}/g,"") : "undefined"}'
+
+# The above text_template uses jQuery syntax to search and replace any instance of 2 consecutive (or more) spaces in a string of text.
