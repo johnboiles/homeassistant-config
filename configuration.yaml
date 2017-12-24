@@ -46,6 +46,17 @@ config:
 
 # Enables some ios features
 ios:
+  push:
+    categories:
+      - name: Print Finished
+        identifier: 'print-finished'
+        actions:
+          - identifier: 'PRINTER_OFF'
+            title: 'Turn off printer'
+            activationMode: 'background'
+            authenticationRequired: yes
+            destructive: no
+            behavior: 'default'
 
 http:
   # Uncomment this to add a password (recommended!)

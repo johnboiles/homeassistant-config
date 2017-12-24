@@ -1,3 +1,4 @@
+# 3D Print Finished Push notification
 - id: octoprint
   alias: Notify me when a 3d print finishes
   trigger:
@@ -6,14 +7,27 @@
     platform: state
     to: 'off'
   action:
-  - data:
+  - service: notify.ios_john_boiless_iphone_x
+    data:
       message: 3D print has finished
       data:
         attachment:
           url: https://house.johnboiles.com:15000/webcam/?action=snapshot
           content-type: jpeg
           hide-thumbnail: false
-    service: notify.ios_john_boiless_iphone_x
+        push:
+          category: "print-finished" # Needs to match the top level identifier you used in the ios configuration
+- alias: Printer off via push action
+  trigger:
+    platform: event
+    event_type: ios.notification_action_fired
+    event_data:
+      actionName: PRINTER_OFF
+  action:
+  - service: switch.turn_off
+    data:
+      entity_id: switch.3d_printer_switch
+# Multi-tap Homeseer stuff
 - action:
   - data:
       entity_id: group.all_lights
