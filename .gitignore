@@ -10,3 +10,4 @@ ha-floorplan/*
 !ha-floorplan/floorplan.css
 secrets.yaml
 known_devices.yaml
+!secrets.yaml.example

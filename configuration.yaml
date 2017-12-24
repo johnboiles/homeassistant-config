@@ -286,6 +286,14 @@ sensor:
         value_template: >-
           {{ now().strftime("%b") }} {{ now().strftime("%d") }}, {{ now().strftime("%-I") }}:{{ now().strftime("%M") }}{{ now().strftime("%p").lower() }}
 
+  - platform: airvisual
+    api_key: !secret airvisual_api_key
+    monitored_conditions:
+      - us
+    city: oakland
+    state: california
+    country: usa
+
 switch:
   - platform: wake_on_lan
     name: "Twitter Laptop WOL"
