@@ -82,6 +82,7 @@
         - name: Particle Sensors
           entities:
              - sensor.pm25_particles
+             - sensor.us_air_quality_index
           #text_template: '${entity.state ? entity.state : "unknown"}'
           # An example of rounding up a number, i.e. a temperature of 90.1 becomes 91
           text_template: '${ !isNaN(entity.state) ? Math.round(entity.state) : "--"}'  
