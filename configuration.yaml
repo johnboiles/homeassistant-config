@@ -46,6 +46,14 @@ frontend:
 # Enables configuration UI
 config:
 
+cloud:
+  alexa:
+    filter:
+      exclude_domains:
+        - group
+        - automation
+        - script
+
 # Enables some ios features
 ios:
   push:
