@@ -309,6 +309,9 @@ switch:
     name: "Twitter Laptop WOL"
     mac_address: "F4-5C-89-A3-A7-73"
     host: tw-mbp-jboiles.local
+  - platform: tplink
+    name: "3D Printer Switch"
+    host: 10.0.0.5
 
 # Text to speech
 tts:
