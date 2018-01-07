@@ -155,6 +155,9 @@ automation.turn_off_common_space_lights_with_a_triple_tap:
 switch.porch_light_switch:
   homebridge_name: Porch Light
   icon: mdi:lightbulb
+switch.basement_light_switch:
+  homebridge_name: Basement Light
+  icon: mdi:lightbulb
 group.octoprint:
   homebridge_hidden: true
   alexa_hidden: true
