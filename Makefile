@@ -27,7 +27,7 @@ pull-remote:
 
 .PHONY: deploy-floorplan
 deploy-floorplan:
-	rsync -av --rsync-path="sudo -u homeassistant rsync" $(BASE_DIR)/ha-floorplan/floorplan.yaml $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/
+	rsync -av --rsync-path="sudo -u homeassistant rsync" $(BASE_DIR)/floorplan.yaml $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/
 	rsync -av --rsync-path="sudo -u homeassistant rsync" $(BASE_DIR)/ha-floorplan/floorplan.svg $(REMOTE_HOST):$(FLOORPLAN_DIR)/
 	rsync -av --rsync-path="sudo -u homeassistant rsync" $(BASE_DIR)/ha-floorplan/floorplan.css $(REMOTE_HOST):$(FLOORPLAN_DIR)/
 
