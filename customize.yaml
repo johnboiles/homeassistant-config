@@ -212,16 +212,13 @@ device_tracker.john_boiless_iphone_x:
 switch.christmas_tree_switch:
   friendly_name: Christmas Tree
   icon: mdi:pine-tree
+  hidden: true
+  homebridge_hidden: true
+  alexa_hidden: true
 automation.turn_on_living_room_lamp_with_triple_tap_up:
   homebridge_hidden: true
   alexa_hidden: true
-automation.turn_on_christmas_tree_lights_with_double_tap_up:
-  homebridge_hidden: true
-  alexa_hidden: true
 automation.turn_off_all_lights_in_the_house_with_a_triple_tap_down_in_the_dining_room:
-  homebridge_hidden: true
-  alexa_hidden: true
-automation.turn_off_christmas_tree_lights_with_double_tap_down:
   homebridge_hidden: true
   alexa_hidden: true
 automation.turn_off_common_space_lights_with_a_triple_tap_down_in_the_kitchen:

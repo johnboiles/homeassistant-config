@@ -119,7 +119,6 @@
         - name: Switches
           entities:
              - switch.living_room_lamp_switch
-             - switch.christmas_tree_switch
              - switch.master_bathroom_fan_switch
           states:
             - state: 'on'
