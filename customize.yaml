@@ -88,6 +88,7 @@ group.all_automations:
 group.all_covers:
   homebridge_hidden: true
   alexa_hidden: true
+  hidden: false
 group.all_lights:
   homebridge_hidden: true
   alexa_hidden: true
