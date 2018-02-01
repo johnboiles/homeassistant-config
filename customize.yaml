@@ -1,21 +1,15 @@
 group.dev_pi:
   homebridge_hidden: true
-  alexa_hidden: true
 group.occupancy:
   homebridge_hidden: true
-  alexa_hidden: true
 group.weather:
   homebridge_hidden: true
-  alexa_hidden: true
 sensor.dark_sky_daily_low_temperature:
   homebridge_hidden: true
-  alexa_hidden: true
 sensor.dark_sky_daily_high_temperature:
   homebridge_hidden: true
-  alexa_hidden: true
 sensor.dark_sky_temperature:
   homebridge_hidden: true
-  alexa_hidden: true
 sensor.living_room_lamp_alarm_level:
   hidden: true
 sensor.living_room_lamp_alarm_type:
@@ -42,56 +36,34 @@ sensor.living_room_lamp_previous_reading_4:
   hidden: true
 group.rtl_433:
   homebridge_hidden: true
-  alexa_hidden: true
 switch.twitter_laptop_wol:
   homebridge_hidden: true
-  alexa_hidden: true
   icon: mdi:laptop-mac
 group.zooz:
   homebridge_hidden: true
-  alexa_hidden: true
 group.light:
   homebridge_hidden: true
-  alexa_hidden: true
 sensor.johnboiles_battery_level:
   hidden: true
 sensor.johnboiles_battery_state:
   hidden: true
 group.peace_lily:
   homebridge_hidden: true
-  alexa_hidden: true
 group.dracaena:
   homebridge_hidden: true
-  alexa_hidden: true
 group.air_quality:
   homebridge_hidden: true
-  alexa_hidden: true
 cover.garage_door:
   homebridge_cover_type: garage_door
   icon: mdi:garage
-light.master_bath_light_level_2:
-  hidden: true
-  homebridge_hidden: true
-  alexa_hidden: true
-sensor.master_bath_light_alarm_level_2:
-  hidden: true
-sensor.master_bath_light_alarm_type_2:
-  hidden: true
-sensor.master_bath_light_sourcenodeid_2:
-  hidden: true
-sensor.master_bath_light_burglar_2:
-  hidden: true
 group.all_automations:
   homebridge_hidden: true
-  alexa_hidden: true
   hidden: false
 group.all_covers:
   homebridge_hidden: true
-  alexa_hidden: true
   hidden: false
 group.all_lights:
   homebridge_hidden: true
-  alexa_hidden: true
   hidden: false
 light.master_bathroom_light_level:
   friendly_name: Master Bathroom Light
@@ -99,30 +71,25 @@ light.master_bathroom_light_level:
 group.all_switches:
   hidden: false
   homebridge_hidden: true
-  alexa_hidden: true
 group.all_devices:
   homebridge_hidden: true
-  alexa_hidden: true
 light.bedroom_light_level:
   friendly_name: Bedroom Light
   homebridge_name: Bedroom Light
 device_tracker.christiasiphone:
   homebridge_hidden: true
-  alexa_hidden: true
 device_tracker.serenasiphone2:
   homebridge_hidden: true
-  alexa_hidden: true
 switch.dehumidifier_switch:
   homebridge_name: Dehumidifier
+  friendly_name: Dehumidifier
 light.dining_room_light_level:
   friendly_name: Dining Room Light
   homebridge_name: Dining Room Light
 sensor.esp8266_co2:
   homebridge_hidden: true
-  alexa_hidden: true
 device_tracker.johnboiles:
   homebridge_hidden: true
-  alexa_hidden: true
 light.kitchen_hallway_light_level:
   friendly_name: Hallway Light
   homebridge_name: Hallway Light
@@ -146,21 +113,21 @@ switch.master_bathroom_fan_switch:
 light.master_bathroom_light_level_2:
   friendly_name: Master Bathroom Light
   hidden: true
+  homebridge_hidden: true
 automation.notify_me_when_a_3d_print_finishes:
   homebridge_hidden: true
-  alexa_hidden: true
 automation.turn_off_common_space_lights_with_a_triple_tap:
   homebridge_hidden: true
-  alexa_hidden: true
 switch.porch_light_switch:
   homebridge_name: Porch Light
+  friendly_name: Porch Light
   icon: mdi:lightbulb
 switch.basement_light_switch:
   homebridge_name: Basement Light
+  friendly_name: Basement Light
   icon: mdi:lightbulb
 group.octoprint:
   homebridge_hidden: true
-  alexa_hidden: true
 sensor.pm25_particles:
   homebridge_sensor_type: air_quality
 sensor.living_room_lamp_power_management:
@@ -193,43 +160,30 @@ switch.3d_printer_switch:
   icon: mdi:printer-3d
 group.sensors:
   homebridge_hidden: true
-  alexa_hidden: true
 automation.homeseer_switch_fix_off:
   homebridge_hidden: true
-  alexa_hidden: true
 automation.homeseer_switch_fix_on:
   homebridge_hidden: true
-  alexa_hidden: true
 group.default_view:
   homebridge_hidden: true
-  alexa_hidden: true
 group.settings:
   homebridge_hidden: true
-  alexa_hidden: true
 device_tracker.john_boiless_iphone_x:
   homebridge_hidden: true
-  alexa_hidden: true
 switch.christmas_tree_switch:
   friendly_name: Christmas Tree
   icon: mdi:pine-tree
   hidden: true
   homebridge_hidden: true
-  alexa_hidden: true
 automation.turn_on_living_room_lamp_with_triple_tap_up:
   homebridge_hidden: true
-  alexa_hidden: true
 automation.turn_off_all_lights_in_the_house_with_a_triple_tap_down_in_the_dining_room:
   homebridge_hidden: true
-  alexa_hidden: true
 automation.turn_off_common_space_lights_with_a_triple_tap_down_in_the_kitchen:
   homebridge_hidden: true
-  alexa_hidden: true
 automation.turn_off_living_room_lamp_with_triple_tap_down:
   homebridge_hidden: true
-  alexa_hidden: true
 automation.printer_off_via_push_action:
   homebridge_hidden: true
-  alexa_hidden: true
 group.all_scripts:
   homebridge_hidden: true
-  alexa_hidden: true

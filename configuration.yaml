@@ -53,6 +53,13 @@ cloud:
         - group
         - automation
         - script
+        - sensor
+        - device_tracker
+      exclude_entities:
+        - switch.twitter_laptop_wol
+        - light.master_bathroom_light_level_2
+        - switch.3d_printer_switch
+        - switch.christmas_tree_switch
 
 # Enables some ios features
 ios:
