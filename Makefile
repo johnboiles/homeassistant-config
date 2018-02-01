@@ -1,4 +1,4 @@
-BASE_DIR=$(shell pwd)
+BASE_DIR="$(shell pwd)"
 REMOTE_HOST=pi@house-pi.local
 REMOTE_CONFIG_DIR=/home/homeassistant/.homeassistant
 FLOORPLAN_DIR=$(REMOTE_CONFIG_DIR)/www/custom_ui/floorplan
