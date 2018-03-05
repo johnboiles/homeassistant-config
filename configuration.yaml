@@ -14,6 +14,7 @@ homeassistant:
 
 recorder:
   db_url: !secret mysql_db_url
+  purge_keep_days: 120
 
 octoprint:
   host: octopi.local
