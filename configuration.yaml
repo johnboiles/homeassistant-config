@@ -12,6 +12,9 @@ homeassistant:
   time_zone: America/Los_Angeles
   customize: !include customize.yaml
 
+recorder:
+  db_url: !secret mysql_db_url
+
 octoprint:
   host: octopi.local
   api_key: !secret octoprint_api_key
