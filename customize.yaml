@@ -187,3 +187,7 @@ automation.printer_off_via_push_action:
   homebridge_hidden: true
 group.all_scripts:
   homebridge_hidden: true
+group.ecobee:
+  homebridge_hidden: true
+climate.thermostat:
+  homebridge_hidden: true

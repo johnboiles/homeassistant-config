@@ -3,6 +3,7 @@ default_view:
   icon: mdi:home
   entities:
     - group.occupancy
+    - group.ecobee
     - group.all_covers
     - group.all_lights
     - group.all_switches
@@ -26,6 +27,13 @@ settings:
   name: Settings
   entities:
     - group.all_automations
+
+ecobee:
+  name: Ecobee
+  entities:
+    - climate.thermostat
+    - sensor.thermostat_humidity
+    - sensor.thermostat_temperature
 
 octoprint:
   name: OctoPrint

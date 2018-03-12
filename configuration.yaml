@@ -16,6 +16,9 @@ recorder:
   db_url: !secret mysql_db_url
   purge_keep_days: 120
 
+ecobee:
+  api_key: !secret ecobee_api_key
+
 octoprint:
   host: octopi.local
   api_key: !secret octoprint_api_key
