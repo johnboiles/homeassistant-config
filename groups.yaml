@@ -62,7 +62,6 @@ occupancy:
     - device_tracker.christiasiphone
     - device_tracker.johnboiles
     - device_tracker.john_boiless_iphone_x
-    - device_tracker.serenasiphone2
  
 weather:
   name: Weather
