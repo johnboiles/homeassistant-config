@@ -361,6 +361,9 @@ device_tracker:
     verify_ssl: false
     username: !secret unifi_username
     password: !secret unifi_password
+    new_device_defaults:
+          track_new_devices: false
+          hide_if_away: false
 
 mqtt:
 #  broker: localhost
