@@ -356,12 +356,10 @@ zwave:
       delay: 3
 
 device_tracker:
-  - platform: netgear
-    host: 10.0.0.1
-    username: admin
-    password: !secret router_password
-    new_device_defaults:
-      track_new_devices: false
+  - platform: unifi
+    host: resin.local
+    username: !secret unifi_username
+    password: !secret unifi_password
 
 mqtt:
 #  broker: localhost
