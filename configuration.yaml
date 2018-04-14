@@ -358,6 +358,7 @@ zwave:
 device_tracker:
   - platform: unifi
     host: resin.local
+    verify_ssl: false
     username: !secret unifi_username
     password: !secret unifi_password
 
