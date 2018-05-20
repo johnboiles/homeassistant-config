@@ -53,6 +53,27 @@ frontend:
 # Enables configuration UI
 config:
 
+homekit:
+  auto_start: false
+  filter:
+    exclude_domains:
+      - group
+      - automation
+      - script
+      - device_tracker
+      - climate
+      - binary_sensor
+    exclude_entities:
+      - switch.twitter_laptop_wol
+      - light.master_bathroom_light_level_2
+      - switch.3d_printer_switch
+      - switch.christmas_tree_switch
+      - switch.twitter_laptop_wol
+      - sensor.dark_sky_daily_low_temperature
+      - sensor.dark_sky_daily_high_temperature
+      - sensor.dark_sky_temperature
+      - sensor.esp8266_co2
+
 cloud:
   alexa:
     filter:
