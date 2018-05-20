@@ -24,7 +24,7 @@
              - sensor.kitchen_temperature
              - sensor.izzy_room_temperature
              - sensor.peace_lily_temperature
-             - sensor.backyard_temperature
+             - sensor.outside_temperature
              - sensor.bedroom_temperature
 
           #text_template: '${entity.state ? entity.state : "unknown"}'
@@ -46,7 +46,7 @@
           entities:
              - sensor.esp8266_humidity
              - sensor.kitchen_humidity
-             - sensor.backyard_humidity
+             - sensor.outside_humidity
              - sensor.izzy_room_humidity
              - sensor.bedroom_humidity
           #text_template: '${entity.state ? entity.state : "unknown"}'

@@ -80,8 +80,8 @@ weather:
 rtl_433:
   name: Thermohygrometers
   entities:
-    - sensor.backyard_humidity
-    - sensor.backyard_temperature
+    - sensor.outside_humidity
+    - sensor.outside_temperature
     - sensor.basement_humidity
     - sensor.basement_temperature
     - sensor.bedroom_humidity
