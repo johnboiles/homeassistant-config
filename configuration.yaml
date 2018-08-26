@@ -391,4 +391,4 @@ mqtt:
   client_id: home-assistant
   discovery: true
   discovery_prefix: homeassistant
-
+  password: !secret http_api_password
