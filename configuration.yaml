@@ -347,6 +347,21 @@ switch:
   - platform: tplink
     name: "3D Printer Switch"
     host: 10.0.0.5
+  - platform: template
+    switches:
+      hvac_fan:
+        friendly_name: "Fan"
+        value_template: "{{ is_state_attr('climate.thermostat', 'fan_mode', 'on') }}"
+        turn_on:
+          service: climate.set_fan_mode
+          data:
+            entity_id: climate.thermostat
+            fan_mode: "on"
+        turn_off:
+          service: climate.set_fan_mode
+          data:
+            entity_id: climate.thermostat
+            fan_mode: "auto"
 
 # Text to speech
 tts:

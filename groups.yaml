@@ -34,6 +34,7 @@ ecobee:
     - climate.thermostat
     - sensor.thermostat_humidity
     - sensor.thermostat_temperature
+    - switch.hvac_fan
 
 octoprint:
   name: OctoPrint
