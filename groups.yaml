@@ -50,11 +50,10 @@ dev_pi:
   name: Pi
   entities:
     - sensor.cpu_speed
-    - sensor.cpu_used
+    - sensor.processor_use
     - sensor.cpu_temp
-    - sensor.disk_used_
-    - sensor.ram_available
-    - sensor.ram_used
+    - sensor.disk_use_percent_
+    - sensor.memory_use_percent
     - sensor.since_last_boot
 
 occupancy:
