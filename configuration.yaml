@@ -290,15 +290,15 @@ sensor:
       - conductivity
       - battery
 
-  - platform: miflora
-    mac: 'C4:7C:8D:62:6C:D2'
-    name: Dracaena
-    monitored_conditions:
-      - moisture
-      - temperature
-      - light
-      - conductivity
-      - battery
+  # - platform: miflora
+  #   mac: 'C4:7C:8D:62:6C:D2'
+  #   name: Dracaena
+  #   monitored_conditions:
+  #     - moisture
+  #     - temperature
+  #     - light
+  #     - conductivity
+  #     - battery
 
   - platform: octoprint
     name: OctoPrint
