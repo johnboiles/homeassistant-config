@@ -20,7 +20,7 @@ ecobee:
   api_key: !secret ecobee_api_key
 
 octoprint:
-  host: octopi.local
+  host: 10.0.0.7
   api_key: !secret octoprint_api_key
   bed: true
 
