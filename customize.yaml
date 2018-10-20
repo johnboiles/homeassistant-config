@@ -37,6 +37,8 @@ group.all_covers:
   hidden: false
 group.all_lights:
   hidden: false
+group.all_fans:
+  hidden: false
 light.master_bathroom_light_level:
   friendly_name: Master Bathroom Light
 group.all_switches:
