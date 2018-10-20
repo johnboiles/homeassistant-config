@@ -106,6 +106,7 @@ peace_lily:
     - sensor.peace_lily_light_intensity
     - sensor.peace_lily_moisture
     - sensor.peace_lily_temperature
+    - history_graph.plant_moisture
 
 dracaena:
   name: Dracaena
