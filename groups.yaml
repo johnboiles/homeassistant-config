@@ -22,6 +22,7 @@ sensors:
     - group.peace_lily
     - group.dracaena
     - group.zooz
+    - group.all_vacuum_cleaners
 
 settings:
   view: yes

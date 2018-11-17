@@ -370,6 +370,17 @@ switch:
           data:
             entity_id: climate.thermostat
             fan_mode: "auto"
+      roomba:
+        friendly_name: "Roomba"
+        value_template: "{{ is_state('vacuum.roomba', 'on') }}"
+        turn_on:
+          service: vacuum.turn_on
+          data:
+            entity_id: vacuum.roomba
+        turn_off:
+          service: vacuum.stop
+          data:
+            entity_id: vacuum.roomba
 
 fan:
   - platform: mqtt
@@ -430,3 +441,28 @@ mqtt:
   discovery: true
   discovery_prefix: homeassistant
   password: !secret http_api_password
+
+vacuum:
+  - platform: mqtt
+    name: "Roomba"
+    supported_features:
+      - turn_on
+      - turn_off
+      - stop
+      - return_home
+      - status
+      - battery
+      - pause
+      - locate
+      - clean_spot
+      - send_command
+    command_topic: "vacuum/command"
+    battery_level_topic: "vacuum/state"
+    battery_level_template: "{{ value_json.battery_level }}"
+    charging_topic: "vacuum/state"
+    charging_template: "{{ value_json.charging }}"
+    cleaning_topic: "vacuum/state"
+    cleaning_template: "{{ value_json.cleaning }}"
+    docked_topic: "vacuum/state"
+    docked_template: "{{ value_json.docked }}"
+    send_command_topic: 'vacuum/send_command'
