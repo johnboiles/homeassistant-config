@@ -108,7 +108,6 @@ switch.3d_printer_switch:
 switch.christmas_tree_switch:
   friendly_name: Christmas Tree
   icon: mdi:pine-tree
-  hidden: true
 sensor.bedroom_humidity:
   device_class: humidity
 sensor.kitchen_humidity:
