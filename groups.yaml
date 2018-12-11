@@ -130,3 +130,4 @@ air_quality:
     - sensor.esp8266_co2
     - sensor.esp8266_rzero
     - sensor.esp8266_mhz19_co2
+    - sensor.hallway_smoke_alarm_state
