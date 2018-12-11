@@ -34,9 +34,13 @@ ecobee:
   name: Ecobee
   entities:
     - climate.thermostat
+    - switch.hvac_fan
     - sensor.thermostat_humidity
     - sensor.thermostat_temperature
-    - switch.hvac_fan
+    - sensor.bedroom_temperature_2
+    - sensor.living_room_temperature
+    - binary_sensor.living_room_occupancy
+    - binary_sensor.bedroom_occupancy
 
 octoprint:
   name: OctoPrint
