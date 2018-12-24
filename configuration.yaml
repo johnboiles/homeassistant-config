@@ -239,20 +239,6 @@ sensor:
 
   - platform: mqtt
     state_topic: 'rtl_433/raw'
-    name: 'Outside Temperature'
-    unit_of_measurement: '°F'
-    expire_after: 600
-    value_template: '{{ value_json.temperature_F if value_json.channel == 6 else states.sensor.outside_temperature.state}}'
-
-  - platform: mqtt
-    state_topic: 'rtl_433/raw'
-    name: 'Outside Humidity'
-    unit_of_measurement: '%'
-    expire_after: 600
-    value_template: '{{ value_json.humidity if value_json.channel == 6 else states.sensor.outside_humidity.state}}'
-
-  - platform: mqtt
-    state_topic: 'rtl_433/raw'
     name: 'Izzy Room Temperature'
     unit_of_measurement: '°F'
     expire_after: 600
