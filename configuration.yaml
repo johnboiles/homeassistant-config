@@ -355,7 +355,8 @@ sensor:
 switch:
   - platform: wake_on_lan
     name: "Twitter Laptop WOL"
-    mac_address: "F4-5C-89-A3-A7-73"
+    # mac_address: "F4-5C-89-A3-A7-73" # Twitter Laptop Wifi
+    mac_address: "0C-4D-E9-AA-C6-52" # Thunderbolt ethernet (with 'tw' on it)
     host: tw-mbp-jboiles.local
   - platform: tplink
     name: "3D Printer Switch"
