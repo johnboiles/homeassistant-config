@@ -184,11 +184,7 @@ sensor:
     unit_of_measurement: "ºC"
     value_template: '{{ value | multiply(0.001) | round(2) }}'
 
-  - platform: command_line
-    name: CPU Speed
-    command: "/usr/bin/vcgencmd measure_clock arm | sed 's/.*=//'"
-    unit_of_measurement: "MHz"
-    value_template: '{{ value | multiply(0.000001) | round(0) }}'
+  - platform: cpuspeed
 
   - platform: systemmonitor
     resources:
