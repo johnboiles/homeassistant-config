@@ -197,7 +197,7 @@ sensor:
     - type: memory_free
     - type: memory_use_percent
     - type: processor_use
-    - type: since_last_boot
+    - type: last_boot
 
   - platform: mqtt
     state_topic: 'rtl_433/raw'
