@@ -59,7 +59,7 @@ dev_pi:
     - sensor.cpu_speed
     - sensor.processor_use
     - sensor.cpu_temp
-    - sensor.disk_use_percent_
+    - sensor.disk_use_percent
     - sensor.memory_use_percent
     - sensor.last_boot
 
