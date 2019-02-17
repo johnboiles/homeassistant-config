@@ -67,8 +67,7 @@ dev_pi:
 occupancy:
   name: Who's Home
   entities:
-    - device_tracker.christiasiphone
-    - device_tracker.johnboiles
+    - device_tracker.johnboiles # iPhone 7
     - device_tracker.john_boiless_iphone_x
  
 weather:
@@ -77,19 +76,14 @@ weather:
     - sun.sun
     - sensor.dark_sky_summary
     - sensor.dark_sky_temperature
-    - sensor.dark_sky_daily_low_temperature
-    - sensor.dark_sky_daily_high_temperature
     - sensor.dark_sky_precip_probability
     - sensor.dark_sky_nearest_storm_distance
-    - sensor.dark_sky_wind_speed
     - sensor.dark_sky_wind_speed
     - sensor.dark_sky_wind_bearing
 
 rtl_433:
   name: Thermohygrometers
   entities:
-    - sensor.outside_humidity
-    - sensor.outside_temperature
     - sensor.basement_humidity
     - sensor.basement_temperature
     - sensor.bedroom_humidity
@@ -114,28 +108,14 @@ peace_lily:
     - sensor.peace_lily_light_intensity
     - sensor.peace_lily_moisture
     - sensor.peace_lily_temperature
-    - history_graph.plant_moisture
-
-dracaena:
-  name: Dracaena
-  entities:
-    - sensor.dracaena_battery
-    - sensor.dracaena_conductivity
-    - sensor.dracaena_light_intensity
-    - sensor.dracaena_moisture
-    - sensor.dracaena_temperature
+#    - history_graph.plant_moisture
 
 air_quality:
   name: Air Quality
   entities:
     - sensor.pm1_particles
-    - sensor.pm25_particles
+    - sensor.pm2_5_particles
     - sensor.pm10_particles
-    - sensor.esp8266_temperature
-    - sensor.esp8266_humidity
-    - sensor.esp8266_co2
-    - sensor.esp8266_rzero
-    - sensor.esp8266_mhz19_co2
     - sensor.hallway_smoke_alarm_state
 
 net_ups:
