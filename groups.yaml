@@ -24,6 +24,7 @@ sensors:
     - group.dracaena
     - group.zooz
     - group.all_vacuum_cleaners
+    - group.net_ups
 
 settings:
   view: yes
@@ -136,3 +137,13 @@ air_quality:
     - sensor.esp8266_rzero
     - sensor.esp8266_mhz19_co2
     - sensor.hallway_smoke_alarm_state
+
+net_ups:
+  name: Network UPS
+  entities:
+    - sensor.nut_ups_battery_runtime
+    - sensor.nut_ups_load
+    - sensor.nut_ups_nominal_real_power
+    - sensor.nut_ups_input_voltage
+    - sensor.nut_ups_battery_charge
+    - sensor.nut_ups_battery_voltage

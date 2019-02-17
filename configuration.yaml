@@ -352,6 +352,17 @@ sensor:
     state: california
     country: usa
 
+  - platform: nut
+    host: 10.0.0.6
+    alias: ups
+    resources:
+      - ups.load
+      - ups.realpower.nominal
+      - input.voltage
+      - battery.runtime
+      - battery.charge
+      - battery.voltage
+
 switch:
   - platform: wake_on_lan
     name: "Twitter Laptop WOL"
