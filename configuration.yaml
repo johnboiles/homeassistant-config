@@ -141,7 +141,6 @@ discovery:
 cover:
   - platform: mqtt
     name: Garage Door
-    friendly_name: Garage
     state_topic: "garage/door"
     command_topic: "garage/button"
     payload_open: "OPEN"
