@@ -135,3 +135,17 @@
       event_type: zwave.network_complete
   action:
     - service: homekit.start
+
+- alias: Soundbar to Aux when the Everywhere group is playing
+  trigger:
+  - platform: state
+    entity_id: media_player.everywhere
+    to: 'playing'
+  - platform: state
+    entity_id: media_player.everywhere
+    from: 'playing'
+  action:
+  - service: mqtt.publish
+    data_template:
+      topic: 'irblaster/tx'
+      payload_template: "{\"type\":\"NEC\",\"code\":\"{% if trigger.to_state.state == 'playing' %}FF8D72{% else %}FF13EC{% endif %}\"}"
