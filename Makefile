@@ -34,3 +34,7 @@ deploy-floorplan:
 .PHONY: deploy-scripts
 deploy-scripts:
 	rsync -av --rsync-path="sudo -u homeassistant rsync" $(BASE_DIR)/python_scripts $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/
+
+.PHONY: deploy-custom-components
+deploy-custom-components:
+	rsync -av --rsync-path="sudo -u homeassistant rsync" $(BASE_DIR)/custom_components $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/

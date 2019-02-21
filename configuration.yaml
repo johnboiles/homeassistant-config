@@ -12,6 +12,14 @@ homeassistant:
   time_zone: America/Los_Angeles
   customize: !include customize.yaml
 
+media_player:
+  - platform: alexa
+    email: !secret amazon_email
+    password: !secret amazon_password
+    url: "amazon.com"
+
+system_health:
+
 recorder:
   db_url: !secret mysql_db_url
   purge_keep_days: 120

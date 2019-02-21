@@ -10,4 +10,8 @@ ha-floorplan/*
 !ha-floorplan/floorplan.css
 secrets.yaml
 known_devices.yaml
+entity_registry.yaml
 !secrets.yaml.example
+!custom_components
+!custom_components/media_player
+!custom_components/media_player/*.py
