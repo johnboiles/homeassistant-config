@@ -444,15 +444,10 @@ zwave:
       refresh_value: true
       delay: 3
 
-device_tracker:
-  - platform: unifi
-    host: resin.local
-    verify_ssl: false
-    username: !secret unifi_username
-    password: !secret unifi_password
-    new_device_defaults:
-          track_new_devices: false
-          hide_if_away: false
+unifi:
+  controllers:
+  - host: 10.0.0.6
+    site: Boiles Home
 
 mqtt:
   client_id: home-assistant
