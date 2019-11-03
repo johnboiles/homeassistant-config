@@ -170,8 +170,6 @@ sensor:
     monitored_conditions:
       - summary
       - temperature
-      - temperature_min
-      - temperature_max
       - precip_probability
       - nearest_storm_distance
       - wind_speed
@@ -344,14 +342,6 @@ sensor:
                           {%endif%}'
         friendly_name: 'Hallway Smoke Alarm'
 
-  - platform: airvisual
-    api_key: !secret airvisual_api_key
-    monitored_conditions:
-      - us
-    city: oakland
-    state: california
-    country: usa
-
   - platform: nut
     host: 10.0.0.6
     alias: ups
@@ -415,10 +405,6 @@ fan:
       - low
       - medium
       - high
-
-# Text to speech
-tts:
-  platform: google
 
 group: !include groups.yaml
 automation: !include automations.yaml
