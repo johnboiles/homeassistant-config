@@ -454,11 +454,10 @@ device_tracker:
           hide_if_away: false
 
 mqtt:
-#  broker: localhost
   client_id: home-assistant
   discovery: true
   discovery_prefix: homeassistant
-  password: !secret http_api_password
+  password: !secret mqtt_password
 
 vacuum:
   - platform: mqtt
