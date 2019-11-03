@@ -102,7 +102,7 @@ sensor.john_boiless_iphone_x_battery_level:
   hidden: true
 sensor.john_boiless_iphone_x_battery_state:
   hidden: true
-switch.3d_printer_switch:
+switch.3d_printer:
   friendly_name: 3D Printer
   icon: mdi:printer-3d
 switch.christmas_tree_switch:

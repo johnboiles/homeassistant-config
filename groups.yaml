@@ -47,7 +47,7 @@ ecobee:
 octoprint:
   name: OctoPrint
   entities:
-    - switch.3d_printer_switch
+    - switch.3d_printer
     - binary_sensor.octoprint_printing
     - binary_sensor.octoprint_printing_error
     - sensor.octoprint_current_state

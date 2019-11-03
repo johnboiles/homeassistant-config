@@ -87,7 +87,7 @@ homekit:
     exclude_entities:
       - switch.twitter_laptop_wol
       - light.master_bathroom_light_level_2
-      - switch.3d_printer_switch
+      - switch.3d_printer
       - switch.christmas_tree_switch
       - switch.twitter_laptop_wol
       - sensor.dark_sky_daily_low_temperature
@@ -107,7 +107,7 @@ cloud:
       exclude_entities:
         - switch.twitter_laptop_wol
         - light.master_bathroom_light_level_2
-        - switch.3d_printer_switch
+        - switch.3d_printer
         - switch.christmas_tree_switch
 
 # Enables some ios features
@@ -370,15 +370,17 @@ sensor:
       - battery.charge
       - battery.voltage
 
+tplink:
+  discovery: false
+  switch:
+    - host: 10.0.0.5
+
 switch:
   - platform: wake_on_lan
     name: "Twitter Laptop WOL"
     # mac_address: "F4-5C-89-A3-A7-73" # Twitter Laptop Wifi
     mac_address: "0C-4D-E9-AA-C6-52" # Thunderbolt ethernet (with 'tw' on it)
     host: tw-mbp-jboiles.local
-  - platform: tplink
-    name: "3D Printer Switch"
-    host: 10.0.0.5
   - platform: template
     switches:
       hvac_fan:
