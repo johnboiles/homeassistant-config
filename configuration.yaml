@@ -118,13 +118,11 @@ ios:
             destructive: no
             behavior: 'default'
 
+default_config:
+
 http:
-  # Uncomment this to add a password (recommended!)
-  api_password: !secret http_api_password
   # Uncomment this if you are using SSL or running in Docker etc
   base_url: !secret http_base_url
-  ssl_certificate: !secret http_ssl_certificate
-  ssl_key: !secret http_ssl_key
 
 # Checks for available updates
 # Note: This component will send some information about your system to
