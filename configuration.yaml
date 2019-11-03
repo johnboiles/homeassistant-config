@@ -196,31 +196,17 @@ sensor:
 
   - platform: mqtt
     state_topic: 'rtl_433/raw'
-    name: 'Bedroom Temperature'
+    name: 'Outside Temperature'
     unit_of_measurement: '°F'
     expire_after: 600
-    value_template: '{{ value_json.temperature_F if value_json.channel == 2 else states.sensor.bedroom_temperature.state }}'
+    value_template: '{{ value_json.temperature_F if value_json.channel == 2 else states.sensor.outside_temperature.state }}'
 
   - platform: mqtt
     state_topic: 'rtl_433/raw'
-    name: 'Bedroom Humidity'
+    name: 'Outside Humidity'
     unit_of_measurement: '%'
     expire_after: 600
-    value_template: '{{ value_json.humidity if value_json.channel == 2 else states.sensor.bedroom_humidity.state}}'
-
-  - platform: mqtt
-    state_topic: 'rtl_433/raw'
-    name: 'Kitchen Temperature'
-    unit_of_measurement: '°F'
-    expire_after: 600
-    value_template: '{{ value_json.temperature_F if value_json.channel == 4 else states.sensor.kitchen_temperature.state}}'
-
-  - platform: mqtt
-    state_topic: 'rtl_433/raw'
-    name: 'Kitchen Humidity'
-    unit_of_measurement: '%'
-    expire_after: 600
-    value_template: '{{ value_json.humidity if value_json.channel == 4 else states.sensor.kitchen_humidity.state}}'
+    value_template: '{{ value_json.humidity if value_json.channel == 2 else states.sensor.outside_humidity.state}}'
 
   - platform: mqtt
     state_topic: 'rtl_433/raw'
@@ -309,6 +295,21 @@ sensor:
           - sensor.dark_sky_daily_high_temperature
           - sensor.dark_sky_summary
         value_template: "Today: {{ states('sensor.dark_sky_daily_low_temperature') | round() }}º/{{ states('sensor.dark_sky_daily_high_temperature') | round() }}º {{ states('sensor.dark_sky_summary') }}"
+
+  - platform: thermal_comfort
+    sensors:
+      basement:
+        friendly_name: Basement
+        temperature_sensor: sensor.basement_temperature
+        humidity_sensor: sensor.basement_humidity
+      inside:
+        friendly_name: Inside
+        temperature_sensor: sensor.thermostat_temperature
+        humidity_sensor: sensor.thermostat_humidity
+      outside:
+        friendly_name: Outside
+        temperature_sensor: sensor.outside_temperature
+        humidity_sensor: sensor.outside_humidity
 
   - platform: template
     sensors:

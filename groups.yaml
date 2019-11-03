@@ -39,7 +39,7 @@ ecobee:
     - switch.hvac_fan
     - sensor.thermostat_humidity
     - sensor.thermostat_temperature
-    - sensor.bedroom_temperature_2
+    - sensor.bedroom_temperature
     - sensor.living_room_temperature
     - binary_sensor.living_room_occupancy
     - binary_sensor.bedroom_occupancy
@@ -84,14 +84,19 @@ weather:
 rtl_433:
   name: Thermohygrometers
   entities:
+    - sensor.outside_humidity
+    - sensor.outside_temperature
     - sensor.basement_humidity
     - sensor.basement_temperature
-    - sensor.bedroom_humidity
-    - sensor.bedroom_temperature
-    - sensor.kitchen_humidity
-    - sensor.kitchen_temperature
     - sensor.izzy_room_humidity
     - sensor.izzy_room_temperature
+    - sensor.bedroom_temperature
+    - sensor.thermostat_humidity
+    - sensor.thermostat_temperature
+    - sensor.living_room_temperature
+    - sensor.basement_absolutehumidity
+    - sensor.inside_absolutehumidity
+    - sensor.outside_absolutehumidity
 
 zooz:
   name: Zooz Z-Wave Plug
@@ -117,6 +122,7 @@ air_quality:
     - sensor.pm2_5_particles
     - sensor.pm10_particles
     - sensor.hallway_smoke_alarm_state
+    - sensor.esp8266_co2
 
 net_ups:
   name: Network UPS
