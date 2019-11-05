@@ -465,3 +465,61 @@ vacuum:
     docked_topic: "vacuum/state"
     docked_template: "{{ value_json.docked }}"
     send_command_topic: 'vacuum/send_command'
+
+media_player:
+  - platform: universal
+    name: Soundbar
+    children:
+      - media_player.living_room
+      - media_player.everywhere
+    commands:
+      turn_on:
+        service: mqtt.publish
+        data:
+          topic: 'irblaster/tx'
+          # The following command is the correct command for on/off, but HomeKit
+          # has a quirk where it tries to make sure the soundbar is on before sending
+          # volume commands. But since the on/off IR codes are the same this ends
+          # up turning the sound bar off. I'm working around this by just sending the
+          # volume up command since it also will turn on the sound bar.
+          # payload: '{"type":"NEC","code":"FF02FD"}'
+          payload: '{"type":"NEC","code":"FF827D"}'
+      turn_off:
+        service: mqtt.publish
+        data:
+          topic: 'irblaster/tx'
+          payload: '{"type":"NEC","code":"FF02FD"}'
+      volume_up:
+        service: mqtt.publish
+        data:
+          topic: 'irblaster/tx'
+          payload: '{"type":"NEC","code":"FF827D"}'
+      volume_down:
+        service: mqtt.publish
+        data:
+          topic: 'irblaster/tx'
+          payload: '{"type":"NEC","code":"FFA25D"}'
+      volume_mute:
+        service: mqtt.publish
+        data:
+          topic: 'irblaster/tx'
+          payload: '{"type":"NEC","code":"FF12ED"}'
+      select_source:
+        service: mqtt.publish
+        data_template:
+          topic: 'irblaster/tx'
+          payload: >-
+            {"type":"NEC","code":"
+            {%- if source == 'Optical' -%}
+              FF13EC
+            {%- elif source == 'Aux 1' -%}
+              FF8D72
+            {%- elif source == 'USB' -%}
+              FF857A
+            {%- elif source == 'Bluetooth' -%}
+              FF44BB
+            {%- elif source == 'Aux 2' -%}
+              FF4DB2
+            {%- elif source == 'Digital' -%}
+              FF936C
+            {%- endif -%}"}

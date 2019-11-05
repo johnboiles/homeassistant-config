@@ -148,4 +148,10 @@
   - service: mqtt.publish
     data_template:
       topic: 'irblaster/tx'
-      payload_template: "{\"type\":\"NEC\",\"code\":\"{% if trigger.to_state.state == 'playing' %}FF8D72{% else %}FF13EC{% endif %}\"}"
+      payload_template: >-
+        {"type":"NEC","code":"
+        {%- if trigger.to_state.state == 'playing' -%}
+          FF8D72
+        {%- else -%}
+          FF13EC
+        {%- endif -%}"}

@@ -118,3 +118,13 @@ sensor.outside_humidity:
   device_class: humidity
 sensor.izzy_room_humidity:
   device_class: humidity
+media_player.soundbar:
+  # Required to make this show up in HomeKit
+  device_class: tv
+  source_list:
+    - Optical
+    - Aux 1
+    - USB
+    - Bluetooth
+    - Aux 2
+    - Digital
