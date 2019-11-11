@@ -26,14 +26,6 @@ octoprint:
   api_key: !secret octoprint_api_key
   bed: true
 
-# history_graph:
-#   plant_moisture:
-#     name: Plant Moisture
-#     entities:
-#       - sensor.peace_lily_moisture
-#     hours_to_show: 720
-#     refresh: 600
-
 binary_sensor:
   - platform: octoprint
     monitored_conditions:
