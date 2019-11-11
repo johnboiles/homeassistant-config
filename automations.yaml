@@ -177,3 +177,33 @@
         message: Garage Door is Open
     - service: timer.start
       entity_id: timer.garage_door
+
+- alias: WD200 Status LED for Garage Door
+  trigger:
+  - platform: state
+    entity_id: cover.garage_door
+    to: open
+  - platform: state
+    entity_id: cover.garage_door
+    to: closed
+  action:
+  - service: zwave.set_config_parameter
+    data_template:
+      node_id: 21
+      parameter: 13 # Dimmer LED mode
+      value: >-
+        {%- if trigger.to_state.state == 'open' -%}
+          Status mode
+        {%- else -%}
+          Normal mode
+        {%- endif -%}
+  - service: zwave.set_config_parameter
+    data_template:
+      node_id: 21
+      parameter: 21 # Status mode LED 1 (bottom) color
+      value: >-
+        {%- if trigger.to_state.state == 'open' -%}
+          Red
+        {%- else -%}
+          White
+        {%- endif -%}
