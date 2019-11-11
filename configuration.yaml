@@ -427,23 +427,32 @@ automation: !include automations.yaml
 zwave:
   usb_path: /dev/ttyACM0
   network_key: !secret zwave_network_key
-  config_path: /etc/openzwave
   device_config:
-    light.master_bedroom_dimmer_level:
+    light.master_bathroom_light_level:
       refresh_value: true
       delay: 3
+      polling_intensity: 2
+    light.bedroom_light_level:
+      refresh_value: true
+      delay: 1
     light.living_room_light_level:
       refresh_value: true
-      delay: 3
+      delay: 1
     light.dining_room_light_level:
       refresh_value: true
-      delay: 3
+      delay: 1
     light.kitchen_light_level:
       refresh_value: true
-      delay: 3
-    light.kitchen_island_level:
+      delay: 1
+    light.kitchen_island_light_level:
       refresh_value: true
-      delay: 3
+      delay: 1
+    light.dining_room_chandelier_level:
+      refresh_value: true
+      delay: 1
+    light.kitchen_hallway_light_level:
+      refresh_value: true
+      delay: 1
 
 unifi:
   controllers:
