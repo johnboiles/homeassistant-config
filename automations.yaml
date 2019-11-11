@@ -229,3 +229,13 @@
       node_id: 24
       parameter: 17
       value: 99
+
+- alias: Push notify when power goes out
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.nut_ups_input_voltage
+      below: 60
+  action:
+    - service: notify.ios_john_boiless_iphone_x
+      data:
+        message: Power is out
