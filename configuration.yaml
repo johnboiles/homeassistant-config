@@ -538,3 +538,8 @@ media_player:
             {%- elif source == 'Digital' -%}
               FF936C
             {%- endif -%}"}
+
+# Used for the automation that notifies every 30 min when the garage is open.
+timer:
+  garage_door:
+    duration: '00:30:00'

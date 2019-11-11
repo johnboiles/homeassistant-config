@@ -155,3 +155,25 @@
         {%- else -%}
           FF13EC
         {%- endif -%}"}
+
+- alias: Garage Door Open Notification
+  trigger:
+    - platform: state
+      entity_id: cover.garage_door
+      to: 'open'
+      for:
+        minutes: 30
+    - platform: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.garage_door
+  condition:
+    condition: state
+    entity_id: cover.garage_door
+    state: 'open'
+  action:
+    - service: notify.ios_john_boiless_iphone_x
+      data:
+        message: Garage Door is Open
+    - service: timer.start
+      entity_id: timer.garage_door
