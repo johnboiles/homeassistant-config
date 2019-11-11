@@ -47,16 +47,11 @@ panel_custom:
     url_path: floorplan
     config: !include floorplan.yaml
 
-logi_circle:
-  username: !secret logi_circle_username
-  password: !secret logi_circle_password
-
 camera:
   - platform: mjpeg
     name: OctoPrint Camera
     mjpeg_url: http://10.0.0.7/webcam/?action=stream
     still_image_url: http://10.0.0.7/webcam/?action=snapshot
-  - platform: logi_circle
 
 script: !include scripts.yaml
 
