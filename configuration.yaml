@@ -543,3 +543,11 @@ media_player:
 timer:
   garage_door:
     duration: '00:30:00'
+
+route53:
+  aws_access_key_id: !secret route53_access_key_id
+  aws_secret_access_key: !secret route53_secret_access_key
+  zone: !secret route53_zone
+  domain: !secret route53_domain
+  records:
+    - house
