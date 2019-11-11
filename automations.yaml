@@ -1,13 +1,13 @@
 # 3D Print Finished Push notification
-- id: octoprint
-  alias: Notify me when a 3d print finishes
+- alias: Notify me when a 3d print finishes
+  id: octoprint
   trigger:
-  - entity_id: binary_sensor.octoprint_printing
-    from: 'on'
     platform: state
+    entity_id: binary_sensor.octoprint_printing
+    from: 'on'
     to: 'off'
   action:
-  - service: notify.ios_john_boiless_iphone_x
+    service: notify.ios_john_boiless_iphone_x
     data:
       message: 3D print has finished
       data:
@@ -17,6 +17,7 @@
           hide-thumbnail: false
         push:
           category: "print-finished" # Needs to match the top level identifier you used in the ios configuration
+
 - alias: Printer off via push action
   trigger:
     platform: event
@@ -24,87 +25,88 @@
     event_data:
       actionName: PRINTER_OFF
   action:
-  - service: switch.turn_off
+    service: switch.turn_off
     data:
       entity_id: switch.3d_printer
+
 # Multi-tap Homeseer stuff
-- action:
-  - data:
-      entity_id: group.all_lights
-    service: light.turn_off
-  - data:
-      entity_id: switch.living_room_lamp_switch
-    service: switch.turn_off
-  - data:
-      entity_id: switch.master_bathroom_fan_switch
-    service: switch.turn_off
-  alias: Turn off all lights in the house with a triple tap down in the dining room
-  condition: []
+- alias: Turn off all lights in the house with a triple tap down in the dining room
   id: '1508091928849'
   trigger:
-  - event_data:
+    event_data:
       entity_id: zwave.dining_room_light
       scene_data: 4
       scene_id: 2
     event_type: zwave.scene_activated
     platform: event
-- action:
-  - data:
-      entity_id: light.kitchen_light_level
-    service: light.turn_off
-  - data:
-      entity_id: light.kitchen_island_light_level
-    service: light.turn_off
-  - data:
-      entity_id: light.dining_room_light_level
-    service: light.turn_off
-  - data:
-      entity_id: light.living_room_light_level
-    service: light.turn_off
-  - data:
-      entity_id: light.kitchen_hallway_light_level
-    service: light.turn_off
-  - data:
-      entity_id: switch.living_room_lamp_switch
-    service: switch.turn_off
-  alias: Turn off common space lights with a triple tap down in the kitchen
-  condition: []
+  action:
+    - service: light.turn_off
+      data:
+        entity_id: group.all_lights
+    - service: switch.turn_off
+      data:
+        entity_id: switch.living_room_lamp_switch
+    - service: switch.turn_off  
+      data:
+        entity_id: switch.master_bathroom_fan_switch
+
+- alias: Turn off common space lights with a triple tap down in the kitchen
   id: 'common-space-lights-kitchen'
   trigger:
-  - event_data:
+    platform: event
+    event_type: zwave.scene_activated    
+    event_data:
       entity_id: zwave.kitchen_light
       scene_data: 4
       scene_id: 2
-    event_type: zwave.scene_activated
-    platform: event
-- action:
-  - data:
-      entity_id: switch.living_room_lamp_switch
-    service: switch.turn_on
-  alias: Turn on living room lamp with triple tap up
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: light.kitchen_light_level
+  - service: light.turn_off
+    data:
+      entity_id: light.kitchen_island_light_level    
+  - service: light.turn_off
+    data:
+      entity_id: light.dining_room_light_level
+  - service: light.turn_off
+    data:
+      entity_id: light.living_room_light_level
+  - service: light.turn_off
+    data:
+      entity_id: light.kitchen_hallway_light_level
+  - service: switch.turn_off
+    data:
+      entity_id: switch.living_room_lamp_switch    
+
+- alias: Turn on living room lamp with triple tap up
   id: 'living-room-lamp-triple-tap-up'
-  condition: []
   trigger:
-  - event_data:
+    platform: event
+    event_type: zwave.scene_activated
+    event_data:
       entity_id: zwave.living_room_light
       scene_id: 1
-      scene_data: 4
-    event_type: zwave.scene_activated
-    platform: event
-- action:
-  - data:
+      scene_data: 4    
+  action:
+    service: switch.turn_on
+    data:
       entity_id: switch.living_room_lamp_switch
-    service: switch.turn_off
-  alias: Turn off living room lamp with triple tap down
+
+- alias: Turn off living room lamp with triple tap down
   id: 'living-room-lamp-triple-tap-down'
-  condition: []
+  action:
+    service: switch.turn_off
+    data:
+      entity_id: switch.living_room_lamp_switch
   trigger:
-  - event_data:
+    event_data:
       entity_id: zwave.living_room_light
       scene_id: 2
       scene_data: 4
     event_type: zwave.scene_activated
     platform: event
+
 - alias: 'Start HomeKit'
   trigger:
     - platform: event
@@ -112,7 +114,7 @@
     - platform: event
       event_type: zwave.network_complete
   action:
-    - service: homekit.start
+    service: homekit.start
 
 - alias: Garage Door Open Notification
   trigger:
@@ -168,10 +170,10 @@
 
 - alias: Keep the bathroom light dim at night
   trigger:
-  - platform: time
+    platform: time
     at: "23:30:00"
   action:
-  - service: zwave.set_config_parameter
+    service: zwave.set_config_parameter
     data_template:
       node_id: 24
       parameter: 17
@@ -179,10 +181,10 @@
 
 - alias: Keep the bathroom light bright by default during the day
   trigger:
-  - platform: time
+    platform: time
     at: "07:30:00"
   action:
-  - service: zwave.set_config_parameter
+    service: zwave.set_config_parameter
     data_template:
       node_id: 24
       parameter: 17
@@ -190,13 +192,13 @@
 
 - alias: Push notify when power goes out
   trigger:
-    - platform: numeric_state
-      entity_id: sensor.nut_ups_input_voltage
-      below: 60
+    platform: numeric_state
+    entity_id: sensor.nut_ups_input_voltage
+    below: 60
   action:
-    - service: notify.ios_john_boiless_iphone_x
-      data:
-        message: Power is out
+    service: notify.ios_john_boiless_iphone_x
+    data:
+      message: Power is out
 
 - alias: Push notify when smoke alarm is triggered
   trigger:
@@ -207,20 +209,20 @@
       entity_id: sensor.hallway_smoke_alarm_state
       from: "Idle"
   action:
-    - service: notify.ios_john_boiless_iphone_x
-      data_template:
-        message: Smoke alarm is triggered for {{ trigger.to_state.state }}
+    service: notify.ios_john_boiless_iphone_x
+    data_template:
+      message: Smoke alarm is triggered for {{ trigger.to_state.state }}
 
 - alias: Soundbar to Aux when the Everywhere group is playing
   trigger:
-  - platform: state
-    entity_id: media_player.everywhere
-    to: 'playing'
-  - platform: state
-    entity_id: media_player.everywhere
-    from: 'playing'
+    - platform: state
+      entity_id: media_player.everywhere
+      to: 'playing'
+    - platform: state
+      entity_id: media_player.everywhere
+      from: 'playing'
   action:
-  - service: mqtt.publish
+    service: mqtt.publish
     data_template:
       topic: 'irblaster/tx'
       payload_template: >-
