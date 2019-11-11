@@ -445,6 +445,9 @@ unifi:
   controllers:
   - host: 10.0.0.6
     site: Boiles Home
+    block_client:
+    - 'ac:cf:5c:33:88:45' # Christina's iPad Air
+    - '28:6a:ba:8e:95:18' # John's iPad2
 
 mqtt:
   client_id: home-assistant
