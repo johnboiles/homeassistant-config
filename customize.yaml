@@ -128,3 +128,5 @@ media_player.soundbar:
     - Bluetooth
     - Aux 2
     - Digital
+switch.master_bathroom_light_level_2:
+  hidden: true
