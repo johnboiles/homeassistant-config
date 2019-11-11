@@ -12,22 +12,9 @@
       message: 3D print has finished
       data:
         attachment:
-          url: https://house.johnboiles.com:15000/webcam/?action=snapshot
+          url: http://10.0.0.7/webcam/?action=snapshot
           content-type: jpeg
           hide-thumbnail: false
-        push:
-          category: "print-finished" # Needs to match the top level identifier you used in the ios configuration
-
-- alias: Printer off via push action
-  trigger:
-    platform: event
-    event_type: ios.notification_action_fired
-    event_data:
-      actionName: PRINTER_OFF
-  action:
-    service: switch.turn_off
-    data:
-      entity_id: switch.3d_printer
 
 # Multi-tap Homeseer stuff
 - alias: Turn off all lights in the house with a triple tap down in the dining room

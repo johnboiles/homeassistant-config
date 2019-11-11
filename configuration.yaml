@@ -116,19 +116,7 @@ cloud:
         - sensor.esp8266_temperature
         - switch.home_assistant_pi4
 
-# Enables some ios features
 ios:
-  push:
-    categories:
-      - name: Print Finished
-        identifier: 'print-finished'
-        actions:
-          - identifier: 'PRINTER_OFF'
-            title: 'Turn off printer'
-            activationMode: 'background'
-            authenticationRequired: yes
-            destructive: no
-            behavior: 'default'
 
 default_config:
 
