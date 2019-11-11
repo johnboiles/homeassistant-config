@@ -196,6 +196,17 @@
     data_template:
       message: Smoke alarm is triggered for {{ trigger.to_state.state }}
 
+- alias: Update Available Notification
+  trigger:
+    platform: state
+    entity_id: binary_sensor.updater
+    from: 'off'
+    to: 'on'
+  action:
+    service: notify.notify
+    data_template:
+      message: "Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }} is available."
+
 - alias: Soundbar to Aux when the Everywhere group is playing
   trigger:
     - platform: state
