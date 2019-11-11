@@ -40,13 +40,6 @@ binary_sensor:
       - Printing
       - Printing Error
 
-panel_custom:
-  - name: floorplan
-    sidebar_title: Floorplan
-    sidebar_icon: mdi:home
-    url_path: floorplan
-    config: !include floorplan.yaml
-
 panel_iframe:
   jupyterlab:
     title: JupyterLab
@@ -303,16 +296,6 @@ sensor:
       - Current State
       - Job Percentage
 
-  - platform: template
-    sensors:
-      todays_weather_message:
-        friendly_name: "Today's Weather"
-        entity_id:
-          - sensor.dark_sky_daily_low_temperature
-          - sensor.dark_sky_daily_high_temperature
-          - sensor.dark_sky_summary
-        value_template: "Today: {{ states('sensor.dark_sky_daily_low_temperature') | round() }}º/{{ states('sensor.dark_sky_daily_high_temperature') | round() }}º {{ states('sensor.dark_sky_summary') }}"
-
   - platform: thermal_comfort
     sensors:
       basement:
@@ -330,18 +313,6 @@ sensor:
 
   - platform: template
     sensors:
-      garage_door_message:
-        friendly_name: "Garage Door Message"
-        entity_id:
-          - cover.garage_door
-        value_template: "Garage Door: {% if is_state('cover.garage_door', 'open') %}Open{% elif is_state('cover.garage_door', 'closed') %}Closed{% else %}Unknown{% endif %}"
-
-  - platform: template
-    sensors:
-      floorplan_datetime_message:
-        friendly_name: 'Date and Time'
-        value_template: >-
-          {{ now().strftime("%b") }} {{ now().strftime("%d") }}, {{ now().strftime("%-I") }}:{{ now().strftime("%M") }}{{ now().strftime("%p").lower() }}
       # From https://community.home-assistant.io/t/first-alert-z-wave-smoke-carbon-monoxide-detectors-dont-show-up-in-home-assistant/1332/15
       hallway_smoke_alarm_state:
         value_template: '{%- if is_state("sensor.hallway_smoke_alarm_alarm_level", "0") %}
