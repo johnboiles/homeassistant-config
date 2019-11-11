@@ -47,6 +47,12 @@ panel_custom:
     url_path: floorplan
     config: !include floorplan.yaml
 
+panel_iframe:
+  jupyterlab:
+    title: JupyterLab
+    icon: mdi:flask
+    url: http://10.0.0.2:7777
+
 camera:
   - platform: mjpeg
     name: OctoPrint Camera
