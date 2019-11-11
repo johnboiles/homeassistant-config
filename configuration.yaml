@@ -196,8 +196,6 @@ sensor:
     unit_of_measurement: "ºC"
     value_template: '{{ value | multiply(0.001) | round(2) }}'
 
-  - platform: cpuspeed
-
   - platform: systemmonitor
     resources:
     - type: disk_use_percent
