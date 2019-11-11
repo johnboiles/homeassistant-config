@@ -83,6 +83,16 @@ homekit:
       - sensor.dark_sky_daily_high_temperature
       - sensor.dark_sky_temperature
       - sensor.esp8266_co2
+      - sensor.octoprint_target_bed_temp
+      - sensor.octoprint_actual_bed_temp
+      - sensor.outside_heatindex
+      - sensor.outside_dewpoint
+      - sensor.inside_heatindex
+      - sensor.inside_dewpoint
+      - sensor.basement_heatindex
+      - sensor.basement_dewpoint
+      - sensor.esp8266_temperature
+      - switch.home_assistant_pi4
 
 cloud:
   alexa:
@@ -98,6 +108,16 @@ cloud:
         - light.master_bathroom_light_level_2
         - switch.3d_printer
         - switch.christmas_tree_switch
+        - sensor.octoprint_target_bed_temp
+        - sensor.octoprint_actual_bed_temp
+        - sensor.outside_heatindex
+        - sensor.outside_dewpoint
+        - sensor.inside_heatindex
+        - sensor.inside_dewpoint
+        - sensor.basement_heatindex
+        - sensor.basement_dewpoint
+        - sensor.esp8266_temperature
+        - switch.home_assistant_pi4
 
 # Enables some ios features
 ios:
