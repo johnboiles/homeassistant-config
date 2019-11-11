@@ -38,6 +38,12 @@ panel_iframe:
     icon: mdi:flask
     url: http://10.0.0.2:7777
 
+logi_circle:
+  client_id: !secret logi_circle_client_id
+  client_secret: !secret logi_circle_client_secret
+  api_key: !secret logi_circle_api_key
+  redirect_uri: !secret logi_circle_redirect_uri
+
 camera:
   - platform: mjpeg
     name: OctoPrint Camera
