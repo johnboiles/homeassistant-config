@@ -220,6 +220,19 @@
       data:
         message: Power is out
 
+- alias: Push notify when smoke alarm is triggered
+  trigger:
+    - platform: state
+      entity_id: sensor.hallway_smoke_alarm_state
+      from: "Unknown"
+    - platform: state
+      entity_id: sensor.hallway_smoke_alarm_state
+      from: "Idle"
+  action:
+    - service: notify.ios_john_boiless_iphone_x
+      data_template:
+        message: Smoke alarm is triggered for {{ trigger.to_state.state }}
+
 - alias: Soundbar to Aux when the Everywhere group is playing
   trigger:
   - platform: state
