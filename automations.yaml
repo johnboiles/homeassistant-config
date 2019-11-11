@@ -1,6 +1,5 @@
 # 3D Print Finished Push notification
 - alias: Notify me when a 3d print finishes
-  id: octoprint
   trigger:
     platform: state
     entity_id: binary_sensor.octoprint_printing
@@ -17,8 +16,8 @@
           hide-thumbnail: false
 
 # Multi-tap Homeseer stuff
+# See https://www.home-assistant.io/docs/z-wave/device-specific/#homeseer-switches
 - alias: Turn off all lights in the house with a triple tap down in the dining room
-  id: '1508091928849'
   trigger:
     event_data:
       entity_id: zwave.dining_room_light
@@ -32,13 +31,12 @@
         entity_id: group.all_lights
     - service: switch.turn_off
       data:
-        entity_id: switch.living_room_lamp_switch
-    - service: switch.turn_off  
+        entity_id: switch.bedroom_lamp_switch
+    - service: switch.turn_off
       data:
         entity_id: switch.master_bathroom_fan_switch
 
 - alias: Turn off common space lights with a triple tap down in the kitchen
-  id: 'common-space-lights-kitchen'
   trigger:
     platform: event
     event_type: zwave.scene_activated    
@@ -58,41 +56,39 @@
       entity_id: light.dining_room_light_level
   - service: light.turn_off
     data:
+      entity_id: light.dining_room_chandelier_level
+  - service: light.turn_off
+    data:
       entity_id: light.living_room_light_level
   - service: light.turn_off
     data:
       entity_id: light.kitchen_hallway_light_level
-  - service: switch.turn_off
-    data:
-      entity_id: switch.living_room_lamp_switch    
 
-- alias: Turn on living room lamp with triple tap up
-  id: 'living-room-lamp-triple-tap-up'
+- alias: Turn on bedroom lamp with triple tap up
   trigger:
     platform: event
     event_type: zwave.scene_activated
     event_data:
-      entity_id: zwave.living_room_light
+      entity_id: zwave.bedroom_light
       scene_id: 1
       scene_data: 4    
   action:
     service: switch.turn_on
     data:
-      entity_id: switch.living_room_lamp_switch
+      entity_id: switch.bedroom_lamp_switch
 
-- alias: Turn off living room lamp with triple tap down
-  id: 'living-room-lamp-triple-tap-down'
+- alias: Turn off bedroom lamp with triple tap down
+  trigger:
+    platform: event
+    event_type: zwave.scene_activated
+    event_data:
+      entity_id: zwave.bedroom_light
+      scene_id: 2
+      scene_data: 4
   action:
     service: switch.turn_off
     data:
-      entity_id: switch.living_room_lamp_switch
-  trigger:
-    event_data:
-      entity_id: zwave.living_room_light
-      scene_id: 2
-      scene_data: 4
-    event_type: zwave.scene_activated
-    platform: event
+      entity_id: switch.bedroom_lamp_switch
 
 - alias: 'Start HomeKit'
   trigger:
