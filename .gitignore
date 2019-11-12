@@ -8,3 +8,5 @@ known_devices.yaml
 entity_registry.yaml
 !secrets.yaml.example
 !custom_components
+!python_scripts
+!python_scripts/*
