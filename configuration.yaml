@@ -382,25 +382,25 @@ zwave:
       polling_intensity: 2
     light.bedroom_light_level:
       refresh_value: true
-      delay: 1
+      delay: 2
     light.living_room_light_level:
       refresh_value: true
-      delay: 1
+      delay: 2
     light.dining_room_light_level:
       refresh_value: true
-      delay: 1
+      delay: 2
     light.kitchen_light_level:
       refresh_value: true
-      delay: 1
+      delay: 2
     light.kitchen_island_light_level:
       refresh_value: true
-      delay: 1
+      delay: 2
     light.dining_room_chandelier_level:
       refresh_value: true
-      delay: 1
+      delay: 2
     light.kitchen_hallway_light_level:
       refresh_value: true
-      delay: 1
+      delay: 2
 
 unifi:
   controllers:
