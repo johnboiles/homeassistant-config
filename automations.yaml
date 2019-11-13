@@ -151,27 +151,112 @@
           White
         {%- endif -%}
 
-- alias: Keep the bathroom light dim at night
+- alias: Adjust dim level for WD100 lights when they are turned off afterhours
   trigger:
-    platform: time
-    at: "23:30:00"
+    - platform: state
+      entity_id:
+        - light.living_room_light_level
+        - light.dining_room_light_level
+        - light.dining_room_chandelier_level
+        - light.kitchen_island_light_level
+        - light.kitchen_light_level
+        - light.kitchen_hallway_light_level
+        - light.bedroom_light_level
+      to: 'off'
+      for:
+        minutes: 5
+  condition:
+    condition: time
+    after: '21:00:00'
+    before: '06:00:00'
   action:
-    service: zwave.set_config_parameter
+    service: script.set_homeseer_dim_level
     data_template:
-      node_id: 24
-      parameter: 17
-      value: 15
+      entity_id: "{{ trigger.entity_id }}"
+      brightness: >-
+        {%- if trigger.entity_id == "light.kitchen_island_light_level" -%}
+          50
+        {%- else -%}
+          3
+        {%- endif -%}
 
-- alias: Keep the bathroom light bright by default during the day
+- alias: Set dim level for lights at night
   trigger:
     platform: time
-    at: "07:30:00"
+    at: "21:00:00"
   action:
-    service: zwave.set_config_parameter
-    data_template:
-      node_id: 24
-      parameter: 17
-      value: 99
+    - service: script.set_homeseer_dim_level
+      data:
+        entity_id: light.living_room_light_level
+        brightness: 3
+    - service: script.set_homeseer_dim_level
+      data:
+        entity_id: light.dining_room_light_level
+        brightness: 3
+    - service: script.set_homeseer_dim_level
+      data:
+        entity_id: light.dining_room_chandelier_level
+        brightness: 3
+    - service: script.set_homeseer_dim_level
+      data:
+        entity_id: light.kitchen_island_light_level
+        brightness: 50
+    - service: script.set_homeseer_dim_level
+      data:
+        entity_id: light.kitchen_light_level
+        brightness: 3
+    - service: script.set_homeseer_dim_level
+      data:
+        entity_id: light.kitchen_hallway_light_level
+        brightness: 3
+    - service: script.set_homeseer_dim_level
+      data:
+        entity_id: light.bedroom_light_level
+        brightness: 3
+    - service: zwave.set_config_parameter
+      data_template:
+        node_id: 24 # Master Bathroom Light
+        parameter: 17
+        value: 15
+
+- alias: Set bright level for lights in the morning
+  trigger:
+    platform: time
+    at: "7:00:00"
+  action:
+    - service: script.set_homeseer_dim_level
+      data:
+        entity_id: light.living_room_light_level
+        brightness: 255
+    - service: script.set_homeseer_dim_level
+      data:
+        entity_id: light.dining_room_light_level
+        brightness: 255
+    - service: script.set_homeseer_dim_level
+      data:
+        entity_id: light.dining_room_chandelier_level
+        brightness: 255
+    - service: script.set_homeseer_dim_level
+      data:
+        entity_id: light.kitchen_island_light_level
+        brightness: 255
+    - service: script.set_homeseer_dim_level
+      data:
+        entity_id: light.kitchen_light_level
+        brightness: 255
+    - service: script.set_homeseer_dim_level
+      data:
+        entity_id: light.kitchen_hallway_light_level
+        brightness: 255
+    - service: script.set_homeseer_dim_level
+      data:
+        entity_id: light.bedroom_light_level
+        brightness: 255
+    - service: zwave.set_config_parameter
+      data_template:
+        node_id: 24 # Master Bathroom Light
+        parameter: 17
+        value: 99
 
 - alias: Push notify when power goes out
   trigger:

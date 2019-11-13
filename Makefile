@@ -26,7 +26,7 @@ pull-remote:
 
 .PHONY: deploy-scripts
 deploy-scripts:
-	rsync -av --rsync-path="sudo rsync" $(BASE_DIR)/python_scripts $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/
+	rsync -av --delete --rsync-path="sudo rsync" $(BASE_DIR)/python_scripts $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/
 
 .PHONY: deploy-custom-components
 deploy-custom-components:
