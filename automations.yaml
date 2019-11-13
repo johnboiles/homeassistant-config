@@ -36,14 +36,20 @@
       data:
         entity_id: switch.master_bathroom_fan_switch
 
-- alias: Turn off common space lights with a triple tap down in the kitchen
+- alias: Turn off common space lights with a triple tap down in the kitchen or bedroom
   trigger:
-    platform: event
-    event_type: zwave.scene_activated    
-    event_data:
-      entity_id: zwave.kitchen_light
-      scene_data: 4
-      scene_id: 2
+    - platform: event
+      event_type: zwave.scene_activated
+      event_data:
+        entity_id: zwave.kitchen_light
+        scene_data: 4
+        scene_id: 2
+    - platform: event
+      event_type: zwave.scene_activated
+      event_data:
+        entity_id: zwave.bedroom_light
+        scene_data: 4
+        scene_id: 2
   action:
   - service: light.turn_off
     data:
