@@ -6,7 +6,7 @@
     from: 'on'
     to: 'off'
   action:
-    service: notify.ios_john_boiless_iphone_x
+    service: notify.mobile_app_john_boiless_iphone_x
     data:
       message: 3D print has finished
       data:
@@ -121,7 +121,7 @@
     entity_id: cover.garage_door
     state: 'open'
   action:
-    - service: notify.ios_john_boiless_iphone_x
+    - service: notify.mobile_app_john_boiless_iphone_x
       data:
         message: Garage Door is Open
     - service: timer.start
@@ -270,7 +270,7 @@
     entity_id: sensor.nut_ups_input_voltage
     below: 60
   action:
-    service: notify.ios_john_boiless_iphone_x
+    service: notify.mobile_app_john_boiless_iphone_x
     data:
       message: Power is out
 
@@ -283,7 +283,7 @@
       entity_id: sensor.hallway_smoke_alarm_state
       from: "Idle"
   action:
-    service: notify.ios_john_boiless_iphone_x
+    service: notify.mobile_app_john_boiless_iphone_x
     data_template:
       message: Smoke alarm is triggered for {{ trigger.to_state.state }}
 
@@ -294,7 +294,7 @@
     from: 'off'
     to: 'on'
   action:
-    service: notify.ios_john_boiless_iphone_x
+    service: notify.mobile_app_john_boiless_iphone_x
     data_template:
       message: "Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }} is available."
 
@@ -323,7 +323,7 @@
         minutes: 30
   action:
     - service: esphome.airsensor_mhz19_calibrate_zero
-    - service: notify.ios_john_boiless_iphone_x
+    - service: notify.mobile_app_john_boiless_iphone_x
       data:
         message: "Calibrating CO2 sensor."
 
