@@ -269,6 +269,10 @@ sensor:
         friendly_name: Outside
         temperature_sensor: sensor.outside_temperature
         humidity_sensor: sensor.outside_humidity
+      dht22:
+        friendly_name: DHT22
+        temperature_sensor: sensor.dht22_temperature
+        humidity_sensor: sensor.dht22_humidity
 
   - platform: template
     sensors:
