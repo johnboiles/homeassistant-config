@@ -79,7 +79,6 @@ homekit:
       - sensor.dark_sky_daily_low_temperature
       - sensor.dark_sky_daily_high_temperature
       - sensor.dark_sky_temperature
-      - sensor.esp8266_co2
       - sensor.octoprint_target_bed_temp
       - sensor.octoprint_actual_bed_temp
       - sensor.outside_heatindex
@@ -88,7 +87,6 @@ homekit:
       - sensor.inside_dewpoint
       - sensor.basement_heatindex
       - sensor.basement_dewpoint
-      - sensor.esp8266_temperature
       - switch.home_assistant_pi4
 
 cloud:
@@ -113,7 +111,6 @@ cloud:
         - sensor.inside_dewpoint
         - sensor.basement_heatindex
         - sensor.basement_dewpoint
-        - sensor.esp8266_temperature
         - switch.home_assistant_pi4
 
 ios:
@@ -231,30 +228,6 @@ sensor:
     unit_of_measurement: '%'
     expire_after: 600
     value_template: '{{ value_json.humidity if value_json.channel == 7 else states.sensor.izzy_room_humidity.state}}'
-
-  - platform: mqtt
-    state_topic: 'homeassistant/sensor/esp8266/particulate/state'
-    name: 'PM1 Particles'
-    qos: 0
-    unit_of_measurement: 'PM'
-    expire_after: 600
-    value_template: '{{ value_json["data"][0]["value"] | round(1) }}'
-
-  - platform: mqtt
-    state_topic: 'homeassistant/sensor/esp8266/particulate/state'
-    name: 'PM2.5 Particles'
-    qos: 0
-    unit_of_measurement: 'PM'
-    expire_after: 600
-    value_template: '{{ value_json["data"][1]["value"] | round(1) }}'
-
-  - platform: mqtt
-    state_topic: 'homeassistant/sensor/esp8266/particulate/state'
-    name: 'PM10 Particles'
-    qos: 0
-    unit_of_measurement: 'PM'
-    expire_after: 600
-    value_template: '{{ value_json["data"][2]["value"] | round(1) }}'
 
   # - platform: miflora
   #   mac: 'C4:7C:8D:62:73:AC'
