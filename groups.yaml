@@ -1,0 +1,9 @@
+all_people:
+  entities:
+    - person.john_boiles
+    - person.christina_boiles
+
+all_occupancy:
+  entities:
+    - binary_sensor.bedroom_occupancy
+    - binary_sensor.living_room_occupancy

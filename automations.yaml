@@ -294,9 +294,38 @@
     from: 'off'
     to: 'on'
   action:
-    service: notify.notify
+    service: notify.ios_john_boiless_iphone_x
     data_template:
       message: "Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }} is available."
+
+- alias: Recalibrate CO2 when nobody is home
+  trigger:
+    - platform: state
+      entity_id: group.all_people
+      to: 'away'
+      for:
+        minutes: 30
+    - platform: state
+      entity_id: group.all_occupancy
+      to: 'off'
+      for:
+        minutes: 30
+  condition:
+    - condition: state
+      entity_id: group.all_people
+      state: 'away'
+      for:
+        minutes: 30
+    - condition: state
+      entity_id: group.all_occupancy
+      state: 'off'
+      for:
+        minutes: 30
+  action:
+    - service: esphome.airsensor_mhz19_calibrate_zero
+    - service: notify.ios_john_boiless_iphone_x
+      data:
+        message: "Calibrating CO2 sensor."
 
 - alias: Soundbar to Aux when the Everywhere group is playing
   trigger:

@@ -359,6 +359,8 @@ fan:
       - medium
       - high
 
+group: !include groups.yaml
+
 automation: !include automations.yaml
 
 zwave:
