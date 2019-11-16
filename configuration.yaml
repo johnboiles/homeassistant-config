@@ -88,6 +88,12 @@ homekit:
       - sensor.basement_heatindex
       - sensor.basement_dewpoint
       - switch.home_assistant_pi4
+      - sensor.bedroom_temperature
+      - sensor.dht22_absolutehumidity
+      - sensor.dht22_dewpoint
+      - sensor.dht22_heatindex
+      - sensor.living_room_temperature
+      - sensor.mh_z19_temperature
 
 cloud:
   alexa:
@@ -112,6 +118,12 @@ cloud:
         - sensor.basement_heatindex
         - sensor.basement_dewpoint
         - switch.home_assistant_pi4
+        - sensor.bedroom_temperature
+        - sensor.dht22_absolutehumidity
+        - sensor.dht22_dewpoint
+        - sensor.dht22_heatindex
+        - sensor.living_room_temperature
+        - sensor.mh_z19_temperature
 
 ios:
 
