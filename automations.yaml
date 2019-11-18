@@ -323,25 +323,25 @@
   trigger:
     - platform: state
       entity_id: group.all_people
-      to: 'away'
+      to: 'not_home'
       for:
-        minutes: 30
+        hours: 2
     - platform: state
       entity_id: group.all_occupancy
       to: 'off'
       for:
-        minutes: 30
+        hours: 2
   condition:
     - condition: state
       entity_id: group.all_people
-      state: 'away'
+      state: 'not_home'
       for:
-        minutes: 30
+        hours: 2
     - condition: state
       entity_id: group.all_occupancy
       state: 'off'
       for:
-        minutes: 30
+        hours: 2
   action:
     - service: esphome.airsensor_mhz19_calibrate_zero
     - service: notify.mobile_app_john_boiless_iphone_x
