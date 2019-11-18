@@ -124,6 +124,12 @@
     - service: notify.mobile_app_john_boiless_iphone_x
       data:
         message: Garage Door is Open
+        data:
+          push:
+            sound:
+              name: default
+              critical: 1
+              volume: 1.0
     - service: timer.start
       entity_id: timer.garage_door
 
@@ -273,6 +279,12 @@
     service: notify.mobile_app_john_boiless_iphone_x
     data:
       message: Power is out
+      data:
+        push:
+          sound:
+            name: default
+            critical: 1
+            volume: 1.0
 
 - alias: Push notify when smoke alarm is triggered
   trigger:
@@ -284,8 +296,17 @@
       from: "Idle"
   action:
     service: notify.mobile_app_john_boiless_iphone_x
-    data_template:
-      message: Smoke alarm is triggered for {{ trigger.to_state.state }}
+    data:
+      title: Smoke alarm
+      # Note: You can't use data_template with critical alerts
+      # See also: https://github.com/home-assistant/home-assistant/issues/24480
+      message: Smoke alarm is triggered!
+      data:
+        push:
+          sound:
+            name: default
+            critical: 1
+            volume: 1.0
 
 - alias: Update Available Notification
   trigger:
