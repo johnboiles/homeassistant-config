@@ -294,6 +294,11 @@
     - platform: state
       entity_id: sensor.hallway_smoke_alarm_state
       from: "Idle"
+  condition:
+    - condition: template
+      value_template: '{{ not is_state("sensor.hallway_smoke_alarm_state", "Idle") }}'
+    - condition: template
+      value_template: '{{ not is_state("sensor.hallway_smoke_alarm_state", "Unknown") }}'
   action:
     service: notify.mobile_app_john_boiless_iphone_x
     data:
