@@ -74,7 +74,6 @@ homekit:
       - switch.twitter_laptop_wol
       - light.master_bathroom_light_level_2
       - switch.3d_printer
-      - switch.christmas_tree_switch
       - switch.twitter_laptop_wol
       - sensor.dark_sky_daily_low_temperature
       - sensor.dark_sky_daily_high_temperature
@@ -108,7 +107,6 @@ cloud:
         - switch.twitter_laptop_wol
         - light.master_bathroom_light_level_2
         - switch.3d_printer
-        - switch.christmas_tree_switch
         - sensor.octoprint_target_bed_temp
         - sensor.octoprint_actual_bed_temp
         - sensor.outside_heatindex
