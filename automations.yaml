@@ -361,6 +361,12 @@
     - platform: state
       entity_id: media_player.everywhere
       from: 'playing'
+    - platform: state
+      entity_id: media_player.living_room
+      to: 'playing'
+    - platform: state
+      entity_id: media_player.living_room
+      from: 'playing'
   action:
     service: mqtt.publish
     data_template:
