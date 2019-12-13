@@ -330,23 +330,23 @@
       entity_id: group.all_people
       to: 'not_home'
       for:
-        hours: 2
+        hours: 4
     - platform: state
       entity_id: group.all_occupancy
       to: 'off'
       for:
-        hours: 2
+        hours: 4
   condition:
     - condition: state
       entity_id: group.all_people
       state: 'not_home'
       for:
-        hours: 2
+        hours: 4
     - condition: state
       entity_id: group.all_occupancy
       state: 'off'
       for:
-        hours: 2
+        hours: 4
   action:
     - service: esphome.airsensor_mhz19_calibrate_zero
     - service: notify.mobile_app_john_boiless_iphone_x
