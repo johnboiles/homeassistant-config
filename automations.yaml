@@ -332,6 +332,30 @@
         message: "Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }} is available."
         title: "Update available"
 
+- alias: Unifi Firmware Available Notification
+  trigger:
+    platform: state
+    entity_id: sensor.unifi_gateway_firmware_upgradable
+    from: '0'
+  action:
+    - service: notify.mobile_app_john_boiless_iphone_x
+      data_template:
+        message: "New Unifi firmware is available."
+    - service: persistent_notification.create
+      data:
+        message: "New Unifi firmware is available."
+        title: "Update available"
+
+- alias: Unifi Gateway New Alerts Notification
+  trigger:
+    platform: state
+    entity_id: sensor.unifi_gateway_alerts
+    from: '0'
+  action:
+    service: notify.mobile_app_john_boiless_iphone_x
+    data_template:
+      message: "Unifi controller has new alerts."
+
 - alias: Recalibrate CO2 when nobody is home
   trigger:
     - platform: state

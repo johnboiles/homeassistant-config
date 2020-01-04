@@ -179,6 +179,16 @@ logbook:
 sun:
 
 sensor:
+  - platform: unifigateway
+    host: 10.0.0.6
+    username: !secret unifi_username
+    password: !secret unifi_password
+    monitored_conditions:
+      - www
+      - wlan
+      - alerts
+      - firmware
+
   - platform: darksky
     api_key: !secret darksky_api_key
     monitored_conditions:
