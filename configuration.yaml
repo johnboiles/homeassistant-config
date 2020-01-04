@@ -68,6 +68,9 @@ config:
 homekit:
   auto_start: false
   filter:
+    include_entities:
+      - binary_sensor.front_door
+      - binary_sensor.back_door
     exclude_domains:
       - group
       - automation

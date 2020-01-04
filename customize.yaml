@@ -31,6 +31,12 @@ sensor.johnboiles_battery_state:
 cover.garage_door:
   icon: mdi:garage
   device_class: garage
+binary_sensor.front_door:
+  icon: mdi:door
+  device_class: door
+binary_sensor.back_door:
+  icon: mdi:door
+  device_class: door
 group.all_automations:
   hidden: false
 group.all_covers:
