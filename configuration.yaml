@@ -432,52 +432,51 @@ media_player:
       - media_player.everywhere
     commands:
       turn_on:
-        service: mqtt.publish
+        service: esphome.ir_blaster_transmit_nec
         data:
-          topic: 'irblaster/tx'
+          address: 0xFF
           # The following command is the correct command for on/off, but HomeKit
           # has a quirk where it tries to make sure the soundbar is on before sending
           # volume commands. But since the on/off IR codes are the same this ends
           # up turning the sound bar off. I'm working around this by just sending the
           # volume up command since it also will turn on the sound bar.
-          # payload: '{"type":"NEC","code":"FF02FD"}'
-          payload: '{"type":"NEC","code":"FF827D"}'
+          # command: 0x02FD
+          command: 0x827D
       turn_off:
-        service: mqtt.publish
+        service: esphome.ir_blaster_transmit_nec
         data:
-          topic: 'irblaster/tx'
-          payload: '{"type":"NEC","code":"FF02FD"}'
+          address: 0xFF
+          command: 0x02FD
       volume_up:
-        service: mqtt.publish
+        service: esphome.ir_blaster_transmit_nec
         data:
-          topic: 'irblaster/tx'
-          payload: '{"type":"NEC","code":"FF827D"}'
+          address: 0xFF
+          command: 0x827D
       volume_down:
-        service: mqtt.publish
+        service: esphome.ir_blaster_transmit_nec
         data:
-          topic: 'irblaster/tx'
-          payload: '{"type":"NEC","code":"FFA25D"}'
+          address: 0xFF
+          command: 0xA25D
       volume_mute:
-        service: mqtt.publish
+        service: esphome.ir_blaster_transmit_nec
         data:
-          topic: 'irblaster/tx'
-          payload: '{"type":"NEC","code":"FF12ED"}'
+          address: 0xFF
+          command: 0x12ED
       select_source:
-        service: mqtt.publish
+        service: esphome.ir_blaster_transmit_nec_string
         data_template:
-          topic: 'irblaster/tx'
-          payload: >-
-            {"type":"NEC","code":"
+          address: 0xFF
+          command: >-
             {%- if source == 'Optical' -%}
-              FF13EC
+              0x13EC
             {%- elif source == 'Aux 1' -%}
-              FF8D72
+              0x8D72
             {%- elif source == 'USB' -%}
-              FF857A
+              0x857A
             {%- elif source == 'Bluetooth' -%}
-              FF44BB
+              0x44BB
             {%- elif source == 'Aux 2' -%}
-              FF4DB2
+              0x4DB2
             {%- elif source == 'Digital' -%}
-              FF936C
-            {%- endif -%}"}
+              0x936C
+            {%- endif -%}

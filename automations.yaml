@@ -400,13 +400,12 @@
       entity_id: media_player.living_room
       from: 'playing'
   action:
-    service: mqtt.publish
+    service: esphome.ir_blaster_transmit_nec_string
     data_template:
-      topic: 'irblaster/tx'
-      payload_template: >-
-        {"type":"NEC","code":"
+      address: 0xFF
+      command: >-
         {%- if trigger.to_state.state == 'playing' -%}
-          FF8D72
+          0x8D72
         {%- else -%}
-          FF13EC
-        {%- endif -%}"}
+          0x13EC
+        {%- endif -%}
