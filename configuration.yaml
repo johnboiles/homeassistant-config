@@ -44,6 +44,11 @@ logi_circle:
   api_key: !secret logi_circle_api_key
   redirect_uri: !secret logi_circle_redirect_uri
 
+yeelight:
+  devices:
+    10.0.0.40:
+      name: Izzys Light
+
 camera:
   - platform: mjpeg
     name: OctoPrint Camera
@@ -125,7 +130,8 @@ cloud:
 
 ios:
 
-default_config:
+# Worth trying to disable to get rid of the persistent notification for Izzy's Yeelight
+# default_config:
 
 http:
   # Uncomment this if you are using SSL or running in Docker etc
@@ -144,6 +150,7 @@ updater:
 discovery:
   ignore:
     - apple_tv
+    - yeelight
 
 cover:
   - platform: mqtt
