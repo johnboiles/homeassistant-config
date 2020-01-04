@@ -272,15 +272,19 @@
     entity_id: sensor.nut_ups_input_voltage
     below: 60
   action:
-    service: notify.mobile_app_john_boiless_iphone_x
-    data:
-      message: Power is out
+    - service: notify.mobile_app_john_boiless_iphone_x
       data:
-        push:
-          sound:
-            name: default
-            critical: 1
-            volume: 1.0
+        message: Power is out
+        data:
+          push:
+            sound:
+              name: default
+              critical: 1
+              volume: 1.0
+    - service: persistent_notification.create
+      data:
+        message: "Power went out"
+        title: "Power outage"
 
 - alias: Push notify when smoke alarm is triggered
   trigger:
@@ -296,18 +300,22 @@
     - condition: template
       value_template: '{{ not is_state("sensor.hallway_smoke_alarm_state", "Unknown") }}'
   action:
-    service: notify.mobile_app_john_boiless_iphone_x
-    data:
-      title: Smoke alarm
-      # Note: You can't use data_template with critical alerts
-      # See also: https://github.com/home-assistant/home-assistant/issues/24480
-      message: Smoke alarm is triggered!
+    - service: notify.mobile_app_john_boiless_iphone_x
       data:
-        push:
-          sound:
-            name: default
-            critical: 1
-            volume: 1.0
+        title: Smoke alarm
+        # Note: You can't use data_template with critical alerts
+        # See also: https://github.com/home-assistant/home-assistant/issues/24480
+        message: Smoke alarm is triggered!
+        data:
+          push:
+            sound:
+              name: default
+              critical: 1
+              volume: 1.0
+    - service: persistent_notification.create
+      data:
+        message: "Smoke alarm is triggered!"
+        title: "Smoke alarm"
 
 - alias: Update Available Notification
   trigger:
@@ -316,9 +324,13 @@
     from: 'off'
     to: 'on'
   action:
-    service: notify.mobile_app_john_boiless_iphone_x
-    data_template:
-      message: "Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }} is available."
+    - service: notify.mobile_app_john_boiless_iphone_x
+      data_template:
+        message: "Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }} is available."
+    - service: persistent_notification.create
+      data:
+        message: "Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }} is available."
+        title: "Update available"
 
 - alias: Recalibrate CO2 when nobody is home
   trigger:
