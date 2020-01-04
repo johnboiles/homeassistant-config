@@ -260,10 +260,6 @@
       data:
         entity_id: light.kitchen_hallway_light_level
         brightness: 255
-    - service: script.set_homeseer_dim_level
-      data:
-        entity_id: light.bedroom_light_level
-        brightness: 255
     - service: zwave.set_config_parameter
       data_template:
         node_id: 24 # Master Bathroom Light
