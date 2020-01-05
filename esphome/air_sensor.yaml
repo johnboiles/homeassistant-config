@@ -1,0 +1,77 @@
+esphome:
+  name: air_sensor
+  platform: ESP32
+  board: wemos_d1_mini32
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  fast_connect: true
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Air Sensor Fallback Hotspot"
+    password: !secret wifi_ap_password
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  services:
+    - service: mhz19_calibrate_zero
+      then:
+        - mhz19.calibrate_zero: mhz19_sensor
+
+ota:
+
+uart:
+  - id: "uart1"
+    tx_pin: 17
+    rx_pin: 16
+    baud_rate: 9600
+  - id: "uart2"
+    tx_pin: 18
+    rx_pin: 5
+    baud_rate: 9600
+
+i2c:
+  sda: 21
+  scl: 22
+
+sensor:
+  - platform: mhz19
+    id: mhz19_sensor
+    co2:
+      name: "MH-Z19 CO2 Value"
+    temperature:
+      name: "MH-Z19 Temperature"
+    update_interval: 60s
+    automatic_baseline_calibration: false
+    uart_id: "uart1"
+  - platform: pmsx003
+    type: PMSX003
+    uart_id: "uart2"
+    pm_1_0:
+      name: "PM <1.0µm µg/m³"
+    pm_2_5:
+      name: "PM <2.5µm µg/m³"
+    pm_10_0:
+      name: "PM <10.0µm µg/m³"
+  - platform: dht
+    model: DHT22
+    pin: 19
+    temperature:
+      name: "DHT22 Temperature"
+    humidity:
+      name: "DHT22 Humidity"
+    update_interval: 60s
+  - platform: ccs811
+    eco2:
+      name: "CCS811 eCO2 Value"
+    tvoc:
+      name: "CCS811 Total Volatile Organic Compound"
+    address: 0x5A
+    update_interval: 60s

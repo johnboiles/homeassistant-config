@@ -10,3 +10,6 @@ entity_registry.yaml
 !custom_components
 !python_scripts
 !python_scripts/*
+/esphome/secrets.yaml
+/esphome/air_sensor
+.DS_Store
