@@ -4,11 +4,12 @@ Home for my ESPHome config files that power various pieces of DIY hardware aroun
 
 ## Air Sensor
 
-Air-quality sensor that uses
+Air-quality sensor to monitor temperature, humidity, particulate count, CO2, and TVOCs with an ESP32 and some cheap-ish sensors.
 
-* MHZ19 CO2 sensor
-* DHT22 temperature/humidity sensor
-* PMS5003 particulate sensor
+* ESP32
+* [PMS5003 High Precision Laser Dust Sensor](https://www.ebay.com/itm/PMS5003-High-Precision-Laser-Dust-Sensor-Module-PM1-0-PM2-5-PM10-Built-in-Fan-N-/263421941788?hash=item3d552bd81c)
+* [MHZ-19 Intelligent Infrared CO2 Module](http://www.winsen-sensor.com/products/ndir-co2-sensor/mh-z19.html)
+* [DHT22 Temperature & Humidity Sensor](https://www.adafruit.com/product/385)
 * CCS811 eCO2 and TVOC sensor
 
 This project also exposes a service to run the calibration on the MHZ19, so I can automate calibration to happen after the house has been unoccupied for a period.
@@ -43,6 +44,8 @@ Install the `esphome` tool
 Make a `secrets.yaml` with your WiFi credentials
 
     cp secrets.yaml.example secrets.yaml
+
+If you don't have it already, you probably need a driver for the CH340 USB->Serial chip. [This janky looking website](http://www.wch.cn/download/CH341SER_MAC_ZIP.html) is the chip manufacturer's official download page.
 
 ## To upload the firmware
 
