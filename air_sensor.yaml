@@ -1,5 +1,5 @@
 esphome:
-  name: airsensor
+  name: air_sensor
   platform: ESP32
   board: wemos_d1_mini32
 
@@ -10,7 +10,7 @@ wifi:
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
-    ssid: "Airsensor Fallback Hotspot"
+    ssid: "Air Sensor Fallback Hotspot"
     password: !secret wifi_ap_password
 
 captive_portal:
@@ -36,6 +36,10 @@ uart:
     tx_pin: 18
     rx_pin: 5
     baud_rate: 9600
+
+i2c:
+  sda: 21
+  scl: 22
 
 sensor:
   - platform: mhz19
@@ -63,4 +67,11 @@ sensor:
       name: "DHT22 Temperature"
     humidity:
       name: "DHT22 Humidity"
+    update_interval: 60s
+  - platform: ccs811
+    eco2:
+      name: "CCS811 eCO2 Value"
+    tvoc:
+      name: "CCS811 Total Volatile Organic Compound"
+    address: 0x5A
     update_interval: 60s

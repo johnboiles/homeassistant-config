@@ -14,8 +14,8 @@ Make a `secrets.yaml` with your WiFi credentials
 
 ## To upload new versions
 
-    esphome air-sensor.yaml run
+    esphome air_sensor.yaml run
 
 ## To read the logs while running
 
-    esphome air-sensor.yaml logs
+    esphome air_sensor.yaml logs
