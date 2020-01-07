@@ -23,7 +23,7 @@ deploy-zwave:
 
 .PHONY: pull-remote
 pull-remote:
-	rsync -av --include='*yaml' --include='scenes' --include='zwcfg*.xml' --exclude='*' $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/ ./
+	rsync -av --include='*yaml' --include='esphome' --include='scenes' --include='zwcfg*.xml' --exclude='*' $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/ ./
 
 .PHONY: deploy-scripts
 deploy-scripts:
