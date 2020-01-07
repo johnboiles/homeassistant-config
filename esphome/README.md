@@ -48,6 +48,10 @@ Hardware:
 * [12V Power Supply](https://www.amazon.com/gp/product/B00MBBOWAU)
 * [Adjustable Regulator](https://www.amazon.com/gp/product/B01MQGMOKI) to power the Wemos D1 Mini.
 
+## ESP32 Camera
+
+Simplest (and cheapest) security camera out there. Just an [ESP32 with a camera module](https://www.amazon.com/gp/product/B07QYTVZL6) in a [3d-printed box](https://www.thingiverse.com/thing:3463679).
+
 # Installing / Running
 
 ESPHome makes it very simple to install the software for this project.
