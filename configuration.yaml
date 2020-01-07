@@ -349,21 +349,6 @@ switch:
             entity_id: climate.thermostat
             fan_mode: "auto"
 
-fan:
-  - platform: mqtt
-    name: "Basement Fan"
-    command_topic: "fan/power"
-    speed_command_topic: "fan/power"
-    payload_on: "100"
-    payload_off: "0"
-    payload_low_speed: "90"
-    payload_medium_speed: "95"
-    payload_high_speed: "100"
-    speeds:
-      - low
-      - medium
-      - high
-
 group: !include groups.yaml
 
 automation: !include automations.yaml

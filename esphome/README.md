@@ -16,7 +16,7 @@ This project also exposes a service to run the calibration on the MHZ19, so I ca
 
 ## Garage Door
 
-Simple garage door controller that uses a relay and a magnetic reed switch.
+Garage door controller that uses a relay and a magnetic reed switch.
 
 Hardware:
 * [NodeMCU 1.0](https://www.amazon.com/HiLetgo-Version-NodeMCU-Internet-Development/dp/B010O1G1ES) ESP8266 Wifi microcontroller (though I'd probably use a [Wemos D1 Mini](https://www.amazon.com/Makerfocus-NodeMcu-Development-ESP8266-ESP-12F/dp/B01N3P763C) if I started over.)
@@ -29,7 +29,23 @@ The electronics are very simple. The relay is switched by a digital output from 
 
 ## IR Blaster
 
-Simple IR blaster for sending IR remote codes to my TV and soundbar. Electronics consist of two IR LEDs and a PN2222 transistor to switch the LEDs (since the ESP8266 can't source enough current to drive those LEDs).
+IR blaster for sending IR remote codes to my TV and soundbar. Electronics consist of two IR LEDs and a PN2222 transistor to switch the LEDs (since the ESP8266 can't source enough current to drive those LEDs).
+
+Hardware:
+* [Wemos D1 Mini](https://www.amazon.com/gp/product/B01N3P763C)
+* IR LED (from my parts box)
+* PN2222 transistor (from my parts box)
+
+## Basement Fan
+
+Small DC exhaust blower fan to exhaust fumes from my basement. I use this to extract fumes from my solder station and other burn-y tools.
+
+Hardware:
+* [Wemos D1 Mini](https://www.amazon.com/gp/product/B01N3P763C)
+* [Attwood Quiet Blower](https://www.amazon.com/Attwood-1749-4-Blower-Resistant-4-Inch/dp/B003EX02DA)
+* [MOSFET board](https://www.amazon.com/gp/product/B01J78FX9S)
+* [4 inch aluminum duct](https://www.amazon.com/gp/product/B01N6DV33G)
+* [12V Power Supply](https://www.amazon.com/gp/product/B00MBBOWAU)
 
 # Installing / Running
 
@@ -49,7 +65,7 @@ If you don't have it already, you probably need a driver for the CH340 USB->Seri
 
 ## To upload the firmware
 
-Replace `air_sensor.yaml` with the desired config and compile and upload the generated firmware.
+Replace `air_sensor.yaml` with the desired config and compile and upload the generated firmware. The first time you do this you'll need to connect over USB, but subsequent uploads can happen over wifi.
 
     esphome air_sensor.yaml run
 
