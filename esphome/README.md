@@ -46,6 +46,7 @@ Hardware:
 * [MOSFET board](https://www.amazon.com/gp/product/B01J78FX9S)
 * [4 inch aluminum duct](https://www.amazon.com/gp/product/B01N6DV33G)
 * [12V Power Supply](https://www.amazon.com/gp/product/B00MBBOWAU)
+* [Adjustable Regulator](https://www.amazon.com/gp/product/B01MQGMOKI) to power the Wemos D1 Mini.
 
 # Installing / Running
 

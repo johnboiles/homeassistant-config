@@ -6,6 +6,7 @@
 secrets.yaml
 known_devices.yaml
 entity_registry.yaml
+!README.md
 !secrets.yaml.example
 !custom_components
 !python_scripts
