@@ -14,6 +14,7 @@ remote-test:
 deploy:
 	$(info Deploying HA config to $(REMOTE_HOST).)
 	rsync -av --rsync-path="sudo rsync" $(BASE_DIR)/*.yaml $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/
+	rsync -av --rsync-path="sudo rsync" $(BASE_DIR)/esphome/*.yaml $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/esphome/
 
 .PHONY: deploy-zwave
 deploy-zwave:
