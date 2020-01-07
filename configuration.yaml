@@ -101,6 +101,7 @@ homekit:
       - sensor.dht22_heatindex
       - sensor.living_room_temperature
       - sensor.mh_z19_temperature
+      - sensor.ccs811_eco2_value
 
 cloud:
   alexa:
