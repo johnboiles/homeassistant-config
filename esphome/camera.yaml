@@ -22,6 +22,7 @@ logger:
 api:
 
 ota:
+  password: !secret ota_password
 
 esp32_camera:
   external_clock:
