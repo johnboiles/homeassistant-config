@@ -6,14 +6,19 @@
     from: 'on'
     to: 'off'
   action:
-    service: notify.mobile_app_john_boiless_iphone_x
-    data:
-      message: 3D print has finished
+    - service: camera.snapshot
       data:
-        attachment:
-          url: http://10.0.0.7/webcam/?action=snapshot
-          content-type: jpeg
-          hide-thumbnail: false
+        entity_id: camera.octoprint_camera
+        filename: /config/www/camera/3d-print.jpg
+    - service: notify.mobile_app_john_boiless_iphone_x
+      data_template:
+        message: 3D print has finished
+        data:
+          attachment:
+            url: !secret 3d_print_snapshot_url
+            image: !secret 3d_print_snapshot_url
+            content-type: jpeg
+            hide-thumbnail: false
 
 # Multi-tap Homeseer stuff
 # See https://www.home-assistant.io/docs/z-wave/device-specific/#homeseer-switches
