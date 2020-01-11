@@ -174,7 +174,6 @@
       entity_id:
         - light.living_room_light_level
         - light.dining_room_light_level
-        - light.dining_room_chandelier_level
         - light.kitchen_island_light_level
         - light.kitchen_light_level
         - light.kitchen_hallway_light_level
@@ -209,10 +208,6 @@
     - service: script.set_homeseer_dim_level
       data:
         entity_id: light.dining_room_light_level
-        brightness: 3
-    - service: script.set_homeseer_dim_level
-      data:
-        entity_id: light.dining_room_chandelier_level
         brightness: 3
     - service: script.set_homeseer_dim_level
       data:
