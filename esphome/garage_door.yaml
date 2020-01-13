@@ -1,7 +1,7 @@
 esphome:
   name: garage_door
   platform: ESP8266
-  board: nodemcuv2
+  board: esp01_1m
 
 wifi:
   ssid: !secret wifi_ssid
@@ -17,6 +17,7 @@ captive_portal:
 
 # Enable logging
 logger:
+  baud_rate: 0
 
 # Enable Home Assistant API
 api:
@@ -26,7 +27,7 @@ ota:
 switch:
   - platform: gpio
     internal: true
-    pin: D2
+    pin: 3
     id: garage_door_relay
 
 binary_sensor:
@@ -34,7 +35,7 @@ binary_sensor:
   internal: true
   platform: gpio
   pin:
-    number: D1
+    number: 1
     mode: INPUT_PULLUP
     inverted: False
   device_class: garage_door
