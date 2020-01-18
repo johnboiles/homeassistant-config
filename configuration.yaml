@@ -1,3 +1,4 @@
+## Section: Core config
 homeassistant:
   # Name of the location where Home Assistant is running
   name: Boiles Home
@@ -12,11 +13,97 @@ homeassistant:
   time_zone: America/Los_Angeles
   customize: !include customize.yaml
 
-system_health:
-
 recorder:
   db_url: !secret mysql_db_url
   purge_keep_days: 120
+
+http:
+  # Uncomment this if you are using SSL or running in Docker etc
+  base_url: !secret http_base_url
+
+## Section: Default config
+
+# See https://www.home-assistant.io/integrations/default_config/
+# `default_config` is a meta-component and configures a default set of
+# integrations for Home Assistant to load. The integrations that will be
+# loaded are: automation, cloud, config, frontend, history, logbook, map,
+# mobile_app, person, script, ssdp, sun, system_health, updater, zeroconf
+
+# default_config:
+
+automation: !include automations.yaml
+
+# Nabu Casa cloud settings
+cloud: !include cloud.yaml
+
+# Enables configuration UI
+config:
+
+# Enables the frontend
+frontend:
+
+# Enables support for tracking state changes over time.
+history:
+
+# View all events in a logbook
+logbook:
+
+mobile_app:
+
+person:
+
+script: !include script.yaml
+
+# Simple Service Discovery Protocol
+ssdp:
+
+# Track the sun
+sun:
+
+system_health:
+
+# Checks for available updates
+updater:
+  include_used_components: true
+
+zeroconf:
+
+## Section: Integration Config
+
+ios:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+zwave:
+  usb_path: /dev/ttyACM0
+  network_key: !secret zwave_network_key
+  device_config:
+    light.master_bathroom_light_level:
+      refresh_value: true
+      delay: 3
+      polling_intensity: 2
+    light.bedroom_light_level:
+      refresh_value: true
+      delay: 2
+    light.living_room_light_level:
+      refresh_value: true
+      delay: 2
+    light.dining_room_light_level:
+      refresh_value: true
+      delay: 2
+    light.kitchen_light_level:
+      refresh_value: true
+      delay: 2
+    light.kitchen_island_light_level:
+      refresh_value: true
+      delay: 2
+    light.dining_room_chandelier_level:
+      refresh_value: true
+      delay: 2
+    light.kitchen_hallway_light_level:
+      refresh_value: true
+      delay: 2
 
 ecobee:
   api_key: !secret ecobee_api_key
@@ -25,18 +112,6 @@ octoprint:
   host: 10.0.0.7
   api_key: !secret octoprint_api_key
   bed: true
-
-binary_sensor:
-  - platform: octoprint
-    monitored_conditions:
-      - Printing
-      - Printing Error
-
-panel_iframe:
-  jupyterlab:
-    title: JupyterLab
-    icon: mdi:flask
-    url: http://10.0.0.2:7777
 
 logi_circle:
   client_id: !secret logi_circle_client_id
@@ -48,22 +123,6 @@ yeelight:
   devices:
     10.0.0.40:
       name: Izzys Light
-
-camera:
-  - platform: mjpeg
-    name: OctoPrint Camera
-    mjpeg_url: http://10.0.0.7/webcam/?action=stream
-    still_image_url: http://10.0.0.7/webcam/?action=snapshot
-
-script: !include script.yaml
-
-python_script:
-
-# Enables the frontend
-frontend:
-
-# Enables configuration UI
-config:
 
 homekit:
   auto_start: false
@@ -103,25 +162,38 @@ homekit:
       - sensor.mh_z19_temperature
       - sensor.ccs811_eco2_value
 
-cloud: !include cloud.yaml
+unifi:
+  controllers:
+  - host: 10.0.0.6
+    site: Boiles Home
+    block_client:
+    - 'ac:cf:5c:33:88:45' # Christina's iPad Air
+    - '28:6a:ba:8e:95:18' # John's iPad2
 
-ios:
+route53:
+  aws_access_key_id: !secret route53_access_key_id
+  aws_secret_access_key: !secret route53_secret_access_key
+  zone: !secret route53_zone
+  domain: !secret route53_domain
+  records:
+    - house
 
-# Worth trying to disable to get rid of the persistent notification for Izzy's Yeelight
-# default_config:
+tplink:
+  discovery: false
+  switch:
+    - host: 10.0.0.5
 
-http:
-  # Uncomment this if you are using SSL or running in Docker etc
-  base_url: !secret http_base_url
+mqtt:
+  client_id: home-assistant
+  discovery: true
+  discovery_prefix: homeassistant
+  password: !secret mqtt_password
 
-# Checks for available updates
-# Note: This component will send some information about your system to
-# the developers to assist with development of Home Assistant.
-# For more information, please see:
-# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
-updater:
-  # Optional, allows Home Assistant developers to focus on popular components.
-  include_used_components: true
+## Section: Component configuration 
+
+group: !include groups.yaml
+
+python_script:
 
 # Discover some devices automatically
 discovery:
@@ -129,24 +201,25 @@ discovery:
     - apple_tv
     - yeelight
 
-# Allows you to issue voice commands from the frontend in enabled browsers
-conversation:
-
-# Enables support for tracking state changes over time.
-history:
-
-# View all events in a logbook
-logbook:
-
-# Track the sun
-sun:
+camera:
+  - platform: mjpeg
+    name: OctoPrint Camera
+    mjpeg_url: http://10.0.0.7/webcam/?action=stream
+    still_image_url: http://10.0.0.7/webcam/?action=snapshot
 
 sensor: !include sensor.yaml
 
-tplink:
-  discovery: false
-  switch:
-    - host: 10.0.0.5
+binary_sensor:
+  - platform: octoprint
+    monitored_conditions:
+      - Printing
+      - Printing Error
+
+panel_iframe:
+  jupyterlab:
+    title: JupyterLab
+    icon: mdi:flask
+    url: http://10.0.0.2:7777
 
 switch:
   - platform: wake_on_lan
@@ -170,66 +243,10 @@ switch:
             entity_id: climate.thermostat
             fan_mode: "auto"
 
-group: !include groups.yaml
-
-automation: !include automations.yaml
-
-zwave:
-  usb_path: /dev/ttyACM0
-  network_key: !secret zwave_network_key
-  device_config:
-    light.master_bathroom_light_level:
-      refresh_value: true
-      delay: 3
-      polling_intensity: 2
-    light.bedroom_light_level:
-      refresh_value: true
-      delay: 2
-    light.living_room_light_level:
-      refresh_value: true
-      delay: 2
-    light.dining_room_light_level:
-      refresh_value: true
-      delay: 2
-    light.kitchen_light_level:
-      refresh_value: true
-      delay: 2
-    light.kitchen_island_light_level:
-      refresh_value: true
-      delay: 2
-    light.dining_room_chandelier_level:
-      refresh_value: true
-      delay: 2
-    light.kitchen_hallway_light_level:
-      refresh_value: true
-      delay: 2
-
-unifi:
-  controllers:
-  - host: 10.0.0.6
-    site: Boiles Home
-    block_client:
-    - 'ac:cf:5c:33:88:45' # Christina's iPad Air
-    - '28:6a:ba:8e:95:18' # John's iPad2
-
-mqtt:
-  client_id: home-assistant
-  discovery: true
-  discovery_prefix: homeassistant
-  password: !secret mqtt_password
-
 # Used for the automation that notifies every 30 min when the garage is open.
 timer:
   garage_door:
     duration: '00:30:00'
-
-route53:
-  aws_access_key_id: !secret route53_access_key_id
-  aws_secret_access_key: !secret route53_secret_access_key
-  zone: !secret route53_zone
-  domain: !secret route53_domain
-  records:
-    - house
 
 media_player:
   - platform: universal
