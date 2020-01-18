@@ -55,7 +55,7 @@ camera:
     mjpeg_url: http://10.0.0.7/webcam/?action=stream
     still_image_url: http://10.0.0.7/webcam/?action=snapshot
 
-script: !include scripts.yaml
+script: !include script.yaml
 
 python_script:
 
