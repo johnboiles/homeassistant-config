@@ -103,34 +103,7 @@ homekit:
       - sensor.mh_z19_temperature
       - sensor.ccs811_eco2_value
 
-cloud:
-  alexa:
-    filter:
-      exclude_domains:
-        - group
-        - automation
-        - script
-        - sensor
-        - device_tracker
-      exclude_entities:
-        - switch.twitter_laptop_wol
-        - light.master_bathroom_light_level_2
-        - switch.3d_printer
-        - sensor.octoprint_target_bed_temp
-        - sensor.octoprint_actual_bed_temp
-        - sensor.outside_heatindex
-        - sensor.outside_dewpoint
-        - sensor.inside_heatindex
-        - sensor.inside_dewpoint
-        - sensor.basement_heatindex
-        - sensor.basement_dewpoint
-        - switch.home_assistant_pi4
-        - sensor.bedroom_temperature
-        - sensor.dht22_absolutehumidity
-        - sensor.dht22_dewpoint
-        - sensor.dht22_heatindex
-        - sensor.living_room_temperature
-        - sensor.mh_z19_temperature
+cloud: !include cloud.yaml
 
 ios:
 
