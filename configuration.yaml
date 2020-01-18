@@ -191,7 +191,7 @@ mqtt:
 
 ## Section: Component configuration 
 
-group: !include groups.yaml
+group: !include group.yaml
 
 python_script:
 
