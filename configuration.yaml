@@ -18,8 +18,6 @@ recorder:
   purge_keep_days: 120
 
 http:
-  # Uncomment this if you are using SSL or running in Docker etc
-  base_url: !secret http_base_url
 
 ## Section: Default config
 
