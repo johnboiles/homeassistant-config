@@ -332,6 +332,20 @@
         message: "Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }} is available."
         title: "Update available"
 
+- alias: HACS Update Available Notification
+  trigger:
+    platform: state
+    entity_id: sensor.hacs
+    from: '0'
+  action:
+    - service: notify.mobile_app_john_boiless_iphone_x
+      data_template:
+        message: "HACS has {{ trigger.to_state.state }} available update."
+    - service: persistent_notification.create
+      data:
+        message: "HACS has {{ trigger.to_state.state }} available update."
+        title: "HACS Update available"
+
 - alias: Unifi Firmware Available Notification
   trigger:
     platform: state
