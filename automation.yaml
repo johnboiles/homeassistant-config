@@ -20,6 +20,21 @@
             content-type: jpeg
             hide-thumbnail: false
 
+- alias: Play Roll Over Easy on Thursday at 7:30a
+  trigger:
+    platform: time
+    at: '07:30:00'
+  condition:
+    - condition: time
+      weekday:
+        - thu
+  action:
+    - service: media_player.play_media
+      data:
+        entity_id: media_player.bedroom
+        media_content_id: "BFF.fm"
+        media_content_type: TUNEIN
+
 # Multi-tap Homeseer stuff
 # See https://www.home-assistant.io/docs/z-wave/device-specific/#homeseer-switches
 - alias: Turn off all lights in the house with a triple tap down in the dining room
