@@ -343,7 +343,7 @@
       data_template:
         message: "Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }} is available."
     - service: persistent_notification.create
-      data:
+      data_template:
         message: "Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }} is available."
         title: "Update available"
 
@@ -357,7 +357,7 @@
       data_template:
         message: "HACS has {{ trigger.to_state.state }} available update."
     - service: persistent_notification.create
-      data:
+      data_template:
         message: "HACS has {{ trigger.to_state.state }} available update."
         title: "HACS Update available"
 
