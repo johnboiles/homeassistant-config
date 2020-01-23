@@ -135,6 +135,7 @@ homekit:
       - device_tracker
       - climate
       - binary_sensor
+      - person
     exclude_entities:
       - switch.twitter_laptop_wol
       - light.master_bathroom_light_level_2
@@ -159,6 +160,7 @@ homekit:
       - sensor.living_room_temperature
       - sensor.mh_z19_temperature
       - sensor.ccs811_eco2_value
+      - switch.unifi_controller_pi_eth0
 
 unifi:
   controllers:
