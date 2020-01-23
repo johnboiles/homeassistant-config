@@ -41,10 +41,10 @@ config:
 frontend:
 
 # Enables support for tracking state changes over time.
-history:
+# history:
 
 # View all events in a logbook
-logbook:
+# logbook:
 
 mobile_app:
 
