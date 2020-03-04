@@ -1,0 +1,51 @@
+esphome:
+  name: sprinkler
+  platform: ESP8266
+  board: d1_mini_lite
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  fast_connect: true
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Sprinker Fallback Hotspot"
+    password: !secret wifi_ap_password
+
+captive_portal:
+
+# Enable logging
+logger:
+
+ota:
+  password: !secret ota_password
+
+# Enable Home Assistant API
+api:
+
+switch:
+  - platform: gpio
+    pin:
+      number: D1
+      inverted: yes
+    name: "Sprinkler Zone 1"
+    icon: "mdi:sprinkler-variant"
+  - platform: gpio
+    pin:
+      number: D2
+      inverted: yes
+    name: "Sprinkler Zone 2"
+    icon: "mdi:sprinkler-variant"
+  - platform: gpio
+    pin:
+      number: D3
+      inverted: yes
+    name: "Sprinkler Zone 3"
+    icon: "mdi:sprinkler-variant"
+  - platform: gpio
+    pin:
+      number: D4
+      inverted: yes
+    name: "Sprinkler Zone 4"
+    icon: "mdi:sprinkler-variant"
