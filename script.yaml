@@ -45,3 +45,31 @@ set_homeseer_dim_level:
     - service: light.turn_off
       data_template:
         entity_id: "{{ entity_id }}"
+
+sprinkler_water_backyard:
+  alias: "Sprinkler Water Backyard"
+  sequence:
+    - service: switch.turn_off
+      entity_id: switch.sprinkler_zone_1
+    - service: switch.turn_off
+      entity_id: switch.sprinkler_zone_2
+    - service: switch.turn_off
+      entity_id: switch.sprinkler_zone_3
+    - delay: '00:01'
+    - service: switch.turn_on
+      entity_id: switch.sprinkler_zone_1
+    - delay: '00:40'
+    - service: switch.turn_off
+      entity_id: switch.sprinkler_zone_1
+    - delay: '00:01'
+    - service: switch.turn_on
+      entity_id: switch.sprinkler_zone_2
+    - delay: '00:40'
+    - service: switch.turn_off
+      entity_id: switch.sprinkler_zone_2
+    - delay: '00:01'
+    - service: switch.turn_on
+      entity_id: switch.sprinkler_zone_3
+    - delay: '00:40'
+    - service: switch.turn_off
+      entity_id: switch.sprinkler_zone_3

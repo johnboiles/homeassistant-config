@@ -418,6 +418,23 @@
       data:
         message: "Calibrating CO2 sensor."
 
+- alias: Water Backyard
+  trigger:
+    - platform: sun
+      event: sunrise
+      offset: "-01:00:00"
+  condition:
+    - condition: time
+      weekday:
+        - wed
+        - thu
+        - sun
+    - condition: numeric_state
+      entity_id: sensor.dark_sky_precip_probability
+      below: 60
+  action:
+    - service: script.sprinkler_water_backyard
+
 - alias: Soundbar to Aux when the Everywhere group is playing
   trigger:
     - platform: state
