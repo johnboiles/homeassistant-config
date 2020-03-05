@@ -124,6 +124,19 @@ yeelight:
 
 homekit:
   auto_start: false
+  entity_config:
+    switch.sprinkler_zone_1:
+      type: sprinkler
+    switch.sprinkler_zone_2:
+      type: sprinkler
+    switch.sprinkler_zone_3:
+      type: sprinkler
+    switch.sprinkler_zone_4:
+      type: sprinkler
+    binary_sensor.front_door:
+      linked_battery_sensor: sensor.front_door_battery_level
+    binary_sensor.back_door:
+      linked_battery_sensor: sensor.back_door_battery_level
   filter:
     include_entities:
       - binary_sensor.front_door
