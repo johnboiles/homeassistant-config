@@ -136,3 +136,5 @@ media_player.soundbar:
     - Digital
 switch.master_bathroom_light_level_2:
   hidden: true
+switch.basement_heater_switch:
+  icon: mdi:hvac
