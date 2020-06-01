@@ -175,14 +175,6 @@ homekit:
       - sensor.ccs811_eco2_value
       - switch.unifi_controller_pi_eth0
 
-unifi:
-  controllers:
-  - host: 10.0.0.6
-    site: Boiles Home
-    block_client:
-    - 'ac:cf:5c:33:88:45' # Christina's iPad Air
-    - '28:6a:ba:8e:95:18' # John's iPad2
-
 route53:
   aws_access_key_id: !secret route53_access_key_id
   aws_secret_access_key: !secret route53_secret_access_key
