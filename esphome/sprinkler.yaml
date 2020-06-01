@@ -29,23 +29,24 @@ switch:
     pin:
       number: D1
       inverted: yes
-    name: "Sprinkler Zone 1"
+    name: "Maple Sprinkler"
     icon: "mdi:sprinkler-variant"
   - platform: gpio
     pin:
       number: D2
       inverted: yes
-    name: "Sprinkler Zone 2"
+    name: "Apple and Lemon Sprinkler"
     icon: "mdi:sprinkler-variant"
   - platform: gpio
     pin:
-      number: D3
+      number: D7
       inverted: yes
-    name: "Sprinkler Zone 3"
+    name: "Vegetable Box Sprinkler"
     icon: "mdi:sprinkler-variant"
-  - platform: gpio
-    pin:
-      number: D4
-      inverted: yes
-    name: "Sprinkler Zone 4"
-    icon: "mdi:sprinkler-variant"
+  # These relays exist but this circuit is unused since I only have 3 sprinkler zones
+  # - platform: gpio
+  #   pin:
+  #     number: D6
+  #     inverted: yes
+  #   name: "Sprinkler Zone 4"
+  #   icon: "mdi:sprinkler-variant"
