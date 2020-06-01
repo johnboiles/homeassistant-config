@@ -1,0 +1,64 @@
+esphome:
+  name: backyard_step_lights
+  platform: ESP8266
+  board: d1_mini
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  fast_connect: true
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Backyard Step Lights"
+    password: !secret wifi_ap_password
+
+captive_portal:
+
+# Enable logging
+logger:
+
+ota:
+
+# Enable Home Assistant API
+api:
+
+light:
+  - platform: neopixelbus
+    type: GRBW
+    variant: SK6812
+    pin: GPIO3
+    num_leds: 30
+    name: "NeoPixel Light"
+    effects:
+      - addressable_fireworks:
+      - addressable_flicker:
+      - addressable_rainbow:
+      - addressable_color_wipe:
+      - addressable_scan:
+      - addressable_random_twinkle:
+      - addressable_twinkle:
+      - addressable_twinkle:
+          name: Custom Twinkle Effect
+          twinkle_probability: 30%
+          progress_interval: 4ms
+      - addressable_lambda:
+          name: "My Custom Effect"
+          update_interval: 16ms
+          lambda: |-
+            // it.size() - Number of LEDs
+            // it[num] - Access the LED at index num.
+            // Set the LED at num to the given r, g, b values
+            // it[num] = ESPColor(r, g, b);
+            // Get the color at index num (ESPColor instance)
+            // it[num].get();
+
+            // Example: Simple color wipe
+            for (int i = it.size() - 1; i > 0; i--) {
+              it[i] = it[i - 1].get();
+            }
+            it[0] = ESPColor::random_color();
+
+            // Bonus: use .range() and .all() to set many LEDs without having to write a loop.
+            it.range(0, 50) = ESPColor::BLACK;
+            it.all().fade_to_black(10);
