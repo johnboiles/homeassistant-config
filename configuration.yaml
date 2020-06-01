@@ -125,13 +125,11 @@ yeelight:
 homekit:
   auto_start: false
   entity_config:
-    switch.sprinkler_zone_1:
+    switch.maple_sprinkler:
       type: sprinkler
-    switch.sprinkler_zone_2:
+    switch.apple_and_lemon_sprinkler:
       type: sprinkler
-    switch.sprinkler_zone_3:
-      type: sprinkler
-    switch.sprinkler_zone_4:
+    switch.vegetable_box_sprinkler:
       type: sprinkler
     binary_sensor.front_door:
       linked_battery_sensor: sensor.front_door_battery_level
