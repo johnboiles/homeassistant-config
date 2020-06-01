@@ -137,6 +137,8 @@ homekit:
       linked_battery_sensor: sensor.front_door_battery_level
     binary_sensor.back_door:
       linked_battery_sensor: sensor.back_door_battery_level
+    camera.octoprint_camera:
+      stream_source: http://10.0.0.7:8080/?action=stream
   filter:
     include_entities:
       - binary_sensor.front_door
@@ -174,6 +176,7 @@ homekit:
       - sensor.mh_z19_temperature
       - sensor.ccs811_eco2_value
       - switch.unifi_controller_pi_eth0
+      - camera.front_yard
 
 route53:
   aws_access_key_id: !secret route53_access_key_id
