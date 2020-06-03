@@ -50,7 +50,7 @@ mobile_app:
 
 person:
 
-script: !include script.yaml
+script: !include scripts.yaml
 
 # Simple Service Discovery Protocol
 ssdp:
