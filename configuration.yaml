@@ -29,7 +29,7 @@ http:
 
 # default_config:
 
-automation: !include automation.yaml
+automation: !include automations.yaml
 
 # Nabu Casa cloud settings
 cloud: !include cloud.yaml
