@@ -123,7 +123,6 @@ yeelight:
       name: Izzys Light
 
 homekit:
-  auto_start: false
   entity_config:
     switch.maple_sprinkler:
       type: sprinkler

@@ -120,15 +120,6 @@
     data:
       entity_id: switch.bedroom_lamp_switch
 
-- alias: 'Start HomeKit'
-  trigger:
-    - platform: event
-      event_type: zwave.network_ready
-    - platform: event
-      event_type: zwave.network_complete
-  action:
-    service: homekit.start
-
 - alias: Garage Door Open Notification
   trigger:
     - platform: state
