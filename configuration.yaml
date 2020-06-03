@@ -141,6 +141,7 @@ homekit:
     include_entities:
       - binary_sensor.front_door
       - binary_sensor.back_door
+      - media_player.soundbar
     exclude_domains:
       - group
       - automation
@@ -149,6 +150,7 @@ homekit:
       - climate
       - binary_sensor
       - person
+      - media_player
     exclude_entities:
       - switch.twitter_laptop_wol
       - light.master_bathroom_light_level_2
@@ -175,6 +177,9 @@ homekit:
       - sensor.ccs811_eco2_value
       - switch.unifi_controller_pi_eth0
       - camera.front_yard
+      - switch.unifi_controller_pi
+      - switch.unifi_poe_00_00_00_00_00_01
+      - switch.unifi_poe_20_2e_5d_55_a4_83
 
 route53:
   aws_access_key_id: !secret route53_access_key_id
