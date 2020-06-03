@@ -58,18 +58,18 @@ sprinkler_water_backyard:
     - delay: '00:01'
     - service: switch.turn_on
       entity_id: switch.maple_sprinkler
-    - delay: '00:40'
+    - delay: '00:12'
     - service: switch.turn_off
       entity_id: switch.maple_sprinkler
     - delay: '00:01'
     - service: switch.turn_on
       entity_id: switch.apple_and_lemon_sprinkler
-    - delay: '00:40'
+    - delay: '00:12'
     - service: switch.turn_off
       entity_id: switch.apple_and_lemon_sprinkler
-    - delay: '00:01'
-    - service: switch.turn_on
-      entity_id: switch.vegetable_box_sprinkler
-    - delay: '00:40'
-    - service: switch.turn_off
-      entity_id: switch.vegetable_box_sprinkler
+    # - delay: '00:01'
+    # - service: switch.turn_on
+    #   entity_id: switch.vegetable_box_sprinkler
+    # - delay: '00:40'
+    # - service: switch.turn_off
+    #   entity_id: switch.vegetable_box_sprinkler

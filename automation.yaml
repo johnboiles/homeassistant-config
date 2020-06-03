@@ -157,6 +157,27 @@
     - service: timer.start
       entity_id: timer.garage_door
 
+- alias: Notify if sprinklers left on for 30 minutes
+  trigger:
+    - platform: state
+      entity_id:
+        - switch.maple_sprinkler
+        - switch.apple_and_lemon_sprinkler
+        - switch.vegetable_box_sprinkler
+      to: 'on'
+      for:
+        minutes: 30
+  action:
+    - service: notify.mobile_app_john_boiless_iphone_x
+      data:
+        message: Sprinkler has been running for > 30 min
+        data:
+          push:
+            sound:
+              name: default
+              critical: 1
+              volume: 1.0
+
 - alias: WD200 Status LED for Garage Door
   trigger:
   - platform: state
@@ -420,18 +441,17 @@
 
 - alias: Water Backyard
   trigger:
-    - platform: sun
-      event: sunrise
-      offset: "-01:00:00"
-  condition:
-    - condition: time
-      weekday:
-        - wed
-        - thu
-        - sun
-    - condition: numeric_state
-      entity_id: sensor.dark_sky_precip_probability
-      below: 60
+    - platform: time
+      at: "03:30:00"
+  # condition:
+    # - condition: time
+    #   weekday:
+    #     - mon
+    #     - wed
+    #     - sat
+    # - condition: numeric_state
+    #   entity_id: sensor.dark_sky_precip_probability
+    #   below: 60
   action:
     - service: script.sprinkler_water_backyard
 
