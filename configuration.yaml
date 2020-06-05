@@ -111,12 +111,6 @@ octoprint:
   api_key: !secret octoprint_api_key
   bed: true
 
-logi_circle:
-  client_id: !secret logi_circle_client_id
-  client_secret: !secret logi_circle_client_secret
-  api_key: !secret logi_circle_api_key
-  redirect_uri: !secret logi_circle_redirect_uri
-
 yeelight:
   devices:
     10.0.0.40:

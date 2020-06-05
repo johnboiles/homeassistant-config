@@ -23,7 +23,6 @@ Off-the-shelf stuff I've integrated with:
 * Z-Wave (for wall switches, outlets, smoke alarms, and door sensors)
 * Ecobee
 * OctoPrint (3d-printer controller)
-* Logi Circle 2
 * Yeelight
 * Apple HomeKit (for Siri and easy access from Apple devices)
 * Amazon Alexa
