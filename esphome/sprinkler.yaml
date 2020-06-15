@@ -2,6 +2,20 @@ esphome:
   name: sprinkler
   platform: ESP8266
   board: d1_mini_lite
+  on_boot:
+    priority: -100
+    # Send a push notification on reboot in case something went wonky when running sprinkers
+    then:
+      - delay: 30s
+      - homeassistant.service:
+          service: notify.mobile_app_john_boiless_iphone_x
+          data:
+            message: "Sprinkler controller rebooted."
+      - homeassistant.service:
+          service: persistent_notification.create
+          data:
+            message: "Sprinkler controller rebooted. If this was expected, disregard."
+            title: "Sprinlker restart"
 
 wifi:
   ssid: !secret wifi_ssid
@@ -50,3 +64,8 @@ switch:
   #     inverted: yes
   #   name: "Sprinkler Zone 4"
   #   icon: "mdi:sprinkler-variant"
+
+sensor:
+  # Uptime sensor.
+  - platform: uptime
+    name: Sprinkler Controller Uptime
