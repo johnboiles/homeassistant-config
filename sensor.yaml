@@ -150,3 +150,27 @@
     - battery.runtime
     - battery.charge
     - battery.voltage
+
+- platform: history_stats
+  name: Maple Sprinkler Runtime Today
+  entity_id: switch.maple_sprinkler
+  state: 'on'
+  type: time
+  start: '{{ now().replace(hour=0, minute=0, second=0) }}'
+  end: '{{ now() }}'
+
+- platform: history_stats
+  name: Apple and Lemon Sprinkler Runtime Today
+  entity_id: switch.apple_and_lemon_sprinkler
+  state: 'on'
+  type: time
+  start: '{{ now().replace(hour=0, minute=0, second=0) }}'
+  end: '{{ now() }}'
+
+- platform: history_stats
+  name: Vegetable Box Sprinkler Runtime Today
+  entity_id: switch.vegetable_box_sprinkler
+  state: 'on'
+  type: time
+  start: '{{ now().replace(hour=0, minute=0, second=0) }}'
+  end: '{{ now() }}'
