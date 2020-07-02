@@ -187,12 +187,6 @@ tplink:
   switch:
     - host: 10.0.0.5
 
-mqtt:
-  client_id: home-assistant
-  discovery: true
-  discovery_prefix: homeassistant
-  password: !secret mqtt_password
-
 ## Section: Component configuration 
 
 group: !include group.yaml
