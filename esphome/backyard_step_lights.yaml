@@ -28,8 +28,8 @@ light:
     type: GRBW
     variant: SK6812
     pin: GPIO3
-    num_leds: 30
-    name: "NeoPixel Light"
+    num_leds: 87
+    name: "Backyard Step Lights"
     effects:
       - addressable_fireworks:
       - addressable_flicker:
@@ -43,22 +43,21 @@ light:
           twinkle_probability: 30%
           progress_interval: 4ms
       - addressable_lambda:
-          name: "My Custom Effect"
-          update_interval: 16ms
+          name: Front Step Only
           lambda: |-
-            // it.size() - Number of LEDs
-            // it[num] - Access the LED at index num.
-            // Set the LED at num to the given r, g, b values
-            // it[num] = ESPColor(r, g, b);
-            // Get the color at index num (ESPColor instance)
-            // it[num].get();
-
-            // Example: Simple color wipe
-            for (int i = it.size() - 1; i > 0; i--) {
-              it[i] = it[i - 1].get();
-            }
-            it[0] = ESPColor::random_color();
-
-            // Bonus: use .range() and .all() to set many LEDs without having to write a loop.
-            it.range(0, 50) = ESPColor::BLACK;
-            it.all().fade_to_black(10);
+            it.all().fade_to_black(0);
+            it.range(22, 66) = current_color;
+      - addressable_lambda:
+          name: Fake Front Louvres
+          lambda: |-
+            it.all().fade_to_black(0);
+            it.range(32, 40) = current_color;
+            it.range(48, 56) = current_color;
+      - addressable_lambda:
+          name: Fake Surround Louvres
+          lambda: |-
+            it.all().fade_to_black(0);
+            it.range(7, 15) = current_color;
+            it.range(32, 40) = current_color;
+            it.range(48, 56) = current_color;
+            it.range(75, 82) = current_color;
