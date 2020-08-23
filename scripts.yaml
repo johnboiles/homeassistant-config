@@ -55,17 +55,17 @@ sprinkler_water_backyard:
       entity_id: switch.apple_and_lemon_sprinkler
     - service: switch.turn_off
       entity_id: switch.vegetable_box_sprinkler
-    - delay: '00:01'
-    - service: switch.turn_on
-      entity_id: switch.maple_sprinkler
-    - delay: '00:12'
-    - service: switch.turn_off
-      entity_id: switch.maple_sprinkler
     - condition: time
       weekday:
       - mon
       - wed
       - fri
+    - delay: '00:01'
+    - service: switch.turn_on
+      entity_id: switch.maple_sprinkler
+    - delay: '00:25'
+    - service: switch.turn_off
+      entity_id: switch.maple_sprinkler
     - delay: '00:01'
     - service: switch.turn_on
       entity_id: switch.apple_and_lemon_sprinkler
