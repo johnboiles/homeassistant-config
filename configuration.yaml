@@ -114,7 +114,7 @@ octoprint:
 yeelight:
   devices:
     10.0.0.40:
-      name: Izzys Light
+      name: Izzys Lamp
 
 homekit:
   entity_config:
