@@ -174,3 +174,8 @@
   type: time
   start: '{{ now().replace(hour=0, minute=0, second=0) }}'
   end: '{{ now() }}'
+
+- platform: waqi
+  token: !secret aqicn_api_token
+  locations:
+    - berkeley
