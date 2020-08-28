@@ -1,0 +1,63 @@
+esphome:
+  name: elijahs_desk_lights
+  platform: ESP8266
+  board: d1_mini
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  fast_connect: true
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Elijah's Desk Lights"
+    password: !secret wifi_ap_password
+
+captive_portal:
+
+# Enable logging
+logger:
+
+ota:
+
+# Enable Home Assistant API
+api:
+
+light:
+  - platform: neopixelbus
+    type: GRBW
+    variant: SK6812
+    pin: GPIO3
+    num_leds: 30
+    name: "Elijah's Desk Lights"
+    effects:
+      - addressable_fireworks:
+      - addressable_flicker:
+      - addressable_rainbow:
+      - addressable_color_wipe:
+      - addressable_scan:
+      - addressable_random_twinkle:
+      - addressable_twinkle:
+      - addressable_twinkle:
+          name: Custom Twinkle Effect
+          twinkle_probability: 30%
+          progress_interval: 4ms
+      - addressable_lambda:
+          name: Front Step Only
+          lambda: |-
+            it.all().fade_to_black(0);
+            it.range(22, 66) = current_color;
+      - addressable_lambda:
+          name: Fake Front Louvres
+          lambda: |-
+            it.all().fade_to_black(0);
+            it.range(32, 40) = current_color;
+            it.range(48, 56) = current_color;
+      - addressable_lambda:
+          name: Fake Surround Louvres
+          lambda: |-
+            it.all().fade_to_black(0);
+            it.range(7, 15) = current_color;
+            it.range(32, 40) = current_color;
+            it.range(48, 56) = current_color;
+            it.range(75, 82) = current_color;
