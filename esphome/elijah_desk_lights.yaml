@@ -1,5 +1,5 @@
 esphome:
-  name: elijahs_desk_lights
+  name: elijah_desk_lights
   platform: ESP8266
   board: d1_mini
 
@@ -10,7 +10,7 @@ wifi:
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
-    ssid: "Elijah's Desk Lights"
+    ssid: "Elijah Desk Lights"
     password: !secret wifi_ap_password
 
 captive_portal:
@@ -28,8 +28,8 @@ light:
     type: GRBW
     variant: SK6812
     pin: GPIO3
-    num_leds: 30
-    name: "Elijah's Desk Lights"
+    num_leds: 83
+    name: "Elijah Desk Lights"
     effects:
       - addressable_fireworks:
       - addressable_flicker:
