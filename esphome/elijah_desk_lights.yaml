@@ -42,22 +42,3 @@ light:
           name: Custom Twinkle Effect
           twinkle_probability: 30%
           progress_interval: 4ms
-      - addressable_lambda:
-          name: Front Step Only
-          lambda: |-
-            it.all().fade_to_black(0);
-            it.range(22, 66) = current_color;
-      - addressable_lambda:
-          name: Fake Front Louvres
-          lambda: |-
-            it.all().fade_to_black(0);
-            it.range(32, 40) = current_color;
-            it.range(48, 56) = current_color;
-      - addressable_lambda:
-          name: Fake Surround Louvres
-          lambda: |-
-            it.all().fade_to_black(0);
-            it.range(7, 15) = current_color;
-            it.range(32, 40) = current_color;
-            it.range(48, 56) = current_color;
-            it.range(75, 82) = current_color;
