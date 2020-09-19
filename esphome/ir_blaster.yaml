@@ -43,5 +43,15 @@ api:
             command: !lambda 'return (int)strtol(command.c_str(), NULL, 16);'
 
 remote_transmitter:
-  pin: D1
+  pin: D0
   carrier_duty_percent: 50%
+
+# Useful for debugging or investigating new IR codes
+# remote_receiver:
+#   pin: D2
+#   dump: all
+#   # Settings to optimize recognition of RF devices
+#   tolerance: 50%
+#   filter: 250us
+#   idle: 4ms
+#   buffer_size: 2kb
