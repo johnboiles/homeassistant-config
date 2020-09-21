@@ -179,3 +179,13 @@
   token: !secret aqicn_api_token
   locations:
     - berkeley
+
+- platform: filter
+  name: "Filtered TVOC"
+  entity_id: sensor.ccs811_total_volatile_organic_compound
+  filters:
+      - filter: lowpass
+        time_constant: 10
+      - filter: time_simple_moving_average
+        window_size: "00:05"
+        precision: 0
