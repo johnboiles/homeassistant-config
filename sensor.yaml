@@ -123,22 +123,22 @@
 - platform: template
   sensors:
     # From https://community.home-assistant.io/t/first-alert-z-wave-smoke-carbon-monoxide-detectors-dont-show-up-in-home-assistant/1332/15
-    hallway_smoke_alarm_state:
+    basement_smoke_alarm_state:
       value_template: >-
-        {%- if is_state("sensor.hallway_smoke_alarm_alarm_level", "0") -%}
+        {%- if is_state("sensor.basement_smoke_alarm_alarm_level", "0") -%}
           Idle
-        {%- elif is_state("sensor.hallway_smoke_alarm_alarm_type", "1") -%}
+        {%- elif is_state("sensor.basement_smoke_alarm_alarm_type", "1") -%}
           Fire
-        {%- elif is_state("sensor.hallway_smoke_alarm_alarm_type", "2") -%}
+        {%- elif is_state("sensor.basement_smoke_alarm_alarm_type", "2") -%}
           CO
-        {%- elif is_state("sensor.hallway_smoke_alarm_alarm_type", "12") -%}
+        {%- elif is_state("sensor.basement_smoke_alarm_alarm_type", "12") -%}
           Testing
-        {%- elif is_state("sensor.hallway_smoke_alarm_alarm_type", "13") -%}
+        {%- elif is_state("sensor.basement_smoke_alarm_alarm_type", "13") -%}
           Idle
         {% else -%}
           Unknown
         {%- endif -%}
-      friendly_name: 'Hallway Smoke Alarm'
+      friendly_name: 'Basement Smoke Alarm'
 
 - platform: nut
   host: 10.0.0.6
