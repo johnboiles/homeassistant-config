@@ -24,7 +24,7 @@
   id: d585d760542f4186a44679bece1487d3
   trigger:
     platform: time
-    at: 07:30:00
+    at: 07:31:00
   condition:
   - condition: time
     weekday:
