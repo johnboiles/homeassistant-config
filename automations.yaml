@@ -19,7 +19,6 @@
           image: !secret 3d_print_snapshot_url
           content-type: jpeg
           hide-thumbnail: false
-
 - alias: Play Roll Over Easy on Thursday at 7:30a
   id: d585d760542f4186a44679bece1487d3
   trigger:
@@ -39,7 +38,6 @@
       entity_id: media_player.bedroom
       media_content_id: BFF.fm
       media_content_type: TUNEIN
-
 - alias: Turn off all lights in the house with a triple tap down in the dining room
   id: 1342127157ed4f988e2dfc5de60cfc69
   trigger:
@@ -59,7 +57,6 @@
   - service: switch.turn_off
     data:
       entity_id: switch.master_bathroom_fan_switch
-
 - alias: Turn off common space lights with a triple tap down in the kitchen or bedroom
   id: 7f5929753d294d9596efe2446d9abf02
   trigger:
@@ -94,7 +91,6 @@
   - service: light.turn_off
     data:
       entity_id: light.kitchen_hallway_light_level
-
 - alias: Turn on bedroom lamp with double tap up
   id: 08182ba3f3554d85a534a5b658d40104
   trigger:
@@ -108,7 +104,6 @@
     service: switch.turn_on
     data:
       entity_id: switch.bedroom_lamp_switch
-
 - alias: Turn off bedroom lamp with double tap down
   id: 2c181ae14b514e0d9a520d8ab7fea07d
   trigger:
@@ -122,7 +117,6 @@
     service: switch.turn_off
     data:
       entity_id: switch.bedroom_lamp_switch
-
 - alias: Garage Door Open Notification
   id: 33e78170ee6f40cbb028622f9a501a66
   trigger:
@@ -151,7 +145,6 @@
             volume: 1.0
   - service: timer.start
     entity_id: timer.garage_door
-
 - alias: Notify if sprinklers left on for 30 minutes
   id: c72b1caa51424d049a2f144c1160d7c7
   trigger:
@@ -202,7 +195,6 @@
         {%- else -%}
           White
         {%- endif -%}
-
 - alias: Adjust dim level for WD100 lights when they are turned off afterhours
   id: 02ac6c6160e74ce2b91d7cd142cd4eda
   trigger:
@@ -231,7 +223,6 @@
         {%- else -%}
           3
         {%- endif -%}
-
 - alias: Set dim level for lights at night
   id: fbd91d4f47f44fc4964c7b38d3a0b9a2
   trigger:
@@ -267,7 +258,6 @@
       node_id: 24
       parameter: 17
       value: 15
-
 - alias: Set bright level for lights in the morning
   id: 5414ebf2b25c4a0a88bb4115c6a2758d
   trigger:
@@ -303,7 +293,6 @@
       node_id: 24
       parameter: 17
       value: 99
-
 - alias: Push notify when power goes out
   id: d986a9e1de204037a6ea78c183f07fde
   trigger:
@@ -324,7 +313,6 @@
     data:
       message: Power went out
       title: Power outage
-
 - alias: Push notify when smoke alarm is triggered
   id: 906bd5f51b04474d85bfe5404251d03f
   trigger:
@@ -354,7 +342,6 @@
     data:
       message: Smoke alarm is triggered!
       title: Smoke alarm
-
 - alias: Update Available Notification
   id: 1002777a3e4d481caf6488391db7b01f
   trigger:
@@ -370,7 +357,6 @@
     data_template:
       message: Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }} is available.
       title: Update available
-
 - alias: HACS Update Available Notification
   id: 76614c0d64b14e15b3c436d07d17b432
   trigger:
@@ -385,7 +371,6 @@
     data_template:
       message: HACS has {{ trigger.to_state.state }} available update.
       title: HACS Update available
-
 - alias: Unifi Firmware Available Notification
   id: 4b1f0b626a9049ab892a56f512106af7
   trigger:
@@ -400,7 +385,6 @@
     data:
       message: New Unifi firmware is available.
       title: Update available
-
 - alias: Unifi Gateway New Alerts Notification
   id: 8fae181b865a49a6bf04128f2e2e9c84
   trigger:
@@ -411,7 +395,6 @@
     service: notify.mobile_app_john_boiless_iphone_x
     data_template:
       message: Unifi controller has new alerts.
-
 - alias: Recalibrate CO2 when nobody is home
   id: a26603390cea4af5aadcdc483dc77d2b
   trigger:
@@ -441,7 +424,6 @@
   - service: notify.mobile_app_john_boiless_iphone_x
     data:
       message: Calibrating CO2 sensor.
-
 - alias: Water Backyard
   id: d3b9ce0c8a7f4527b200174e076f9213
   trigger:
@@ -449,7 +431,6 @@
     at: 03:30:00
   action:
   - service: script.sprinkler_water_backyard
-
 - alias: Soundbar to Aux when the Everywhere group is playing
   id: 230724d25e4c428d9370c15e120ebbf9
   trigger:
@@ -475,7 +456,6 @@
         {%- else -%}
           0x13EC
         {%- endif -%}
-
 - alias: Turn on Step lights With Bistro Lights
   id: '1591884118185'
   description: ''
@@ -497,7 +477,6 @@
       white_value: 36
     entity_id: light.backyard_step_lights
     service: light.turn_on
-
 - alias: Turn off step lights with bistro lights
   id: '1591884206093'
   description: Turn off step lights with bistro lights
