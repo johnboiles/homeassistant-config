@@ -309,9 +309,19 @@
       brightness: 3
   - service: ozw.set_config_parameter
     data_template:
-      node_id: 24
+      node_id: 24 # Master Bathroom Light
       parameter: 17
       value: 15
+  - service: ozw.set_config_parameter
+    data_template:
+      node_id: 33 # Elijah's Room Light
+      parameter: 9
+      value: 30
+  - service: ozw.set_config_parameter
+    data_template:
+      node_id: 34 # Izzy's Room Light
+      parameter: 9
+      value: 30
 - alias: Set bright level for lights in the morning
   id: 5414ebf2b25c4a0a88bb4115c6a2758d
   trigger:
@@ -344,8 +354,18 @@
       brightness: 255
   - service: ozw.set_config_parameter
     data_template:
-      node_id: 24
+      node_id: 24 # Master Bathroom Light
       parameter: 17
+      value: 99
+  - service: ozw.set_config_parameter
+    data_template:
+      node_id: 33 # Elijah's Room Light
+      parameter: 9
+      value: 99
+  - service: ozw.set_config_parameter
+    data_template:
+      node_id: 34 # Izzy's Room Light
+      parameter: 9
       value: 99
 - alias: Push notify when power goes out
   id: d986a9e1de204037a6ea78c183f07fde
