@@ -64,13 +64,13 @@
     event_type: ozw.scene_activated
     event_data:
       node_id: 10
-      scene_data: 4
+      scene_value_id: 5
       scene_id: 2
   - platform: event
     event_type: ozw.scene_activated
     event_data:
       node_id: 30
-      scene_data: 4
+      scene_value_id: 5
       scene_id: 2
   action:
   - service: light.turn_off
@@ -99,7 +99,7 @@
     event_data:
       node_id: 30
       scene_id: 1
-      scene_data: 3
+      scene_value_id: 4
   action:
     service: switch.turn_on
     data:
@@ -112,7 +112,7 @@
     event_data:
       node_id: 30
       scene_id: 2
-      scene_data: 3
+      scene_value_id: 4
   action:
     service: switch.turn_off
     data:
@@ -124,11 +124,12 @@
     event_data:
       node_id: 38
       scene_id: 1
+      scene_value_id: 4
     platform: event
   action:
   - service: light.turn_off
     data:
-      entity_id: light.master_bathroom
+      entity_id: light.master_bathroom_light
   - delay: '00:20'
   - service: switch.turn_off
     data:
