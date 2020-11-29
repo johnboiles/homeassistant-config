@@ -6,6 +6,8 @@ alexa:
       - script
       - sensor
       - device_tracker
+      - timer
+      - media_player
     exclude_entities:
       - switch.twitter_laptop_wol
       - light.master_bathroom_light_2
@@ -25,3 +27,17 @@ alexa:
       - sensor.dht22_heatindex
       - sensor.living_room_temperature
       - sensor.mh_z19_temperature
+      - cover.garage_door
+      - binary_sensor.octoprint_printing_error
+      - binary_sensor.living_room_occupancy
+      - binary_sensor.remote_ui
+      - binary_sensor.rpi_power_status
+      - binary_sensor.quest_is_charging
+      - binary_sensor.updater
+      - switch.unifi_controller_pi
+      - binary_sensor.upstairs_smoke_alarms_access_control_door_window_open
+      - binary_sensor.master_bathroom_motion_detected
+      - binary_sensor.upstairs_smoke_alarms_home_security_tampering_cover_removed
+      - switch.unifi_poe_20_2e_5d_55_a4_83
+      - binary_sensor.front_door_tampering_cover_removed
+      - switch.unifi_poe_00_00_00_00_00_01
