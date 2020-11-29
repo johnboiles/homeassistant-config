@@ -2,10 +2,8 @@ cover.garage_door:
   icon: mdi:garage
   device_class: garage
 binary_sensor.front_door:
-  icon: mdi:door
   device_class: door
 binary_sensor.back_door:
-  icon: mdi:door
   device_class: door
 binary_sensor.upstairs_smoke_alarms:
   device_class: smoke
