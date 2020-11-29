@@ -57,6 +57,9 @@
   - service: switch.turn_off
     data:
       entity_id: switch.master_bathroom_fan
+  - service: switch.turn_off
+    data:
+      entity_id: switch.christmas_tree_lights
 - alias: Turn off common space lights with a triple tap down in the kitchen or bedroom
   id: 7f5929753d294d9596efe2446d9abf02
   trigger:
@@ -91,6 +94,33 @@
   - service: light.turn_off
     data:
       entity_id: light.kitchen_hallway_light
+  - service: switch.turn_off
+    data:
+      entity_id: switch.christmas_tree_lights
+- alias: Turn on christmas tree double tap up in dining room
+  trigger:
+    platform: event
+    event_type: ozw.scene_activated
+    event_data:
+      node_id: 8
+      scene_id: 1
+      scene_value_id: 4
+  action:
+    service: switch.turn_on
+    data:
+      entity_id: switch.christmas_tree_lights
+- alias: Turn off christmas tree double tap up in dining room
+  trigger:
+    platform: event
+    event_type: ozw.scene_activated
+    event_data:
+      node_id: 8
+      scene_id: 2
+      scene_value_id: 4
+  action:
+    service: switch.turn_off
+    data:
+      entity_id: switch.christmas_tree_lights
 - alias: Turn on bedroom lamp with double tap up
   id: 08182ba3f3554d85a534a5b658d40104
   trigger:
