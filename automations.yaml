@@ -41,82 +41,98 @@
 - alias: Turn off all lights in the house with a triple tap down in the dining room
   id: 1342127157ed4f988e2dfc5de60cfc69
   trigger:
+    event_type: ozw.scene_activated
     event_data:
-      entity_id: zwave.dining_room_light
-      scene_data: 4
+      node_id: 8
+      scene_value_id: 5
       scene_id: 2
-    event_type: zwave.scene_activated
     platform: event
   action:
   - service: light.turn_off
     data:
-      entity_id: group.all_lights
+      entity_id: all
   - service: switch.turn_off
     data:
-      entity_id: switch.bedroom_lamp_switch
+      entity_id: switch.bedroom_lamp
   - service: switch.turn_off
     data:
-      entity_id: switch.master_bathroom_fan_switch
+      entity_id: switch.master_bathroom_fan
 - alias: Turn off common space lights with a triple tap down in the kitchen or bedroom
   id: 7f5929753d294d9596efe2446d9abf02
   trigger:
   - platform: event
-    event_type: zwave.scene_activated
+    event_type: ozw.scene_activated
     event_data:
-      entity_id: zwave.kitchen_light
+      node_id: 10
       scene_data: 4
       scene_id: 2
   - platform: event
-    event_type: zwave.scene_activated
+    event_type: ozw.scene_activated
     event_data:
-      entity_id: zwave.bedroom_light
+      node_id: 30
       scene_data: 4
       scene_id: 2
   action:
   - service: light.turn_off
     data:
-      entity_id: light.kitchen_light_level
+      entity_id: light.kitchen_light
   - service: light.turn_off
     data:
-      entity_id: light.kitchen_island_light_level
+      entity_id: light.kitchen_island_light
   - service: light.turn_off
     data:
-      entity_id: light.dining_room_light_level
+      entity_id: light.dining_room_light
   - service: light.turn_off
     data:
-      entity_id: light.dining_room_chandelier_level
+      entity_id: light.dining_room_chandelier
   - service: light.turn_off
     data:
-      entity_id: light.living_room_light_level
+      entity_id: light.living_room_light
   - service: light.turn_off
     data:
-      entity_id: light.kitchen_hallway_light_level
+      entity_id: light.kitchen_hallway_light
 - alias: Turn on bedroom lamp with double tap up
   id: 08182ba3f3554d85a534a5b658d40104
   trigger:
     platform: event
-    event_type: zwave.scene_activated
+    event_type: ozw.scene_activated
     event_data:
-      entity_id: zwave.bedroom_light
+      node_id: 30
       scene_id: 1
       scene_data: 3
   action:
     service: switch.turn_on
     data:
-      entity_id: switch.bedroom_lamp_switch
+      entity_id: switch.bedroom_lamp
 - alias: Turn off bedroom lamp with double tap down
   id: 2c181ae14b514e0d9a520d8ab7fea07d
   trigger:
     platform: event
-    event_type: zwave.scene_activated
+    event_type: ozw.scene_activated
     event_data:
-      entity_id: zwave.bedroom_light
+      node_id: 30
       scene_id: 2
       scene_data: 3
   action:
     service: switch.turn_off
     data:
-      entity_id: switch.bedroom_lamp_switch
+      entity_id: switch.bedroom_lamp
+- alias: Turn off bathroom lights 20min after a double tap down on the fan switch
+  mode: restart
+  trigger:
+    event_type: ozw.scene_activated
+    event_data:
+      node_id: 38
+      scene_id: 1
+    platform: event
+  action:
+  - service: light.turn_off
+    data:
+      entity_id: light.master_bathroom
+  - delay: '00:20'
+  - service: switch.turn_off
+    data:
+      entity_id: switch.master_bathroom_fan
 - alias: Garage Door Open Notification
   id: 33e78170ee6f40cbb028622f9a501a66
   trigger:
@@ -175,7 +191,7 @@
     entity_id: cover.garage_door
     to: closed
   action:
-  - service: zwave.set_config_parameter
+  - service: ozw.set_config_parameter
     data_template:
       node_id: 21
       parameter: 13 # Dimmer LED mode
@@ -185,7 +201,7 @@
         {%- else -%}
           Normal mode
         {%- endif -%}
-  - service: zwave.set_config_parameter
+  - service: ozw.set_config_parameter
     data_template:
       node_id: 21
       parameter: 21 # Status mode LED 1 (bottom) color
@@ -200,12 +216,12 @@
   trigger:
   - platform: state
     entity_id:
-    - light.living_room_light_level
-    - light.dining_room_light_level
-    - light.kitchen_island_light_level
-    - light.kitchen_light_level
-    - light.kitchen_hallway_light_level
-    - light.bedroom_light_level
+    - light.living_room_light
+    - light.dining_room_light
+    - light.kitchen_island_light
+    - light.kitchen_light
+    - light.kitchen_hallway_light
+    - light.bedroom_light
     to: 'off'
     for:
       minutes: 5
@@ -218,7 +234,7 @@
     data_template:
       entity_id: "{{ trigger.entity_id }}"
       brightness: >-
-        {%- if trigger.entity_id == "light.kitchen_island_light_level" -%}
+        {%- if trigger.entity_id == "light.kitchen_island_light" -%}
           50
         {%- else -%}
           3
@@ -231,29 +247,29 @@
   action:
   - service: script.set_homeseer_dim_level
     data:
-      entity_id: light.living_room_light_level
+      entity_id: light.living_room_light
       brightness: 3
   - service: script.set_homeseer_dim_level
     data:
-      entity_id: light.dining_room_light_level
+      entity_id: light.dining_room_light
       brightness: 3
   - service: script.set_homeseer_dim_level
     data:
-      entity_id: light.kitchen_island_light_level
+      entity_id: light.kitchen_island_light
       brightness: 50
   - service: script.set_homeseer_dim_level
     data:
-      entity_id: light.kitchen_light_level
+      entity_id: light.kitchen_light
       brightness: 3
   - service: script.set_homeseer_dim_level
     data:
-      entity_id: light.kitchen_hallway_light_level
+      entity_id: light.kitchen_hallway_light
       brightness: 3
   - service: script.set_homeseer_dim_level
     data:
-      entity_id: light.bedroom_light_level
+      entity_id: light.bedroom_light
       brightness: 3
-  - service: zwave.set_config_parameter
+  - service: ozw.set_config_parameter
     data_template:
       node_id: 24
       parameter: 17
@@ -266,29 +282,29 @@
   action:
   - service: script.set_homeseer_dim_level
     data:
-      entity_id: light.living_room_light_level
+      entity_id: light.living_room_light
       brightness: 255
   - service: script.set_homeseer_dim_level
     data:
-      entity_id: light.dining_room_light_level
+      entity_id: light.dining_room_light
       brightness: 255
   - service: script.set_homeseer_dim_level
     data:
-      entity_id: light.dining_room_chandelier_level
+      entity_id: light.dining_room_chandelier
       brightness: 255
   - service: script.set_homeseer_dim_level
     data:
-      entity_id: light.kitchen_island_light_level
+      entity_id: light.kitchen_island_light
       brightness: 255
   - service: script.set_homeseer_dim_level
     data:
-      entity_id: light.kitchen_light_level
+      entity_id: light.kitchen_light
       brightness: 255
   - service: script.set_homeseer_dim_level
     data:
-      entity_id: light.kitchen_hallway_light_level
+      entity_id: light.kitchen_hallway_light
       brightness: 255
-  - service: zwave.set_config_parameter
+  - service: ozw.set_config_parameter
     data_template:
       node_id: 24
       parameter: 17
@@ -482,7 +498,7 @@
   trigger:
   - device_id: a9fb08898aae4a7a81c1a9e68ea3cde6
     domain: light
-    entity_id: light.backyard_bistro_lights_level
+    entity_id: light.backyard_bistro_lights
     platform: device
     type: turned_on
   condition: []
@@ -503,7 +519,7 @@
   trigger:
   - device_id: a9fb08898aae4a7a81c1a9e68ea3cde6
     domain: light
-    entity_id: light.backyard_bistro_lights_level
+    entity_id: light.backyard_bistro_lights
     platform: device
     type: turned_off
   condition: []

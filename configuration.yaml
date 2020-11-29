@@ -73,36 +73,6 @@ ios:
 # Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
 
-zwave:
-  usb_path: /dev/ttyACM0
-  network_key: !secret zwave_network_key
-  device_config:
-    light.master_bathroom_light_level:
-      refresh_value: true
-      delay: 3
-      polling_intensity: 2
-    light.bedroom_light_level:
-      refresh_value: true
-      delay: 2
-    light.living_room_light_level:
-      refresh_value: true
-      delay: 2
-    light.dining_room_light_level:
-      refresh_value: true
-      delay: 2
-    light.kitchen_light_level:
-      refresh_value: true
-      delay: 2
-    light.kitchen_island_light_level:
-      refresh_value: true
-      delay: 2
-    light.dining_room_chandelier_level:
-      refresh_value: true
-      delay: 2
-    light.kitchen_hallway_light_level:
-      refresh_value: true
-      delay: 2
-
 ecobee:
   api_key: !secret ecobee_api_key
 
@@ -146,7 +116,7 @@ homekit:
       - media_player
     exclude_entities:
       - switch.twitter_laptop_wol
-      - light.master_bathroom_light_level_2
+      - light.master_bathroom_light_2
       - switch.3d_printer
       - switch.twitter_laptop_wol
       - sensor.dark_sky_daily_low_temperature

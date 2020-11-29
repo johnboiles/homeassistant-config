@@ -8,7 +8,7 @@ alexa:
       - device_tracker
     exclude_entities:
       - switch.twitter_laptop_wol
-      - light.master_bathroom_light_level_2
+      - light.master_bathroom_light_2
       - switch.3d_printer
       - sensor.octoprint_target_bed_temp
       - sensor.octoprint_actual_bed_temp
