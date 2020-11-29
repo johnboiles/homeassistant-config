@@ -1,0 +1,20 @@
+set_homeseer_dim_level:
+  alias: Set HomeSeer switch default dim level
+  description: Automatically set dim level for HomeSeer WD100/WD200 switches (by turning them on to the desired brightness then immediately back off)
+  fields:
+    entity_id:
+      description: The light that will configured.
+      example: light.bedroom_light
+    brightness:
+      description: The default brightness as char from 1-255.
+      example: 10
+  sequence:
+    - condition: template
+      value_template: "{{ states(entity_id) == 'off' }}"
+    - service: light.turn_on
+      data_template:
+        entity_id: "{{ entity_id }}"
+        brightness: "{{ brightness }}"
+    - service: light.turn_off
+      data_template:
+        entity_id: "{{ entity_id }}"

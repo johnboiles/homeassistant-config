@@ -1,0 +1,22 @@
+# Turns on the bedroom lights and then the living room lights 1 minute later
+movie_scene:
+  alias: Activate the movie scene
+  sequence:
+    # This is Home Assistant Script Syntax
+    - alias: Kitchen Island light to dim
+      service: light.turn_on
+      data:
+        entity_id: light.kitchen_island_light
+        brightness_pct: 2
+    - alias: Living room light off
+      service: light.turn_off
+      data:
+        entity_id: light.living_room_light
+    - alias: Dining room light off
+      service: light.turn_off
+      data:
+        entity_id: light.dining_room_light
+    - alias: Kitchen light off
+      service: light.turn_off
+      data:
+        entity_id: light.kitchen_light

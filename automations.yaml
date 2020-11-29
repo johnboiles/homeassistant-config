@@ -157,6 +157,13 @@
       scene_value_id: 4
     platform: event
   action:
+  - service: script.inovelli_led
+    data:
+      entity_id: switch.master_bathroom_fan
+      model: switch
+      color: green
+      duration: 2 seconds
+      effect: breath
   - service: light.turn_off
     data:
       entity_id: light.master_bathroom_light

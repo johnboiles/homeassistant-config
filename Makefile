@@ -14,6 +14,7 @@ remote-test:
 deploy:
 	$(info Deploying HA config to $(REMOTE_HOST).)
 	rsync -av --rsync-path="sudo rsync" $(BASE_DIR)/*.yaml $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/
+	rsync -av --rsync-path="sudo rsync" $(BASE_DIR)/scripts/*.yaml $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/scripts/
 	rsync -av --rsync-path="sudo rsync" $(BASE_DIR)/esphome/*.yaml $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/esphome/
 	rsync -av --rsync-path="sudo rsync" $(BASE_DIR)/panels/*.html $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/panels/
 
