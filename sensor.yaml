@@ -126,7 +126,7 @@
     basement_smoke_alarm_state:
       value_template: >-
         {%- if is_state("sensor.basement_smoke_alarm_alarm_level", "0") -%}
-          Idle
+          Clear
         {%- elif is_state("sensor.basement_smoke_alarm_alarm_type", "1") -%}
           Fire
         {%- elif is_state("sensor.basement_smoke_alarm_alarm_type", "2") -%}
@@ -134,11 +134,12 @@
         {%- elif is_state("sensor.basement_smoke_alarm_alarm_type", "12") -%}
           Testing
         {%- elif is_state("sensor.basement_smoke_alarm_alarm_type", "13") -%}
-          Idle
+          Clear
         {% else -%}
           Unknown
         {%- endif -%}
       friendly_name: 'Basement Smoke Alarm'
+      icon_template: hass:smoke-detector
 
 - platform: nut
   host: 10.0.0.6

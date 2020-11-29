@@ -7,6 +7,8 @@ binary_sensor.front_door:
 binary_sensor.back_door:
   icon: mdi:door
   device_class: door
+binary_sensor.upstairs_smoke_alarms:
+  device_class: smoke
 sensor.pm25_particles:
   device_class: pm25
 sensor.bedroom_humidity:

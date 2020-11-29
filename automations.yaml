@@ -368,10 +368,10 @@
     from: Unknown
   - platform: state
     entity_id: sensor.basement_smoke_alarm_state
-    from: Idle
+    from: Clear
   condition:
   - condition: template
-    value_template: '{{ not is_state("sensor.basement_smoke_alarm_state", "Idle") }}'
+    value_template: '{{ not is_state("sensor.basement_smoke_alarm_state", "Clear") }}'
   - condition: template
     value_template: '{{ not is_state("sensor.basement_smoke_alarm_state", "Unknown") }}'
   action:
@@ -392,7 +392,7 @@
 - alias: Push notify when upstairs smoke alarms are triggered
   trigger:
   - platform: state
-    entity_id: binary_sensor.upstairs_smoke_alarms_sensor
+    entity_id: binary_sensor.upstairs_smoke_alarms
     to: 'on'
   action:
   - service: notify.mobile_app_john_boiless_iphone_x
