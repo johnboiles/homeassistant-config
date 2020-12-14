@@ -1,6 +1,6 @@
 BASE_DIR="$(shell pwd)"
-REMOTE_HOST=pi@10.0.0.2
-REMOTE_CONFIG_DIR=/usr/share/hassio/homeassistant
+REMOTE_HOST=hassio@10.0.0.2
+REMOTE_CONFIG_DIR=/config
 
 .PHONY: test
 test:
