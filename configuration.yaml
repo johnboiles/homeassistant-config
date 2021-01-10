@@ -103,6 +103,8 @@ homekit:
     include_entities:
       - binary_sensor.front_door
       - binary_sensor.back_door
+      - binary_sensor.basement_side_door
+      - binary_sensor.basement_motion_detected
       - media_player.soundbar
     exclude_domains:
       - group
