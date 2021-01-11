@@ -227,6 +227,7 @@ timer:
 media_player:
   - platform: universal
     name: Soundbar
+    state_template: 'on'
     children:
       - media_player.living_room
       - media_player.everywhere
@@ -279,4 +280,50 @@ media_player:
               0x4DB2
             {%- elif source == 'Digital' -%}
               0x936C
+            {%- endif -%}
+  - platform: universal
+    name: Vizio TV
+    state_template: >
+      {% if is_state('device_tracker.vizio_tv_wlan', 'home') %}
+      on
+      {% else %}
+      off
+      {% endif %}
+    commands:
+      turn_on:
+        service: esphome.ir_blaster_transmit_nec
+        data:
+          address: 0x20DF
+          command: 0x54AB
+      turn_off:
+        service: esphome.ir_blaster_transmit_raw
+        data:
+          address: 0x20DF
+          command: 0xA45B
+      volume_up:
+        service: esphome.ir_blaster_transmit_nec
+        data:
+          address: 0xFF
+          command: 0x827D
+      volume_down:
+        service: esphome.ir_blaster_transmit_nec
+        data:
+          address: 0xFF
+          command: 0xA25D
+      volume_mute:
+        service: esphome.ir_blaster_transmit_nec
+        data:
+          address: 0xFF
+          command: 0x12ED
+      select_source:
+        service: esphome.ir_blaster_transmit_nec_string
+        data_template:
+          address: 0x20DF
+          command: >-
+            {%- if source == 'Apple TV' -%}
+              0xA15E
+            {%- elif source == 'Nintendo Switch' -%}
+              0xC13E
+            {%- elif source == 'Side HDMI' -%}
+              0x21DE
             {%- endif -%}
