@@ -1,7 +1,7 @@
-- alias: Notify me when a 3d print finishes
-  id: 282d7e1b370b46bfa5aa73521d93d8d2
+- id: 282d7e1b370b46bfa5aa73521d93d8d2
+  alias: 'Notification: 3d print finished'
   trigger:
-    platform: state
+  - platform: state
     entity_id: binary_sensor.octoprint_printing
     from: 'on'
     to: 'off'
@@ -19,10 +19,12 @@
           image: !secret 3d_print_snapshot_url
           content-type: jpeg
           hide-thumbnail: false
-- alias: Play Roll Over Easy on Thursday at 7:30a
-  id: d585d760542f4186a44679bece1487d3
+  mode: single
+- id: d585d760542f4186a44679bece1487d3
+  alias: 'Bedroom: Play Roll Over Easy'
+  description: Plays Roll Over Easy on BFF.fm on the bedroom Echo via TuneIn
   trigger:
-    platform: time
+  - platform: time
     at: 07:31:00
   condition:
   - condition: time
@@ -38,10 +40,11 @@
       entity_id: media_player.bedroom
       media_content_id: BFF.fm
       media_content_type: TUNEIN
-- alias: Turn off all lights in the house with a triple tap down in the dining room
-  id: 1342127157ed4f988e2dfc5de60cfc69
+  mode: single
+- id: 1342127157ed4f988e2dfc5de60cfc69
+  alias: 'Dining Room: Turn off all lights with a triple tap down'
   trigger:
-    event_type: ozw.scene_activated
+  - event_type: ozw.scene_activated
     event_data:
       node_id: 8
       scene_value_id: 5
@@ -57,11 +60,9 @@
   - service: switch.turn_off
     data:
       entity_id: switch.master_bathroom_fan
-  - service: switch.turn_off
-    data:
-      entity_id: switch.christmas_tree_lights
-- alias: Turn off common space lights with a triple tap down in the kitchen or bedroom
-  id: 7f5929753d294d9596efe2446d9abf02
+  mode: single
+- id: 7f5929753d294d9596efe2446d9abf02
+  alias: 'Kitchen/Bedroom: Turn off common space lights with a triple tap down'
   trigger:
   - platform: event
     event_type: ozw.scene_activated
@@ -94,63 +95,39 @@
   - service: light.turn_off
     data:
       entity_id: light.kitchen_hallway_light
+  mode: single
+- id: 08182ba3f3554d85a534a5b658d40104
+  alias: 'Bedroom: Turn on lamp with double tap up'
+  trigger:
+  - platform: event
+    event_type: ozw.scene_activated
+    event_data:
+      node_id: 30
+      scene_id: 1
+      scene_value_id: 4
+  action:
+  - service: switch.turn_on
+    data:
+      entity_id: switch.bedroom_lamp
+  mode: single
+- id: 2c181ae14b514e0d9a520d8ab7fea07d
+  alias: 'Bedroom: Turn off lamp with double tap down'
+  trigger:
+  - platform: event
+    event_type: ozw.scene_activated
+    event_data:
+      node_id: 30
+      scene_id: 2
+      scene_value_id: 4
+  action:
   - service: switch.turn_off
     data:
-      entity_id: switch.christmas_tree_lights
-- alias: Turn on christmas tree double tap up in dining room
-  trigger:
-    platform: event
-    event_type: ozw.scene_activated
-    event_data:
-      node_id: 8
-      scene_id: 1
-      scene_value_id: 4
-  action:
-    service: switch.turn_on
-    data:
-      entity_id: switch.christmas_tree_lights
-- alias: Turn off christmas tree double tap up in dining room
-  trigger:
-    platform: event
-    event_type: ozw.scene_activated
-    event_data:
-      node_id: 8
-      scene_id: 2
-      scene_value_id: 4
-  action:
-    service: switch.turn_off
-    data:
-      entity_id: switch.christmas_tree_lights
-- alias: Turn on bedroom lamp with double tap up
-  id: 08182ba3f3554d85a534a5b658d40104
-  trigger:
-    platform: event
-    event_type: ozw.scene_activated
-    event_data:
-      node_id: 30
-      scene_id: 1
-      scene_value_id: 4
-  action:
-    service: switch.turn_on
-    data:
       entity_id: switch.bedroom_lamp
-- alias: Turn off bedroom lamp with double tap down
-  id: 2c181ae14b514e0d9a520d8ab7fea07d
+  mode: single
+- id: b5d3da4e0d33496ab4965ee577aac543
+  alias: 'Bathroom: Turn off fan 20min after a double tap down on the fan switch'
   trigger:
-    platform: event
-    event_type: ozw.scene_activated
-    event_data:
-      node_id: 30
-      scene_id: 2
-      scene_value_id: 4
-  action:
-    service: switch.turn_off
-    data:
-      entity_id: switch.bedroom_lamp
-- alias: Turn off bathroom lights 20min after a double tap down on the fan switch
-  mode: restart
-  trigger:
-    event_type: ozw.scene_activated
+  - event_type: ozw.scene_activated
     event_data:
       node_id: 38
       scene_id: 1
@@ -167,24 +144,26 @@
   - service: light.turn_off
     data:
       entity_id: light.master_bathroom_light
-  - delay: '00:20'
+  - delay: 00:20
   - service: switch.turn_off
     data:
       entity_id: switch.master_bathroom_fan
-- alias: Garage Door Open Notification
-  id: 33e78170ee6f40cbb028622f9a501a66
+  mode: restart
+- id: 33e78170ee6f40cbb028622f9a501a66
+  alias: 'Notification: Garage Door Open'
+  description: Send a critical notification if the garage door is left open for 30
+    minutes.
   trigger:
   - platform: state
     entity_id: cover.garage_door
     to: open
-    for:
-      minutes: 30
+    for: 0:30:00
   - platform: event
     event_type: timer.finished
     event_data:
       entity_id: timer.garage_door
   condition:
-    condition: state
+  - condition: state
     entity_id: cover.garage_door
     state: open
   action:
@@ -196,11 +175,13 @@
           sound:
             name: default
             critical: 1
-            volume: 1.0
+            volume: 1
   - service: timer.start
     entity_id: timer.garage_door
-- alias: Notify if sprinklers left on for 30 minutes
-  id: c72b1caa51424d049a2f144c1160d7c7
+  mode: single
+- id: c72b1caa51424d049a2f144c1160d7c7
+  alias: 'Notification: Sprinklers left on'
+  description: Push notify if the sprinklers have been left on for 30 minutes.
   trigger:
   - platform: state
     entity_id:
@@ -208,8 +189,7 @@
     - switch.apple_and_lemon_sprinkler
     - switch.vegetable_box_sprinkler
     to: 'on'
-    for:
-      minutes: 30
+    for: 0:30:00
   action:
   - service: notify.mobile_app_john_boiless_iphone_x
     data:
@@ -219,8 +199,10 @@
           sound:
             name: default
             critical: 1
-            volume: 1.0
-- alias: WD200 Status LED for Garage Door
+            volume: 1
+  mode: single
+- id: 61edd68a44424f01b011a64b2ac45ec1
+  alias: 'Kitchen: WD200 Status LED for Garage Door'
   trigger:
   - platform: state
     entity_id: cover.garage_door
@@ -249,8 +231,9 @@
         {%- else -%}
           White
         {%- endif -%}
-- alias: Adjust dim level for WD100 lights when they are turned off afterhours
-  id: 02ac6c6160e74ce2b91d7cd142cd4eda
+  mode: single
+- id: 02ac6c6160e74ce2b91d7cd142cd4eda
+  alias: 'Lighting: Set default level for WD100 when turned off after hours'
   trigger:
   - platform: state
     entity_id:
@@ -261,14 +244,13 @@
     - light.kitchen_hallway_light
     - light.bedroom_light
     to: 'off'
-    for:
-      minutes: 5
+    for: 0:05:00
   condition:
-    condition: time
+  - condition: time
     after: '21:00:00'
     before: 06:00:00
   action:
-    service: script.set_homeseer_dim_level
+  - service: script.set_homeseer_dim_level
     data_template:
       entity_id: "{{ trigger.entity_id }}"
       brightness: >-
@@ -277,10 +259,11 @@
         {%- else -%}
           3
         {%- endif -%}
-- alias: Set dim level for lights at night
-  id: fbd91d4f47f44fc4964c7b38d3a0b9a2
+  mode: single
+- id: fbd91d4f47f44fc4964c7b38d3a0b9a2
+  alias: 'Lighting: Set default level at night'
   trigger:
-    platform: time
+  - platform: time
     at: '21:00:00'
   action:
   - service: script.set_homeseer_dim_level
@@ -322,10 +305,11 @@
       node_id: 34 # Izzy's Room Light
       parameter: 9
       value: 30
-- alias: Set bright level for lights in the morning
-  id: 5414ebf2b25c4a0a88bb4115c6a2758d
+  mode: single
+- id: 5414ebf2b25c4a0a88bb4115c6a2758d
+  alias: 'Lighting: Set default level in the morning'
   trigger:
-    platform: time
+  - platform: time
     at: '7:00:00'
   action:
   - service: script.set_homeseer_dim_level
@@ -367,12 +351,14 @@
       node_id: 34 # Izzy's Room Light
       parameter: 9
       value: 99
-- alias: Push notify when power goes out
-  id: d986a9e1de204037a6ea78c183f07fde
+  mode: single
+- id: d986a9e1de204037a6ea78c183f07fde
+  alias: 'Notification: power is out'
+  description: Sends a critical notification when the power goes out.
   trigger:
-    platform: numeric_state
+  - platform: numeric_state
     entity_id: sensor.nut_ups_input_voltage
-    below: 60
+    below: '60'
   action:
   - service: notify.mobile_app_john_boiless_iphone_x
     data:
@@ -382,13 +368,14 @@
           sound:
             name: default
             critical: 1
-            volume: 1.0
+            volume: 1
   - service: persistent_notification.create
     data:
       message: Power went out
       title: Power outage
-- alias: Push notify when smoke alarm is triggered
-  id: 906bd5f51b04474d85bfe5404251d03f
+  mode: single
+- id: 906bd5f51b04474d85bfe5404251d03f
+  alias: 'Notification: Smoke alarm is triggered in the Basement'
   trigger:
   - platform: state
     entity_id: sensor.basement_smoke_alarm_state
@@ -411,12 +398,14 @@
           sound:
             name: default
             critical: 1
-            volume: 1.0
+            volume: 1
   - service: persistent_notification.create
     data:
       message: Basement smoke alarm is triggered!
       title: Smoke alarm
-- alias: Push notify when upstairs smoke alarms are triggered
+  mode: single
+- id: 37ac75c3bcd64822b24cf7d3c29c6ea4
+  alias: 'Notification: Smoke alarms are triggered upstairs'
   trigger:
   - platform: state
     entity_id: binary_sensor.upstairs_smoke_alarms
@@ -431,15 +420,16 @@
           sound:
             name: default
             critical: 1
-            volume: 1.0
+            volume: 1
   - service: persistent_notification.create
     data:
       message: Upstairs smoke alarm is triggered!
       title: Smoke alarm
-- alias: Update Available Notification
-  id: 1002777a3e4d481caf6488391db7b01f
+  mode: single
+- id: 1002777a3e4d481caf6488391db7b01f
+  alias: 'Notification: Update Available'
   trigger:
-    platform: state
+  - platform: state
     entity_id: binary_sensor.updater
     from: 'off'
     to: 'on'
@@ -451,10 +441,11 @@
     data_template:
       message: Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }} is available.
       title: Update available
-- alias: HACS Update Available Notification
-  id: 76614c0d64b14e15b3c436d07d17b432
+  mode: single
+- id: 76614c0d64b14e15b3c436d07d17b432
+  alias: 'Notification: HACS Update Available'
   trigger:
-    platform: state
+  - platform: state
     entity_id: sensor.hacs
     from: '0'
   action:
@@ -465,10 +456,11 @@
     data_template:
       message: HACS has {{ trigger.to_state.state }} available update.
       title: HACS Update available
-- alias: Unifi Firmware Available Notification
-  id: 4b1f0b626a9049ab892a56f512106af7
+  mode: single
+- id: 4b1f0b626a9049ab892a56f512106af7
+  alias: 'Notification: Unifi Firmware Available'
   trigger:
-    platform: state
+  - platform: state
     entity_id: sensor.unifi_gateway_firmware_upgradable
     from: '0'
   action:
@@ -479,18 +471,20 @@
     data:
       message: New Unifi firmware is available.
       title: Update available
-- alias: Unifi Gateway New Alerts Notification
-  id: 8fae181b865a49a6bf04128f2e2e9c84
+  mode: single
+- id: 8fae181b865a49a6bf04128f2e2e9c84
+  alias: 'Notification: Unifi Gateway New Alerts'
   trigger:
-    platform: state
+  - platform: state
     entity_id: sensor.unifi_gateway_alerts
     from: '0'
   action:
-    service: notify.mobile_app_john_boiless_iphone_x
+  - service: notify.mobile_app_john_boiless_iphone_x
     data_template:
       message: Unifi controller has new alerts.
-- alias: Recalibrate CO2 when nobody is home
-  id: a26603390cea4af5aadcdc483dc77d2b
+  mode: single
+- id: a26603390cea4af5aadcdc483dc77d2b
+  alias: 'Kitchen: Recalibrate CO2 when nobody is home'
   trigger:
   - platform: state
     entity_id: group.all_people
@@ -500,8 +494,7 @@
   - platform: state
     entity_id: group.all_occupancy
     to: 'off'
-    for:
-      hours: 4
+    for: '4:00:00'
   condition:
   - condition: state
     entity_id: group.all_people
@@ -518,15 +511,17 @@
   - service: notify.mobile_app_john_boiless_iphone_x
     data:
       message: Calibrating CO2 sensor.
-- alias: Water Backyard
-  id: d3b9ce0c8a7f4527b200174e076f9213
+  mode: single
+- id: d3b9ce0c8a7f4527b200174e076f9213
+  alias: 'Outside: Water Backyard'
   trigger:
   - platform: time
     at: 03:30:00
   action:
   - service: script.sprinkler_water_backyard
-- alias: Soundbar to Aux when the Everywhere group is playing
-  id: 230724d25e4c428d9370c15e120ebbf9
+  mode: single
+- id: 230724d25e4c428d9370c15e120ebbf9
+  alias: 'Living Room: Soundbar to Aux when Alexa is playing music'
   trigger:
   - platform: state
     entity_id: media_player.everywhere
@@ -541,7 +536,7 @@
     entity_id: media_player.living_room
     from: playing
   action:
-    service: esphome.ir_blaster_transmit_nec_string
+  - service: esphome.ir_blaster_transmit_nec_string
     data_template:
       address: 0xFF
       command: >-
@@ -550,8 +545,9 @@
         {%- else -%}
           0x13EC
         {%- endif -%}
-- alias: Turn on Step lights With Bistro Lights
-  id: '1591884118185'
+  mode: single
+- id: '1591884118185'
+  alias: 'Outside: Turn on Step lights With Bistro Lights'
   description: ''
   trigger:
   - device_id: a9fb08898aae4a7a81c1a9e68ea3cde6
@@ -571,9 +567,10 @@
       white_value: 36
     entity_id: light.backyard_step_lights
     service: light.turn_on
-- alias: Turn off step lights with bistro lights
-  id: '1591884206093'
-  description: Turn off step lights with bistro lights
+  mode: single
+- id: '1591884206093'
+  alias: 'Outside: Turn off step lights with bistro lights'
+  description: ''
   trigger:
   - device_id: a9fb08898aae4a7a81c1a9e68ea3cde6
     domain: light
@@ -585,3 +582,4 @@
   - data: {}
     entity_id: light.backyard_step_lights
     service: light.turn_off
+  mode: single
