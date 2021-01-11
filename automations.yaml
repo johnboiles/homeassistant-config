@@ -583,3 +583,57 @@
     entity_id: light.backyard_step_lights
     service: light.turn_off
   mode: single
+- id: '1609711538194'
+  alias: 'Basement: Light On Motion'
+  description: ''
+  use_blueprint:
+    path: freakshock88/motion_illuminance_activated_entity.yaml
+    input:
+      motion_sensor: binary_sensor.basement_motion_detected
+      target_entity: switch.basement_light
+      no_motion_wait: '500'
+- id: '1609712117326'
+  alias: Basement Motion Image
+  description: ''
+  use_blueprint:
+    path: vorion/send-camera-snapshot-notification-on-motion.yaml
+    input:
+      delay: 3
+      motion_sensor: binary_sensor.basement_motion_detected
+      camera: camera.esp_camera
+      notify_device: 01945bd05deb4009b1bc0020fc562b68
+      is_ios: true
+      notification_title: Basement Motion Detected
+- id: '1609728044097'
+  alias: 'Basement: Light with Garage Door'
+  description: Turn on the Basement Light when the Garage Door opens.
+  trigger:
+  - platform: state
+    entity_id: cover.garage_door
+    from: closed
+    to: open
+  condition: []
+  action:
+  - service: switch.turn_on
+    data: {}
+    entity_id: switch.basement_light
+  mode: single
+- id: '1610226412253'
+  alias: 'Basement: Lights and heater off when no motion'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.basement_motion_detected
+    to: 'off'
+    for: 00:15:00
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 0e47181916be7034f083d15852874a08
+    entity_id: switch.basement_light
+    domain: switch
+  - type: turn_off
+    device_id: dad36f9de4021e97413220d85d5a5a4e
+    entity_id: switch.basement_heater
+    domain: switch
+  mode: single
