@@ -41,6 +41,27 @@ api:
         - remote_transmitter.transmit_nec:
             address: !lambda 'return address;'
             command: !lambda 'return (int)strtol(command.c_str(), NULL, 16);'
+    - service: transmit_raw
+      variables:
+        code: int[]
+        carrier_frequency: float
+      then:
+        - remote_transmitter.transmit_raw:
+            code: !lambda 'return code;'
+            carrier_frequency: !lambda 'return carrier_frequency;'
+    - service: transmit_raw_repeat
+      variables:
+        code: int[]
+        carrier_frequency: float
+        repeat_times: int
+        repeat_wait_time_us: int
+      then:
+        - remote_transmitter.transmit_raw:
+            code: !lambda 'return code;'
+            carrier_frequency: !lambda 'return carrier_frequency;'
+            repeat:
+              times: !lambda 'return repeat_times;'
+              wait_time: !lambda 'return repeat_wait_time_us;'
 
 remote_transmitter:
   pin: D0
@@ -48,9 +69,11 @@ remote_transmitter:
 
 # Useful for debugging or investigating new IR codes
 # remote_receiver:
-#   pin: D2
+#   pin:
+#     number: D2
+#     inverted: True
 #   dump: all
-#   # Settings to optimize recognition of RF devices
+#   # Settings to optimize recognition of RF devices (only uncomment for RF)
 #   tolerance: 50%
 #   filter: 250us
 #   idle: 4ms
