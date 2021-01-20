@@ -28,7 +28,7 @@ light:
     type: GRBW
     variant: SK6812
     pin: GPIO3
-    num_leds: 87
+    num_leds: 86
     name: "Backyard Step Lights"
     effects:
       - addressable_fireworks:
