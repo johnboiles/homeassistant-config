@@ -125,7 +125,7 @@
       entity_id: switch.bedroom_lamp
   mode: single
 - id: b5d3da4e0d33496ab4965ee577aac543
-  alias: 'Bathroom: Turn off fan 20min after a double tap down on the fan switch'
+  alias: 'Bathroom: Run fan for 20min after a double tap down on the fan switch'
   trigger:
   - event_type: ozw.scene_activated
     event_data:
@@ -141,13 +141,19 @@
       color: green
       duration: 2 seconds
       effect: breath
-  - service: light.turn_off
-    data:
-      entity_id: light.master_bathroom_light
+  - type: turn_on
+    device_id: ce840b60085a24a1500c3f6db552a3d2
+    entity_id: switch.master_bathroom_fan
+    domain: switch
+  - type: turn_off
+    device_id: b25ce08e59828c6afe04d62923600a4f
+    entity_id: light.master_bathroom_light
+    domain: light
   - delay: 00:20
-  - service: switch.turn_off
-    data:
-      entity_id: switch.master_bathroom_fan
+  - type: turn_off
+    device_id: ce840b60085a24a1500c3f6db552a3d2
+    entity_id: switch.master_bathroom_fan
+    domain: switch
   mode: restart
 - id: 33e78170ee6f40cbb028622f9a501a66
   alias: 'Notification: Garage Door Open'
@@ -636,4 +642,39 @@
     device_id: dad36f9de4021e97413220d85d5a5a4e
     entity_id: switch.basement_heater
     domain: switch
+  mode: single
+- id: '1611013519767'
+  alias: 'Bathroom: Light and fan off after 45min of no motion'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.master_bathroom_motion_detected
+    to: 'off'
+    for: 00:45:00
+  condition: []
+  action:
+  - type: turn_off
+    device_id: ce840b60085a24a1500c3f6db552a3d2
+    entity_id: switch.master_bathroom_fan
+    domain: switch
+  - type: turn_off
+    device_id: b25ce08e59828c6afe04d62923600a4f
+    entity_id: light.master_bathroom_light
+    domain: light
+  mode: single
+- id: '1611029049758'
+  alias: 'Bathroom: Light on with motion'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.master_bathroom_motion_detected
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: sun.sun
+    state: below_horizon
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: light.master_bathroom_light
   mode: single
