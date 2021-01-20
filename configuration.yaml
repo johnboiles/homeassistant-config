@@ -76,14 +76,9 @@ ecobee:
   api_key: !secret ecobee_api_key
 
 octoprint:
-  host: 10.0.0.7
+  host: 10.0.2.17
   api_key: !secret octoprint_api_key
   bed: true
-
-yeelight:
-  devices:
-    10.0.0.40:
-      name: Izzys Lamp
 
 homekit:
   entity_config:
@@ -98,7 +93,7 @@ homekit:
     binary_sensor.back_door:
       linked_battery_sensor: sensor.back_door_battery_level
     camera.octoprint_camera:
-      stream_source: http://10.0.0.7:8080/?action=stream
+      stream_source: http://10.0.2.17:8080/?action=stream
   filter:
     include_entities:
       - binary_sensor.front_door
@@ -156,7 +151,7 @@ route53:
 tplink:
   discovery: false
   switch:
-    - host: 10.0.0.5
+    - host: 10.0.2.40
 
 ## Section: Component configuration 
 
@@ -173,8 +168,8 @@ discovery:
 camera:
   - platform: mjpeg
     name: OctoPrint Camera
-    mjpeg_url: http://10.0.0.7/webcam/?action=stream
-    still_image_url: http://10.0.0.7/webcam/?action=snapshot
+    mjpeg_url: http://10.0.2.17/webcam/?action=stream
+    still_image_url: http://10.0.2.17/webcam/?action=snapshot
 
 sensor: !include sensor.yaml
 
