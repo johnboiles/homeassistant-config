@@ -4,23 +4,24 @@ This is my [Home Assistant](https://home-assistant.io) configuration. This also 
 
 ## Core Hardware
 
-I run Home Assistant on a Raspberry Pi 4 (2GB model) with a USB SSD. Unfortunately, directly booting from USB isn't supported yet on the Pi4, so I also need an SD card for the boot partition. I also use the Pi PoE hat so I can power cycle the Pi remotely if necessary (via Unifi controller).
+I run [Home Assistant Operating System](https://github.com/home-assistant/operating-system) on a Raspberry Pi 4 (2GB model) with a USB SSD. I also use the Pi PoE hat so I can power cycle the Pi remotely if necessary (via Unifi controller).
 
 * [Raspberry Pi 4 Model B (2GB Ram)](https://www.adafruit.com/product/4292)
-* [Sandisk Ultra A1 microSD](https://www.amazon.com/gp/product/B073JWXGNT)
 * [StarTech.com SATA to USB Cable](https://www.amazon.com/gp/product/B00HJZJI84)
 * [Kingston 120GB SATA SSD](https://www.amazon.com/gp/product/B01N6JQS8C)
+  * Note: If starting fresh I might consider a NVMe drive so that there's an easy upgrade path someday when/if there's a Pi with PCIe.
 * [Z-Wave.Me USB Stick](https://www.amazon.com/gp/product/B00QJEY6OC)
+  * Note: If starting fresh I'd get [this GoControl Zigbee + Z-Wave stick](https://www.amazon.com/GoControl-CECOMINOD016164-HUSBZB-1-USB-Hub/dp/B01GJ826F8) so that I could use both Z-Wave and Zigbee.
 * [Raspberry Pi PoE Hat](https://www.adafruit.com/product/3953)
 
 ## Core Software
 
-I run [Hass.io](https://www.home-assistant.io/hassio/) on [Raspbian Buster Lite](https://www.raspberrypi.org/downloads/raspbian/) using the [Generic Linux Docker install method](https://www.home-assistant.io/hassio/installation/#alternative-install-on-a-generic-linux-host). This gives me the convenience and simplicity of Hass.io but also gives me a full Linux environment I can hack around with.
+I run [Home Assistant Operating System](https://github.com/home-assistant/operating-system). Installation is super easy (just use [balenaEtcher](https://www.balena.io/etcher/) to flash the OS image to your SSD from your computer) and it supports easy 1-click OS updates in the Home Assistant UI via [RAUC](https://rauc.io/).
 
 ## Integrations
 
 Off-the-shelf stuff I've integrated with:
-* Z-Wave (for wall switches, outlets, smoke alarms, and door sensors)
+* Z-Wave (for wall switches, outlets, smoke alarms, door sensors, Yale Assure smart lock)
 * Ecobee
 * OctoPrint (3d-printer controller)
 * Yeelight
@@ -38,6 +39,8 @@ Stuff I've built:
 * [ESPHome Fan Controller](https://github.com/johnboiles/homeassistant-config/blob/master/esphome/basement_fan.yaml) (controls an exhaust fan in my basement)
 * [ESPHome Air Sensor](https://github.com/johnboiles/homeassistant-config/blob/master/esphome/air_sensor.yaml) (reads CO2, temperature, humidity, particulates, and TVOCs in the air)
 * [ESPHome Garage Controller](https://github.com/johnboiles/homeassistant-config/blob/master/esphome/garage_door.yaml) (opens/closes my garage and reports open/closed status)
+* [ESPHome Sprinkler Controller](https://github.com/johnboiles/homeassistant-config/blob/master/esphome/sprinkler.yaml) (controls valves for my sprinklers)
+* [ESPHome RGB Lights Controller](https://github.com/johnboiles/homeassistant-config/blob/master/esphome/backyard_step_lights.yaml) (controls an RGB LED light strip under my patio step)
 
 ## Automations
 
