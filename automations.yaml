@@ -10,7 +10,7 @@
     data:
       entity_id: camera.octoprint_camera
       filename: /config/www/camera/3d-print.jpg
-  - service: notify.mobile_app_john_boiless_iphone_x
+  - service: notify.mobile_app_john_boiless_iphone_12_pro
     data_template:
       message: 3D print has finished
       data:
@@ -173,7 +173,7 @@
     entity_id: cover.garage_door
     state: open
   action:
-  - service: notify.mobile_app_john_boiless_iphone_x
+  - service: notify.mobile_app_john_boiless_iphone_12_pro
     data:
       message: Garage Door is Open
       data:
@@ -197,7 +197,7 @@
     to: 'on'
     for: 0:30:00
   action:
-  - service: notify.mobile_app_john_boiless_iphone_x
+  - service: notify.mobile_app_john_boiless_iphone_12_pro
     data:
       message: Sprinkler has been running for > 30 min
       data:
@@ -366,7 +366,7 @@
     entity_id: sensor.nut_ups_input_voltage
     below: '60'
   action:
-  - service: notify.mobile_app_john_boiless_iphone_x
+  - service: notify.mobile_app_john_boiless_iphone_12_pro
     data:
       message: Power is out
       data:
@@ -395,7 +395,7 @@
   - condition: template
     value_template: '{{ not is_state("sensor.basement_smoke_alarm_state", "Unknown") }}'
   action:
-  - service: notify.mobile_app_john_boiless_iphone_x
+  - service: notify.mobile_app_john_boiless_iphone_12_pro
     data:
       title: Smoke alarm
       message: Basement smoke alarm is triggered!
@@ -417,7 +417,7 @@
     entity_id: binary_sensor.upstairs_smoke_alarms
     to: 'on'
   action:
-  - service: notify.mobile_app_john_boiless_iphone_x
+  - service: notify.mobile_app_john_boiless_iphone_12_pro
     data:
       title: Smoke alarm
       message: Upstairs smoke alarm is triggered!
@@ -440,7 +440,7 @@
     from: 'off'
     to: 'on'
   action:
-  - service: notify.mobile_app_john_boiless_iphone_x
+  - service: notify.mobile_app_john_boiless_iphone_12_pro
     data_template:
       message: Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }} is available.
   - service: persistent_notification.create
@@ -455,7 +455,7 @@
     entity_id: sensor.hacs
     from: '0'
   action:
-  - service: notify.mobile_app_john_boiless_iphone_x
+  - service: notify.mobile_app_john_boiless_iphone_12_pro
     data_template:
       message: HACS has {{ trigger.to_state.state }} available update.
   - service: persistent_notification.create
@@ -470,7 +470,7 @@
     entity_id: sensor.unifi_gateway_firmware_upgradable
     from: '0'
   action:
-  - service: notify.mobile_app_john_boiless_iphone_x
+  - service: notify.mobile_app_john_boiless_iphone_12_pro
     data_template:
       message: New Unifi firmware is available.
   - service: persistent_notification.create
@@ -485,7 +485,7 @@
     entity_id: sensor.unifi_gateway_alerts
     from: '0'
   action:
-  - service: notify.mobile_app_john_boiless_iphone_x
+  - service: notify.mobile_app_john_boiless_iphone_12_pro
     data_template:
       message: Unifi controller has new alerts.
   mode: single
@@ -514,7 +514,7 @@
       hours: 4
   action:
   - service: esphome.airsensor_mhz19_calibrate_zero
-  - service: notify.mobile_app_john_boiless_iphone_x
+  - service: notify.mobile_app_john_boiless_iphone_12_pro
     data:
       message: Calibrating CO2 sensor.
   mode: single
