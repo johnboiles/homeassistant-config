@@ -291,7 +291,7 @@ media_player:
           address: 0x20DF
           command: 0x54AB
       turn_off:
-        service: esphome.ir_blaster_transmit_raw
+        service: esphome.ir_blaster_transmit_nec
         data:
           address: 0x20DF
           command: 0xA45B
