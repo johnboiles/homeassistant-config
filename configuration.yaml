@@ -16,6 +16,12 @@ homeassistant:
 recorder:
   db_url: !secret mysql_db_url
 
+logger:
+  default: warning
+  logs:
+    homeassistant.components.homekit: debug
+    pyhap: debug
+
 http:
 
 ## Section: Default config
