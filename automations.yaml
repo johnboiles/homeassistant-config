@@ -673,8 +673,42 @@
   - condition: state
     entity_id: sun.sun
     state: below_horizon
+  - condition: state
+    entity_id: light.master_bathroom_light
+    state: 'off'
+    for:
+      minutes: 1
   action:
   - service: light.turn_on
     data:
       entity_id: light.master_bathroom_light
+  mode: single
+- id: '1612232509176'
+  alias: 'Izzy''s Room: Lamp to Green at Wakeup Time'
+  description: ''
+  trigger:
+  - platform: time
+    at: 07:00:00
+  condition: []
+  action:
+  - service: light.turn_on
+    data:
+      entity_id: light.izzys_lamp
+      rgb_color:
+      - 0
+      - 100
+      - 0
+    entity_id: light.izzys_lamp
+  mode: single
+- id: '1612319924016'
+  alias: 'System: Reload Homekit at 7:17a'
+  description: Attempt to work around issues where the Apple Watch HomeKit fails until
+    HomeKit is reloaded
+  trigger:
+  - platform: time
+    at: 07:17:00
+  condition: []
+  action:
+  - service: homekit.reload
+    data: {}
   mode: single
