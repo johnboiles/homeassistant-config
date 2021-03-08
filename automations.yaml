@@ -727,7 +727,8 @@
     - sun
   action:
   - service: script.tech_time_over
-    data: {}
+    data:
+      message: Tech time is over. Go have fun with Legos books or games!
   mode: single
 - id: '1614471411550'
   alias: 'Living Room: TV off at 7:30am on weekdays'
@@ -748,7 +749,8 @@
     state: 'on'
   action:
   - service: script.tech_time_over
-    data: {}
+    data:
+      message: Tech time is over. Time to get dressed and have breakfast!
   mode: single
 - id: '1614471752933'
   alias: 'Living Room: TV turns back off after limits.'

@@ -1,10 +1,21 @@
 tech_time_over:
   alias: "Tech time is over"
+  fields:
+    message:
+      description: The message said by Alexa after tech time is over.
+      example: Time to go have breakfast
+  variables:
+    message: "Tech time is over"
   sequence:
     - service: esphome.ir_blaster_transmit_nec
       data:
         address: 0x20DF # TV Off
         command: 0xA45B
+    - delay:
+        hours: 0
+        minutes: 0
+        seconds: 2
+        milliseconds: 0
     - service: esphome.ir_blaster_transmit_nec
       data:
         address: 0xFF # Soundbar to Aux (for Alexa)
@@ -18,7 +29,7 @@ tech_time_over:
       data:
         data:
           type: tts
-        message: Tech time is over. Go have fun with Legos books or games!
+        message: "{{ message }}"
     - repeat:
         count: '10'
         sequence:
