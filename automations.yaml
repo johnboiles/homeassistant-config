@@ -44,11 +44,11 @@
 - id: 1342127157ed4f988e2dfc5de60cfc69
   alias: 'Dining Room: Turn off all lights with a triple tap down'
   trigger:
-  - event_type: ozw.scene_activated
+  - event_type: zwave_js_event
     event_data:
       node_id: 8
-      scene_value_id: 5
-      scene_id: 2
+      property_key: 002,
+      value": KeyPressed3x
     platform: event
   action:
   - service: light.turn_off
@@ -65,17 +65,17 @@
   alias: 'Kitchen/Bedroom: Turn off common space lights with a triple tap down'
   trigger:
   - platform: event
-    event_type: ozw.scene_activated
+    event_type: zwave_js_event
     event_data:
       node_id: 10
-      scene_value_id: 5
-      scene_id: 2
+      property_key: 002,
+      value": KeyPressed3x
   - platform: event
-    event_type: ozw.scene_activated
+    event_type: zwave_js_event
     event_data:
       node_id: 30
-      scene_value_id: 5
-      scene_id: 2
+      property_key: 002,
+      value": KeyPressed3x
   action:
   - service: light.turn_off
     data:
@@ -100,11 +100,11 @@
   alias: 'Bedroom: Turn on lamp with double tap up'
   trigger:
   - platform: event
-    event_type: ozw.scene_activated
+    event_type: zwave_js_event
     event_data:
       node_id: 30
-      scene_id: 1
-      scene_value_id: 4
+      property_key: 001,
+      value": KeyPressed2x
   action:
   - service: switch.turn_on
     data:
@@ -114,11 +114,11 @@
   alias: 'Bedroom: Turn off lamp with double tap down'
   trigger:
   - platform: event
-    event_type: ozw.scene_activated
+    event_type: zwave_js_event
     event_data:
       node_id: 30
-      scene_id: 2
-      scene_value_id: 4
+      property_key: 002,
+      value": KeyPressed2x
   action:
   - service: switch.turn_off
     data:
@@ -127,11 +127,11 @@
 - id: b5d3da4e0d33496ab4965ee577aac543
   alias: 'Bathroom: Run fan for 20min after a double tap down on the fan switch'
   trigger:
-  - event_type: ozw.scene_activated
+  - event_type: zwave_js_event
     event_data:
       node_id: 38
-      scene_id: 1
-      scene_value_id: 4
+      property_key: 001,
+      value": KeyPressed2x
     platform: event
   action:
   - service: script.inovelli_led
