@@ -826,3 +826,16 @@
     entity_id: switch.porch_light
     domain: switch
   mode: single
+- id: '1615076634661'
+  alias: 'Basement: Set Splitflap From Input'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: input_text.splitflap
+  condition: []
+  action:
+  - service: mqtt.publish
+    data:
+      topic: splitflap
+      payload: '{{ states(''input_text.splitflap'') }}'
+  mode: single
