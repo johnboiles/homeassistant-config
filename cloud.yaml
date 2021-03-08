@@ -8,6 +8,8 @@ alexa:
       - device_tracker
       - timer
       - media_player
+    include_entities:
+      - media_player.vizio_tv
     exclude_entities:
       - switch.twitter_laptop_wol
       - light.master_bathroom_light_2
