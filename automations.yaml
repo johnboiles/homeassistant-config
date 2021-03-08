@@ -787,3 +787,42 @@
       address: 8415
       command: 42075
   mode: single
+- id: '1614914257006'
+  alias: 'Outside: Lock Door at Sunset'
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+  condition: []
+  action:
+  - device_id: c985abd1e1a57459ed18ae54fe3c6d25
+    domain: lock
+    entity_id: lock.front_door_lock
+    type: lock
+  mode: single
+- id: '1614914289466'
+  alias: 'Outside: Turn on Porch Light at Sunset'
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+  condition: []
+  action:
+  - type: turn_on
+    device_id: e1df5a4f30fa0c2c35fb68360f3572df
+    entity_id: switch.porch_light
+    domain: switch
+  mode: single
+- id: '1614914335846'
+  alias: 'Outside: Turn Off Porch Light At Sunrise'
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunrise
+  condition: []
+  action:
+  - type: turn_off
+    device_id: e1df5a4f30fa0c2c35fb68360f3572df
+    entity_id: switch.porch_light
+    domain: switch
+  mode: single
