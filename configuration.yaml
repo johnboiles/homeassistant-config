@@ -12,6 +12,8 @@ homeassistant:
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: America/Los_Angeles
   customize: !include customize.yaml
+  packages:
+    update_notifications: !include update_notifications.yaml
 
 recorder:
   db_url: !secret mysql_db_url

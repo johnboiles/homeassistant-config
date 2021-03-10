@@ -432,37 +432,6 @@
       message: Upstairs smoke alarm is triggered!
       title: Smoke alarm
   mode: single
-- id: 1002777a3e4d481caf6488391db7b01f
-  alias: 'Notification: Update Available'
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.updater
-    from: 'off'
-    to: 'on'
-  action:
-  - service: notify.mobile_app_john_boiless_iphone_12_pro
-    data_template:
-      message: Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }} is available.
-  - service: persistent_notification.create
-    data_template:
-      message: Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }} is available.
-      title: Update available
-  mode: single
-- id: 76614c0d64b14e15b3c436d07d17b432
-  alias: 'Notification: HACS Update Available'
-  trigger:
-  - platform: state
-    entity_id: sensor.hacs
-    from: '0'
-  action:
-  - service: notify.mobile_app_john_boiless_iphone_12_pro
-    data_template:
-      message: HACS has {{ trigger.to_state.state }} available update.
-  - service: persistent_notification.create
-    data_template:
-      message: HACS has {{ trigger.to_state.state }} available update.
-      title: HACS Update available
-  mode: single
 - id: 4b1f0b626a9049ab892a56f512106af7
   alias: 'Notification: Unifi Firmware Available'
   trigger:
