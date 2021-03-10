@@ -47,8 +47,8 @@
   - event_type: zwave_js_event
     event_data:
       node_id: 8
-      property_key: 002,
-      value": KeyPressed3x
+      property_key: "002"
+      value: KeyPressed3x
     platform: event
   action:
   - service: light.turn_off
@@ -68,14 +68,14 @@
     event_type: zwave_js_event
     event_data:
       node_id: 10
-      property_key: 002,
-      value": KeyPressed3x
+      property_key: "002"
+      value: KeyPressed3x
   - platform: event
     event_type: zwave_js_event
     event_data:
       node_id: 30
-      property_key: 002,
-      value": KeyPressed3x
+      property_key: "002"
+      value: KeyPressed3x
   action:
   - service: light.turn_off
     data:
@@ -103,8 +103,8 @@
     event_type: zwave_js_event
     event_data:
       node_id: 30
-      property_key: 001,
-      value": KeyPressed2x
+      property_key: "001"
+      value: KeyPressed2x
   action:
   - service: switch.turn_on
     data:
@@ -117,8 +117,8 @@
     event_type: zwave_js_event
     event_data:
       node_id: 30
-      property_key: 002,
-      value": KeyPressed2x
+      property_key: "002"
+      value: KeyPressed2x
   action:
   - service: switch.turn_off
     data:
@@ -130,8 +130,8 @@
   - event_type: zwave_js_event
     event_data:
       node_id: 38
-      property_key: 001,
-      value": KeyPressed2x
+      property_key: "001"
+      value: KeyPressed2x
     platform: event
   action:
   - service: script.inovelli_led
@@ -217,19 +217,19 @@
     entity_id: cover.garage_door
     to: closed
   action:
-  - service: ozw.set_config_parameter
+  - service: zwave_js.set_config_parameter
     data_template:
-      node_id: 21
+      entity_id: light.dining_room_chandelier
       parameter: 13 # Dimmer LED mode
       value: >-
         {%- if trigger.to_state.state == 'open' -%}
-          Status mode
+          Enable
         {%- else -%}
-          Normal mode
+          Disable
         {%- endif -%}
-  - service: ozw.set_config_parameter
+  - service: zwave_js.set_config_parameter
     data_template:
-      node_id: 21
+      entity_id: light.dining_room_chandelier
       parameter: 21 # Status mode LED 1 (bottom) color
       value: >-
         {%- if trigger.to_state.state == 'open' -%}
@@ -296,19 +296,19 @@
     data:
       entity_id: light.bedroom_light
       brightness: 3
-  - service: ozw.set_config_parameter
+  - service: zwave_js.set_config_parameter
     data_template:
-      node_id: 24 # Master Bathroom Light
+      entity_id: light.master_bathroom_light
       parameter: 17
       value: 15
-  - service: ozw.set_config_parameter
+  - service: zwave_js.set_config_parameter
     data_template:
-      node_id: 33 # Elijah's Room Light
+      entity_id: light.elijahs_room_light
       parameter: 9
       value: 30
-  - service: ozw.set_config_parameter
+  - service: zwave_js.set_config_parameter
     data_template:
-      node_id: 34 # Izzy's Room Light
+      entity_id: light.izzys_room_light
       parameter: 9
       value: 30
   mode: single
@@ -342,19 +342,19 @@
     data:
       entity_id: light.kitchen_hallway_light
       brightness: 255
-  - service: ozw.set_config_parameter
+  - service: zwave_js.set_config_parameter
     data_template:
-      node_id: 24 # Master Bathroom Light
+      entity_id: light.master_bathroom_light
       parameter: 17
       value: 99
-  - service: ozw.set_config_parameter
+  - service: zwave_js.set_config_parameter
     data_template:
-      node_id: 33 # Elijah's Room Light
+      entity_id: light.elijahs_room_light
       parameter: 9
       value: 99
-  - service: ozw.set_config_parameter
+  - service: zwave_js.set_config_parameter
     data_template:
-      node_id: 34 # Izzy's Room Light
+      entity_id: light.izzys_room_light
       parameter: 9
       value: 99
   mode: single
