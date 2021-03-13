@@ -1,0 +1,12 @@
+turn_off_interior_lights:
+  alias: Turn off interior lights
+  sequence:
+    - service: light.turn_off
+      data:
+        entity_id: all
+    - service: switch.turn_off
+      data:
+        entity_id: switch.bedroom_lamp
+    - service: switch.turn_off
+      data:
+        entity_id: switch.master_bathroom_fan

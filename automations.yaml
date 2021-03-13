@@ -51,15 +51,7 @@
       value: KeyPressed3x
     platform: event
   action:
-  - service: light.turn_off
-    data:
-      entity_id: all
-  - service: switch.turn_off
-    data:
-      entity_id: switch.bedroom_lamp
-  - service: switch.turn_off
-    data:
-      entity_id: switch.master_bathroom_fan
+  - service: script.turn_off_interior_lights
   mode: single
 - id: 7f5929753d294d9596efe2446d9abf02
   alias: 'Kitchen/Bedroom: Turn off common space lights with a triple tap down'
@@ -807,4 +799,20 @@
     data:
       topic: splitflap
       payload: '{{ states(''input_text.splitflap'') }}'
+  mode: single
+- id: '1615618583223'
+  alias: 'System: Turn off lights and lock doors when everyone leaves'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: group.all_people
+    to: not_home
+    for: 00:05:00
+  condition: []
+  action:
+  - service: script.turn_off_interior_lights
+  - device_id: 85a08776dab4ed63a75d09d78521ddc7
+    domain: lock
+    entity_id: lock.front_door_lock
+    type: lock
   mode: single
