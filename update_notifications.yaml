@@ -48,7 +48,7 @@ alert:
       - mobile_app_john_boiless_iphone_12_pro
     data:
       tag: 'ha-update-available'
-      url: 'http://hassio.local/hassio/addon/core_check_config'
+      url: 'homeassistant://navigate/hassio/addon/core_check_config'
       ttl: 21600
 
   # Supervisor update is available - un-acknowledgeable, auto-dismiss, me only
@@ -64,7 +64,7 @@ alert:
       - mobile_app_john_boiless_iphone_12_pro
     data:
       tag: 'supervisor-update-available'
-      url: 'http://hassio.local/hassio/dashboard'
+      url: 'homeassistant://navigate/hassio/dashboard'
       ttl: 21600
 
   # HACS repos have updates available - unacknowledgeable, auto-dismiss, me only
@@ -74,13 +74,13 @@ alert:
     state: 'on'
     can_acknowledge: false
     repeat: 360
-    title: "Updates available in {{ states('sensor.hacs') }} HACS repo{% if states('sensor.hacs') | int > 1 %}s{% endif %}"
-    message: ""
+    title: "Update for HACS package available"
+    message: "Updates available in {{ states('sensor.hacs') }} HACS repo{% if states('sensor.hacs') | int > 1 %}s{% endif %}"
     notifiers:
       - mobile_app_john_boiless_iphone_12_pro
     data:
       tag: 'hacs-update-available'
-      url: 'http://hassio.local/hacs/installed'
+      url: 'homeassistant://navigate/hacs/installed'
       ttl: 21600
 
   # Addons have updates available - unacknowledgeable, auto-dismiss, me only
@@ -90,18 +90,18 @@ alert:
     state: 'on'
     can_acknowledge: false
     repeat: 360
-    title: "Updates available for {{ states('sensor.supervisor_updates') }} HA addon{% if states('sensor.supervisor_updates') | int > 1 %}s{% endif %}"
-    message: ""
+    title: "Update for addon available"
+    message: "Updates available for {{ states('sensor.supervisor_updates') }} HA addon{% if states('sensor.supervisor_updates') | int > 1 %}s{% endif %}"
     notifiers:
       - mobile_app_john_boiless_iphone_12_pro
     data:
       tag: 'addon-update-available'
-      url: 'http://hassio.local/hassio/dashboard'
+      url: 'homeassistant://navigate/hassio/dashboard'
       ttl: 21600
 
 automation:
   - id: '1585256741683'
-    alias: Check config with update
+    alias: "System: Check config with update"
     description: Starts the check config addon when an update becomes available
     trigger:
     - entity_id: binary_sensor.updater
