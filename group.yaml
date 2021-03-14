@@ -7,3 +7,13 @@ all_occupancy:
   entities:
     - binary_sensor.bedroom_occupancy
     - binary_sensor.living_room_occupancy
+
+batteries:
+  entities:
+    - sensor.lock_battery_level
+    - sensor.motion_battery_level
+    - sensor.backdoor_battery_level
+    - sensor.sidedoor_battery_level
+    - sensor.frontdoor_battery_level
+    - sensor.smokealarm_battery_level
+    - sensor.smokealarms_battery_level
