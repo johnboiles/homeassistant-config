@@ -44,10 +44,10 @@
 - id: 1342127157ed4f988e2dfc5de60cfc69
   alias: 'Dining Room: Turn off all lights with a triple tap down'
   trigger:
-  - event_type: zwave_js_event
+  - event_type: zwave_js_value_notification
     event_data:
       node_id: 8
-      property_key: "002"
+      property_key: '002'
       value: KeyPressed3x
     platform: event
   action:
@@ -57,16 +57,16 @@
   alias: 'Kitchen/Bedroom: Turn off common space lights with a triple tap down'
   trigger:
   - platform: event
-    event_type: zwave_js_event
+    event_type: zwave_js_value_notification
     event_data:
       node_id: 10
-      property_key: "002"
+      property_key: '002'
       value: KeyPressed3x
   - platform: event
-    event_type: zwave_js_event
+    event_type: zwave_js_value_notification
     event_data:
       node_id: 30
-      property_key: "002"
+      property_key: '002'
       value: KeyPressed3x
   action:
   - service: light.turn_off
@@ -92,10 +92,10 @@
   alias: 'Bedroom: Turn on lamp with double tap up'
   trigger:
   - platform: event
-    event_type: zwave_js_event
+    event_type: zwave_js_value_notification
     event_data:
       node_id: 30
-      property_key: "001"
+      property_key: '001'
       value: KeyPressed2x
   action:
   - service: switch.turn_on
@@ -106,10 +106,10 @@
   alias: 'Bedroom: Turn off lamp with double tap down'
   trigger:
   - platform: event
-    event_type: zwave_js_event
+    event_type: zwave_js_value_notification
     event_data:
       node_id: 30
-      property_key: "002"
+      property_key: '002'
       value: KeyPressed2x
   action:
   - service: switch.turn_off
@@ -119,10 +119,10 @@
 - id: b5d3da4e0d33496ab4965ee577aac543
   alias: 'Bathroom: Run fan for 20min after a double tap down on the fan switch'
   trigger:
-  - event_type: zwave_js_event
+  - event_type: zwave_js_value_notification
     event_data:
       node_id: 38
-      property_key: "001"
+      property_key: '001'
       value: KeyPressed2x
     platform: event
   action:
