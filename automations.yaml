@@ -87,6 +87,10 @@
   - service: light.turn_off
     data:
       entity_id: light.kitchen_hallway_light
+  - device_id: c985abd1e1a57459ed18ae54fe3c6d25
+    domain: lock
+    entity_id: lock.front_door_lock
+    type: lock
   mode: single
 - id: 08182ba3f3554d85a534a5b658d40104
   alias: 'Bedroom: Turn on lamp with double tap up'
