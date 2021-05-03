@@ -41,29 +41,40 @@ api:
 switch:
   - platform: gpio
     pin:
-      number: D1
+      number: D0
       inverted: yes
     name: "Maple Sprinkler"
     icon: "mdi:sprinkler-variant"
   - platform: gpio
     pin:
-      number: D2
+      number: D5
       inverted: yes
     name: "Apple and Lemon Sprinkler"
     icon: "mdi:sprinkler-variant"
   - platform: gpio
     pin:
-      number: D7
+      number: D2
       inverted: yes
     name: "Vegetable Box Sprinkler"
     icon: "mdi:sprinkler-variant"
-  # These relays exist but this circuit is unused since I only have 3 sprinkler zones
-  # - platform: gpio
-  #   pin:
-  #     number: D6
-  #     inverted: yes
-  #   name: "Sprinkler Zone 4"
-  #   icon: "mdi:sprinkler-variant"
+  - platform: gpio
+    pin:
+      number: D1
+      inverted: yes
+    name: "Lime Tree Sprinkler"
+    icon: "mdi:sprinkler-variant"
+  - platform: gpio
+    pin:
+      number: D7
+      inverted: yes
+    name: "Curb Sprinkler"
+    icon: "mdi:sprinkler-variant"
+  - platform: gpio
+    pin:
+      number: D6
+      inverted: yes
+    name: "Orange Tree Sprinkler"
+    icon: "mdi:sprinkler-variant"
 
 sensor:
   # Uptime sensor.
