@@ -176,6 +176,30 @@
   start: '{{ now().replace(hour=0, minute=0, second=0) }}'
   end: '{{ now() }}'
 
+- platform: history_stats
+  name: Lime Tree Sprinkler Runtime Today
+  entity_id: switch.lime_tree_sprinkler
+  state: 'on'
+  type: time
+  start: '{{ now().replace(hour=0, minute=0, second=0) }}'
+  end: '{{ now() }}'
+
+- platform: history_stats
+  name: Curb Sprinkler Runtime Today
+  entity_id: switch.curb_sprinkler
+  state: 'on'
+  type: time
+  start: '{{ now().replace(hour=0, minute=0, second=0) }}'
+  end: '{{ now() }}'
+
+- platform: history_stats
+  name: Orange Tree Sprinkler Runtime Today
+  entity_id: switch.orange_tree_sprinkler
+  state: 'on'
+  type: time
+  start: '{{ now().replace(hour=0, minute=0, second=0) }}'
+  end: '{{ now() }}'
+
 - platform: waqi
   token: !secret aqicn_api_token
   locations:

@@ -190,8 +190,11 @@
     - switch.maple_sprinkler
     - switch.apple_and_lemon_sprinkler
     - switch.vegetable_box_sprinkler
+    - switch.lime_tree_sprinkler
+    - switch.curb_sprinkler
+    - switch.orange_tree_sprinkler
     to: 'on'
-    for: 0:30:00
+    for: 0:50:00
   action:
   - service: notify.mobile_app_john_boiless_iphone_12_pro
     data:
@@ -491,7 +494,7 @@
       message: Calibrating CO2 sensor.
   mode: single
 - id: d3b9ce0c8a7f4527b200174e076f9213
-  alias: 'Outside: Water Backyard'
+  alias: 'Outside: Water Yard'
   trigger:
   - platform: time
     at: 03:30:00

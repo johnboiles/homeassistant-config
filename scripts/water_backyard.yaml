@@ -7,6 +7,12 @@ sprinkler_water_backyard:
       entity_id: switch.apple_and_lemon_sprinkler
     - service: switch.turn_off
       entity_id: switch.vegetable_box_sprinkler
+    - service: switch.turn_off
+      entity_id: switch.lime_tree_sprinkler
+    - service: switch.turn_off
+      entity_id: switch.curb_sprinkler
+    - service: switch.turn_off
+      entity_id: switch.orange_tree_sprinkler
     - condition: time
       weekday:
       - mon
