@@ -98,6 +98,12 @@ homekit:
       type: sprinkler
     switch.vegetable_box_sprinkler:
       type: sprinkler
+    switch.orange_tree_sprinkler:
+      type: sprinkler
+    switch.lime_tree_sprinkler:
+      type: sprinkler
+    switch.curb_sprinkler:
+      type: sprinkler
     binary_sensor.front_door:
       linked_battery_sensor: sensor.front_door_battery_level
     binary_sensor.back_door:
@@ -120,6 +126,7 @@ homekit:
       - binary_sensor
       - person
       - media_player
+      - alarm_control_panel
     exclude_entities:
       - switch.twitter_laptop_wol
       - light.master_bathroom_light_2
@@ -149,6 +156,14 @@ homekit:
       - switch.unifi_controller_pi
       - switch.unifi_poe_00_00_00_00_00_01
       - switch.unifi_poe_20_2e_5d_55_a4_83
+      - remote.55_tcl_roku_tv
+      - switch.schedule_24610b
+      - switch.schedule_461866
+      - switch.schedule_627e53
+      - switch.schedule_938896
+      - switch.schedule_d62501
+      - switch.shutoff_valve
+      - switch.this_device_do_not_disturb_switch
 
 route53:
   aws_access_key_id: !secret route53_access_key_id
