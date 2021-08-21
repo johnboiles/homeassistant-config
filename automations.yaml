@@ -11,14 +11,10 @@
       entity_id: camera.octoprint_camera
       filename: /config/www/camera/3d-print.jpg
   - service: notify.mobile_app_john_boiless_iphone_12_pro
-    data_template:
+    data:
       message: 3D print has finished
       data:
-        attachment:
-          url: !secret 3d_print_snapshot_url
-          image: !secret 3d_print_snapshot_url
-          content-type: jpeg
-          hide-thumbnail: false
+        image: /local/camera/3d-print.jpg
   mode: single
 - id: d585d760542f4186a44679bece1487d3
   alias: 'Bedroom: Play Roll Over Easy'
