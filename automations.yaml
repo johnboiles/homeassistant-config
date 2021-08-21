@@ -489,14 +489,6 @@
     data:
       message: Calibrating CO2 sensor.
   mode: single
-- id: d3b9ce0c8a7f4527b200174e076f9213
-  alias: 'Outside: Water Yard'
-  trigger:
-  - platform: time
-    at: 03:30:00
-  action:
-  - service: script.sprinkler_water_backyard
-  mode: single
 - id: 230724d25e4c428d9370c15e120ebbf9
   alias: 'Living Room: Soundbar to Aux when Alexa is playing music'
   trigger:
@@ -670,18 +662,6 @@
       - 100
       - 0
     entity_id: light.izzys_lamp
-  mode: single
-- id: '1612319924016'
-  alias: 'System: Reload Homekit at 7:17a'
-  description: Attempt to work around issues where the Apple Watch HomeKit fails until
-    HomeKit is reloaded
-  trigger:
-  - platform: time
-    at: 07:17:00
-  condition: []
-  action:
-  - service: homekit.reload
-    data: {}
   mode: single
 - id: '1614471277466'
   alias: 'Living Room: TV off after 1 hour on the weekends'
