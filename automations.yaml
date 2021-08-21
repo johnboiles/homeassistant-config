@@ -826,3 +826,34 @@
     entity_id: lock.front_door_lock
     type: lock
   mode: single
+- id: '1629572434173'
+  alias: 'Living Room: Turn down the Soundbar Daily'
+  description: ''
+  trigger:
+  - platform: time
+    at: 03:00:00
+  condition: []
+  action:
+  - repeat:
+      count: '20'
+      sequence:
+      - service: media_player.volume_down
+        target:
+          entity_id: media_player.soundbar
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 0
+          milliseconds: 500
+  - repeat:
+      count: '5'
+      sequence:
+      - service: media_player.volume_up
+        target:
+          entity_id: media_player.soundbar
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 0
+          milliseconds: 500
+  mode: single
