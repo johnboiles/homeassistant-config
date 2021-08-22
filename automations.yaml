@@ -837,3 +837,34 @@
           seconds: 0
           milliseconds: 500
   mode: single
+- id: '1629675387087'
+  alias: 'Bathroom: Run fan after double double tap up on the fan switch'
+  description: ''
+  trigger:
+  - event_type: zwave_js_value_notification
+    event_data:
+      node_id: 38
+      property_key: '002'
+      value: KeyPressed2x
+    platform: event
+  condition: []
+  action:
+  - service: script.inovelli_led
+    data:
+      entity_id: switch.master_bathroom_fan
+      model: switch
+      color: Green
+      effect: Breath
+      duration: 2 Seconds
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+  - service: switch.turn_on
+    target:
+      device_id: 2a53f154c85a957d90b00631e8e06d1c
+  - service: light.turn_off
+    target:
+      device_id: afd495d7e6d5db432f159256c1409954
+  mode: restart
