@@ -868,3 +868,17 @@
     target:
       device_id: afd495d7e6d5db432f159256c1409954
   mode: restart
+- id: '1630473928636'
+  alias: 'Izzy''s Room: Turn off Light at 10pm'
+  description: ''
+  trigger:
+  - platform: time
+    at: '22:00:00'
+  condition: []
+  action:
+  - service: light.turn_off
+    target:
+      entity_id: light.izzys_room_light
+    data:
+      transition: 13
+  mode: single
