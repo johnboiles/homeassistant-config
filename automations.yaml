@@ -877,11 +877,6 @@
       entity_id: media_player.soundbar
     data:
       source: Aux 1
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 2
-      milliseconds: 0
   - service: notify.alexa_media_living_room
     data:
       data:
@@ -890,7 +885,7 @@
   - delay:
       hours: 0
       minutes: 0
-      seconds: 5
+      seconds: 8
       milliseconds: 0
   - service: media_player.select_source
     target:

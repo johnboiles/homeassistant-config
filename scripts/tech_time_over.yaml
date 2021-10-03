@@ -10,11 +10,6 @@ tech_time_over:
     - service: media_player.turn_off
       target:
         entity_id: media_player.55_tcl_roku_tv
-    - delay:
-        hours: 0
-        minutes: 0
-        seconds: 2
-        milliseconds: 0
     - service: media_player.select_source
       target:
         entity_id: media_player.soundbar
@@ -23,7 +18,7 @@ tech_time_over:
     - delay:
         hours: 0
         minutes: 0
-        seconds: 5
+        seconds: 12
         milliseconds: 0
     - service: notify.alexa_media_living_room
       data:
