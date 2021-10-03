@@ -217,8 +217,10 @@
 
 - platform: history_stats
   name: TV on Today
-  entity_id: media_player.vizio_tv
-  state: "on"
+  entity_id: media_player.55_tcl_roku_tv
+  state:
+    - "on"
+    - "playing"
   type: time
   start: "{{ now().replace(hour=0, minute=0, second=0) }}"
   end: "{{ now() }}"

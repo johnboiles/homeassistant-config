@@ -29,8 +29,3 @@ media_player.soundbar:
     - Bluetooth
     - Aux 2
     - Digital
-media_player.vizio_tv:
-  source_list:
-    - Apple TV
-    - Nintendo Switch
-    - Side HDMI

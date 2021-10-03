@@ -664,15 +664,15 @@
     entity_id: light.izzys_lamp
   mode: single
 - id: '1614471277466'
-  alias: 'Living Room: TV off after 1 hour on the weekends'
+  alias: 'Living Room: TV off after 1.5 hours on the weekends'
   description: ''
   trigger:
   - platform: numeric_state
     entity_id: sensor.tv_on_today
-    above: '1'
+    above: '1.5'
   condition:
   - condition: time
-    before: '11:00:00'
+    before: '9:30:00'
     weekday:
     - sat
     - sun
@@ -681,62 +681,38 @@
     data:
       message: Tech time is over. Go have fun with Legos books or games!
   mode: single
-- id: '1614471411550'
-  alias: 'Living Room: TV off at 7:30am on weekdays'
-  description: ''
-  trigger:
-  - platform: time
-    at: 07:30:00
-  condition:
-  - condition: time
-    weekday:
-    - mon
-    - tue
-    - wed
-    - thu
-    - fri
-  - condition: state
-    entity_id: media_player.vizio_tv
-    state: 'on'
-  action:
-  - service: script.tech_time_over
-    data:
-      message: Tech time is over. Time to get dressed and have breakfast!
-  mode: single
 - id: '1614471752933'
   alias: 'Living Room: TV turns back off after limits.'
   description: ''
   trigger:
   - platform: state
-    entity_id: media_player.vizio_tv
+    entity_id: media_player.55_tcl_roku_tv
     to: 'on'
+  - platform: state
+    entity_id: media_player.55_tcl_roku_tv
+    to: 'playing'
   condition:
   - condition: or
     conditions:
+    - condition: time
+      weekday:
+      - sat
+      - sun
+      before: '7:00'
     - condition: and
       conditions:
       - condition: time
         weekday:
         - sat
         - sun
-        before: '11:00'
+        before: '9:30'
       - condition: numeric_state
         entity_id: sensor.tv_on_today
-        above: '1'
-    - condition: time
-      weekday:
-      - mon
-      - tue
-      - wed
-      - thu
-      - fri
-      before: '8:30'
-      after: '7:30'
+        above: '1.5'
   action:
-  - service: esphome.ir_blaster_transmit_nec
-    data:
-      address: 8415
-      command: 42075
+  - service: media_player.turn_off
+    target:
+      entity_id: media_player.55_tcl_roku_tv
   mode: single
 - id: '1614914257006'
   alias: 'Outside: Lock Door at Sunset'
