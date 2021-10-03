@@ -15,10 +15,11 @@ tech_time_over:
         minutes: 0
         seconds: 2
         milliseconds: 0
-    - service: esphome.ir_blaster_transmit_nec
+    - service: media_player.select_source
+      target:
+        entity_id: media_player.soundbar
       data:
-        address: 0xFF # Soundbar to Aux (for Alexa)
-        command: 0x8D72
+        source: Aux 1
     - delay:
         hours: 0
         minutes: 0
@@ -29,19 +30,8 @@ tech_time_over:
         data:
           type: tts
         message: "{{ message }}"
-    - repeat:
-        count: '10'
-        sequence:
-        - service: esphome.ir_blaster_transmit_nec
-          data:
-            address: 0x20DF # TV Off
-            command: 0xA45B
-        - delay:
-            hours: 0
-            minutes: 0
-            seconds: 30
-            milliseconds: 0
-    - service: esphome.ir_blaster_transmit_nec
+    - service: media_player.select_source
+      target:
+        entity_id: media_player.soundbar
       data:
-        address: 0xFF # Soundbar back to Optical
-        command: 0x13EC
+        source: Optical

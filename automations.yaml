@@ -690,7 +690,7 @@
     to: 'on'
   - platform: state
     entity_id: media_player.55_tcl_roku_tv
-    to: 'playing'
+    to: playing
   condition:
   - condition: or
     conditions:
@@ -857,4 +857,44 @@
       entity_id: light.izzys_room_light
     data:
       transition: 13
+  mode: single
+- id: '1633272415315'
+  alias: 'Living Room: Announce TV time is half over'
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.tv_on_today
+    above: '.75'
+  condition:
+  - condition: time
+    before: 09:30:00
+    weekday:
+    - sat
+    - sun
+  action:
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.soundbar
+    data:
+      source: Aux 1
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 2
+      milliseconds: 0
+  - service: notify.alexa_media_living_room
+    data:
+      data:
+        type: tts
+      message: tech time is half way over. Time to switch turns
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: media_player.select_source
+    target:
+      entity_id: media_player.soundbar
+    data:
+      source: Optical
   mode: single
