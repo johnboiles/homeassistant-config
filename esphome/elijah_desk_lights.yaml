@@ -23,11 +23,36 @@ ota:
 # Enable Home Assistant API
 api:
 
+
+
+output:
+  - platform: esp8266_pwm
+    pin:
+      number: D3
+      inverted: true
+      mode: OUTPUT_OPEN_DRAIN
+    frequency: 1000 Hz
+    id: pwm_output
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: D4
+      inverted: true
+      mode: INPUT_PULLUP
+    name: "Elijah Button"
+
+# Example usage in a light
 light:
+  - platform: monochromatic
+    output: pwm_output
+    name: "Elijah Button Light"
+    effects:
+      - pulse:
   - platform: neopixelbus
     type: GRBW
     variant: SK6812
-    pin: GPIO3
+    pin: GPIO3 # RX pin
     num_leds: 83
     name: "Elijah Desk Lights"
     effects:
