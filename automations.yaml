@@ -304,21 +304,40 @@
     at: '19:00:00'
   action:
   - service: zwave_js.set_config_parameter
-    data_template:
+    data:
+      parameter: '9'
+      value: '35'
+    target:
       entity_id: light.elijahs_room_light
-      parameter: 9
-      value: 35
   - service: zwave_js.set_config_parameter
-    data_template:
+    target:
       entity_id: light.izzys_room_light
-      parameter: 9
-      value: 30
+    data:
+      parameter: '9'
+      value: '30'
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: zwave_js.set_config_parameter
+    data:
+      parameter: '10'
+      value: '35'
+    target:
+      entity_id: light.elijahs_room_light
+  - service: zwave_js.set_config_parameter
+    target:
+      entity_id: light.izzys_room_light
+    data:
+      parameter: '10'
+      value: '30'
   mode: single
 - id: 5414ebf2b25c4a0a88bb4115c6a2758d
   alias: 'Lighting: Set default level in the morning'
   trigger:
   - platform: time
-    at: '7:00:00'
+    at: 07:00:00
   action:
   - service: script.set_homeseer_dim_level
     data:
@@ -345,20 +364,40 @@
       entity_id: light.kitchen_hallway_light
       brightness: 255
   - service: zwave_js.set_config_parameter
-    data_template:
+    target:
       entity_id: light.master_bathroom_light
-      parameter: 17
-      value: 99
+    data:
+      parameter: '17'
+      value: '99'
   - service: zwave_js.set_config_parameter
-    data_template:
+    target:
       entity_id: light.elijahs_room_light
-      parameter: 9
-      value: 99
+    data:
+      parameter: '9'
+      value: '99'
   - service: zwave_js.set_config_parameter
-    data_template:
+    target:
       entity_id: light.izzys_room_light
-      parameter: 9
-      value: 99
+    data:
+      parameter: '9'
+      value: '99'
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
+  - service: zwave_js.set_config_parameter
+    target:
+      entity_id: light.elijahs_room_light
+    data:
+      parameter: '10'
+      value: '99'
+  - service: zwave_js.set_config_parameter
+    target:
+      entity_id: light.izzys_room_light
+    data:
+      parameter: '10'
+      value: '99'
   mode: single
 - id: d986a9e1de204037a6ea78c183f07fde
   alias: 'Notification: power is out'
