@@ -15,7 +15,7 @@ esphome:
           service: persistent_notification.create
           data:
             message: "Sprinkler controller rebooted. If this was expected, disregard."
-            title: "Sprinlker restart"
+            title: "Sprinkler restart"
 
 wifi:
   ssid: !secret wifi_ssid
