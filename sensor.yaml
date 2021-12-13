@@ -222,5 +222,5 @@
     - "on"
     - "playing"
   type: time
-  start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+  start: "{{ now().replace(hour=4, minute=0, second=0) }}"
   end: "{{ now() }}"
