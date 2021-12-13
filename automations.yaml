@@ -566,15 +566,16 @@
   condition: []
   action:
   - data:
-      brightness: 70
-      effect: Fake Surround Louvres
-      rgb_color:
+      brightness_pct: 50
+      rgbw_color:
       - 255
       - 162
       - 71
-      white_value: 36
-    entity_id: light.backyard_step_lights
+      - 150
+      effect: Fake Surround Louvres
     service: light.turn_on
+    target:
+      entity_id: light.backyard_step_lights
   mode: single
 - id: '1591884206093'
   alias: 'Outside: Turn off step lights with bistro lights'
