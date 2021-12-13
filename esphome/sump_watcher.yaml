@@ -10,6 +10,9 @@ wifi:
 
 # Enable logging
 logger:
+  logs:
+    ct_clamp: INFO
+    sensor: INFO
 
 ota:
 

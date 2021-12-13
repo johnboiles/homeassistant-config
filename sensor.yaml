@@ -224,3 +224,12 @@
   type: time
   start: "{{ now().replace(hour=4, minute=0, second=0) }}"
   end: "{{ now() }}"
+
+- platform: history_stats
+  name: Sump Runtime This Week
+  entity_id: binary_sensor.sump_pump
+  state:
+    - "on"
+  type: time
+  start: "{{ as_timestamp( now().replace(hour=0, minute=0, second=0) ) - now().weekday() * 86400 }}"
+  end: "{{ now() }}"
