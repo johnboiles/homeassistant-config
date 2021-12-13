@@ -226,10 +226,10 @@
   end: "{{ now() }}"
 
 - platform: history_stats
-  name: Sump Runtime This Week
+  name: Sump Activated Count
   entity_id: binary_sensor.sump_pump
+  type: count
   state:
     - "on"
-  type: time
   start: "{{ as_timestamp( now().replace(hour=0, minute=0, second=0) ) - now().weekday() * 86400 }}"
   end: "{{ now() }}"
