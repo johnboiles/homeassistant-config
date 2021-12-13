@@ -36,11 +36,26 @@ output:
 
 binary_sensor:
   - platform: gpio
+    internal: true
     pin:
       number: D4
       inverted: true
       mode: INPUT_PULLUP
     name: "Elijah Button"
+    on_double_click:
+      then:
+        - homeassistant.service:
+            service: light.toggle
+            data:
+              entity_id: light.elijahs_room_light
+        - homeassistant.service:
+            service: light.turn_off
+            data:
+              entity_id: light.elijah_desk_lights
+        - homeassistant.service:
+            service: light.turn_off
+            data:
+              entity_id: light.elijah_button_light
 
 # Example usage in a light
 light:

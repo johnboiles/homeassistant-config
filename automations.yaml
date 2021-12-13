@@ -933,26 +933,6 @@
     data:
       source: Optical
   mode: single
-- id: '1634435615409'
-  alias: 'Elijah''s Room: Turn on/off his lights with a button'
-  description: ''
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.elijah_button
-    from: 'off'
-    to: 'on'
-  condition: []
-  action:
-  - service: light.toggle
-    target:
-      entity_id: light.elijahs_room_light
-  - service: light.turn_off
-    target:
-      entity_id: light.elijah_desk_lights
-  - service: light.turn_off
-    target:
-      entity_id: light.elijah_button_light
-  mode: single
 - id: '1634435731298'
   alias: 'Elijah''s Room: Button light on at 7:40a on weekdays'
   description: ''
