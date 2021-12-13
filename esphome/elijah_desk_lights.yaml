@@ -1,5 +1,5 @@
 esphome:
-  name: elijah_desk_lights
+  name: elijah-desk-lights
   platform: ESP8266
   board: d1_mini
 

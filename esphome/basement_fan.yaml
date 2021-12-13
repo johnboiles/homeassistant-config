@@ -1,5 +1,5 @@
 esphome:
-  name: basement_fan
+  name: basement-fan
   platform: ESP8266
   board: d1_mini
 

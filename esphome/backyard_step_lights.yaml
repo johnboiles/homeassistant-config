@@ -1,5 +1,5 @@
 esphome:
-  name: backyard_step_lights
+  name: backyard-step-lights
   platform: ESP8266
   board: d1_mini
 

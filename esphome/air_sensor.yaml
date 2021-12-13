@@ -1,5 +1,5 @@
 esphome:
-  name: air_sensor
+  name: air-sensor
   platform: ESP32
   board: wemos_d1_mini32
 

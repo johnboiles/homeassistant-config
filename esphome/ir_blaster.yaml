@@ -1,5 +1,5 @@
 esphome:
-  name: ir_blaster
+  name: ir-blaster
   platform: ESP8266
   board: d1_mini
 

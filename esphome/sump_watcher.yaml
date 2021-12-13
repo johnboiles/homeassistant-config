@@ -1,5 +1,5 @@
 esphome:
-  name: sump_watcher
+  name: sump-watcher
   platform: ESP8266
   board: d1_mini
 
