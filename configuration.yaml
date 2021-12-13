@@ -165,6 +165,8 @@ homekit:
       - switch.schedule_d62501
       - switch.shutoff_valve
       - switch.this_device_do_not_disturb_switch
+      - sensor.mh_z19_co2_value
+      - light.stinas_bed_lamp
 
 route53:
   aws_access_key_id: !secret route53_access_key_id
