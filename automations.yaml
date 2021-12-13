@@ -988,3 +988,23 @@
     target:
       entity_id: light.elijah_button_light
   mode: single
+- id: '1635877623449'
+  alias: 'System: Notify when internet comes back'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.remote_ui
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 10
+      milliseconds: 0
+  condition: []
+  action:
+  - service: notify.mobile_app_john_boiless_iphone_12_pro
+    data:
+      message: Home Assistant reconnected to cloud!
+      title: Internet is back!
+  mode: single
