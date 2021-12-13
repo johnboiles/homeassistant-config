@@ -22,7 +22,7 @@ sensor:
     sensor: adc_sensor
     name: "Measured Current"
     id: "sump_current"
-    update_interval: 1
+    update_interval: 1s
     filters:
       - calibrate_linear:
         - 0 -> 0
