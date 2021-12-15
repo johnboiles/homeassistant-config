@@ -258,49 +258,49 @@ media_player:
       turn_on:
         service: esphome.ir_blaster_transmit_nec
         data:
-          address: 0xFF
+          address: 0xFF00
           # The following command is the correct command for on/off, but HomeKit
           # has a quirk where it tries to make sure the soundbar is on before sending
           # volume commands. But since the on/off IR codes are the same this ends
           # up turning the sound bar off. I'm working around this by just sending the
           # volume up command since it also will turn on the sound bar.
           # command: 0x02FD
-          command: 0x827D
+          command: 0xBE41
       turn_off:
         service: esphome.ir_blaster_transmit_nec
         data:
-          address: 0xFF
-          command: 0x02FD
+          address: 0xFF00
+          command: 0xBF40
       volume_up:
         service: esphome.ir_blaster_transmit_nec
         data:
-          address: 0xFF
-          command: 0x827D
+          address: 0xFF00
+          command: 0xBE41
       volume_down:
         service: esphome.ir_blaster_transmit_nec
         data:
-          address: 0xFF
-          command: 0xA25D
+          address: 0xFF00
+          command: 0xBA45
       volume_mute:
         service: esphome.ir_blaster_transmit_nec
         data:
-          address: 0xFF
-          command: 0x12ED
+          address: 0xFF00
+          command: 0xB748
       select_source:
         service: esphome.ir_blaster_transmit_nec_string
         data_template:
-          address: 0xFF
+          address: 0xFF00
           command: >-
             {%- if source == 'Optical' -%}
-              0x13EC
+              0x37C8
             {%- elif source == 'Aux 1' -%}
-              0x8D72
+              0x4EB1
             {%- elif source == 'USB' -%}
-              0x857A
+              0x5EA1
             {%- elif source == 'Bluetooth' -%}
-              0x44BB
+              0xDD22
             {%- elif source == 'Aux 2' -%}
               0x4DB2
             {%- elif source == 'Digital' -%}
-              0x936C
+              0x36C9
             {%- endif -%}

@@ -546,12 +546,12 @@
   action:
   - service: esphome.ir_blaster_transmit_nec_string
     data_template:
-      address: 0xFF
+      address: 0xFF00
       command: >-
         {%- if trigger.to_state.state == 'playing' -%}
-          0x8D72
+          0x4EB1
         {%- else -%}
-          0x13EC
+          0x37C8
         {%- endif -%}
   mode: single
 - id: '1591884118185'
