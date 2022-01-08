@@ -306,7 +306,7 @@
   - service: zwave_js.set_config_parameter
     data:
       parameter: '9'
-      value: '35'
+      value: '1'
     target:
       entity_id: light.elijahs_room_light
   - service: zwave_js.set_config_parameter
@@ -314,7 +314,7 @@
       entity_id: light.izzys_room_light
     data:
       parameter: '9'
-      value: '30'
+      value: '1'
   - delay:
       hours: 0
       minutes: 0
@@ -323,7 +323,7 @@
   - service: zwave_js.set_config_parameter
     data:
       parameter: '10'
-      value: '35'
+      value: '1'
     target:
       entity_id: light.elijahs_room_light
   - service: zwave_js.set_config_parameter
@@ -331,7 +331,7 @@
       entity_id: light.izzys_room_light
     data:
       parameter: '10'
-      value: '30'
+      value: '1'
   mode: single
 - id: 5414ebf2b25c4a0a88bb4115c6a2758d
   alias: 'Lighting: Set default level in the morning'
@@ -987,4 +987,94 @@
     data:
       message: Home Assistant reconnected to cloud!
       title: Internet is back!
+  mode: single
+- id: '1639551963233'
+  alias: Turn on christmas tree
+  description: ''
+  trigger:
+  - platform: time
+    at: 07:00:00
+  condition: []
+  action:
+  - service: switch.turn_on
+    target:
+      entity_id: switch.christmas_tree_lights
+  mode: single
+- id: '1640449448359'
+  alias: 'Living Room: No TV in the morning'
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: media_player.55_tcl_roku_tv
+    to: 'on'
+  - platform: state
+    entity_id: media_player.55_tcl_roku_tv
+    to: playing
+  condition:
+  - condition: time
+    before: '10:00:00'
+  action:
+  - service: media_player.turn_off
+    target:
+      entity_id: media_player.55_tcl_roku_tv
+  mode: single
+- id: '1641536934201'
+  alias: 'Climate: Set thermostat to 70 in the morning'
+  description: ''
+  trigger:
+  - platform: time
+    at: 07:00:00
+  condition: []
+  action:
+  - service: climate.set_temperature
+    target:
+      device_id: a907903c294bb822add66ad09f815382
+    data:
+      temperature: 70
+  mode: single
+- id: '1641537015983'
+  alias: 'Climate: Set thermostat to 65 at night'
+  description: ''
+  trigger:
+  - platform: time
+    at: '21:00:00'
+  condition: []
+  action:
+  - service: climate.set_temperature
+    target:
+      device_id: a907903c294bb822add66ad09f815382
+    data:
+      temperature: 65
+  mode: single
+- id: '1641674852044'
+  alias: 'Notification: Critical notification for leak sensors'
+  description: ''
+  trigger:
+  - type: turned_on
+    platform: device
+    device_id: f2240ba5b3a586a5fa3cdce7415cf5e4
+    entity_id: binary_sensor.dishwasher_leak_sensor_water
+    domain: binary_sensor
+  - type: turned_on
+    platform: device
+    device_id: 434292cbb0748b0427bf8840c7a5cab6
+    entity_id: binary_sensor.washing_machine_leak_sensor_water
+    domain: binary_sensor
+  - type: turned_on
+    platform: device
+    device_id: 405743db70972b84745d0d1c6c2cf804
+    entity_id: binary_sensor.fridge_leak_sensor_water
+    domain: binary_sensor
+  condition: []
+  action:
+  - service: notify.mobile_app_john_boiless_iphone_12_pro
+    data:
+      title: Leak detected!
+      message: '{{ trigger.from_state.attributes.friendly_name }} triggered'
+      data:
+        push:
+          sound:
+            name: default
+            critical: 1
+            volume: 1
   mode: single
