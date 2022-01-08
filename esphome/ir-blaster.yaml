@@ -2,6 +2,8 @@ esphome:
   name: ir-blaster
   platform: ESP8266
   board: d1_mini
+  platformio_options:
+    board_build.f_cpu: 160000000L
 
 wifi:
   ssid: !secret wifi_ssid
@@ -78,3 +80,64 @@ remote_transmitter:
 #   filter: 250us
 #   idle: 4ms
 #   buffer_size: 2kb
+
+external_components:
+  # - source: github://johnboiles/esphome-hdmi-cec
+  - source: ../../../esphome/hdmi_cec/components/
+
+hdmi_cec:
+  address: 0x05 # Audio system
+  physical_address: 0x4000
+  pin: D1 # GPIO5
+  on_message:
+    - opcode: 0xC3 # Request ARC start
+      then:
+        - hdmi_cec.send: # Report ARC started
+            destination: 0x0
+            data: [ 0xC1 ]
+    - opcode: 0x70 # System audio mode request
+      then:
+        - hdmi_cec.send:
+            destination: 0x0
+            data: [ 0x72, 0x01 ]
+    # We can provide mute status and volume here but we don't know
+    # What it is, so instead provide nothing
+    # - opcode: 0x71 # Give audio status
+    #   then:
+    #     - hdmi_cec.send:
+    #         destination: 0x0
+    #         # data: [ 0x7A, 0x7F ]
+    #         data: [ 0x00, 0x00, 0x00 ]
+    - opcode: 0x7D # Give audio system mode status
+      then:
+        - hdmi_cec.send:
+            destination: 0x0
+            data: [ 0x7E, 0x01 ]
+    - opcode: 0x46 # Give OSD name
+      then:
+        - hdmi_cec.send:
+            destination: 0x0
+            data: [0x47, 0x65, 0x73, 0x70, 0x68, 0x6F, 0x6D, 0x65] # esphome
+    - opcode: 0x8C # Give device Vendor ID
+      then:
+        - hdmi_cec.send:
+            destination: 0xF
+            data: [0x87, 0x00, 0x15, 0x82]
+    - data: [0x44, 0x41] # User control pressed: volume up
+      then:
+        - logger.log: "Volume up"
+        - remote_transmitter.transmit_nec:
+            address: 0xFF00
+            command: 0xBE41
+    - data: [0x44, 0x42] # User control pressed: volume down
+      then:
+        - logger.log: "Volume down"
+        - remote_transmitter.transmit_nec:
+            address: 0xFF00
+            command: 0xBA45
+    - data: [0x44, 0x43] # User control pressed: volume mute
+      then:
+        - logger.log: "Volume mute"
+        - remote_transmitter.transmit_nec:
+            address: 0xFF00
+            command: 0xB748
