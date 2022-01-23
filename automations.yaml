@@ -1012,7 +1012,7 @@
     to: playing
   condition:
   - condition: time
-    before: '10:00:00'
+    before: 09:00:00
   action:
   - service: media_player.turn_off
     target:
