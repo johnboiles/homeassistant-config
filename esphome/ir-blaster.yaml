@@ -82,8 +82,7 @@ remote_transmitter:
 #   buffer_size: 2kb
 
 external_components:
-  # - source: github://johnboiles/esphome-hdmi-cec
-  - source: ../../../esphome/hdmi_cec/components/
+  - source: github://johnboiles/esphome-hdmi-cec
 
 hdmi_cec:
   address: 0x05 # Audio system
