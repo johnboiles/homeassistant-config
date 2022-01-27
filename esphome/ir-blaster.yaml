@@ -97,7 +97,7 @@ hdmi_cec:
     - opcode: 0x70 # System audio mode request
       then:
         - hdmi_cec.send:
-            destination: 0x0
+            destination: 0xF
             data: [ 0x72, 0x01 ]
     # We can provide mute status and volume here but we don't know
     # What it is, so instead provide nothing
