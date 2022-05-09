@@ -33,7 +33,6 @@ alexa:
       - binary_sensor.remote_ui
       - binary_sensor.rpi_power_status
       - binary_sensor.quest_is_charging
-      - binary_sensor.updater
       - switch.unifi_controller_pi
       - binary_sensor.upstairs_smoke_alarms_access_control_door_window_open
       - binary_sensor.master_bathroom_motion_detected

@@ -12,8 +12,6 @@ homeassistant:
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: America/Los_Angeles
   customize: !include customize.yaml
-  packages:
-    update_notifications: !include update_notifications.yaml
 
 recorder:
   db_url: !secret mysql_db_url
@@ -29,7 +27,7 @@ http:
 # `default_config` is a meta-component and configures a default set of
 # integrations for Home Assistant to load. The integrations that will be
 # loaded are: automation, cloud, config, frontend, history, logbook, map,
-# mobile_app, person, script, ssdp, sun, system_health, updater, zeroconf
+# mobile_app, person, script, ssdp, sun, system_health, zeroconf
 
 # default_config:
 
@@ -65,10 +63,6 @@ ssdp:
 sun:
 
 system_health:
-
-# Checks for available updates
-updater:
-  include_used_components: true
 
 zeroconf:
 
