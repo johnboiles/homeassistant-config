@@ -128,10 +128,8 @@ homekit:
       - person
       - alarm_control_panel
     exclude_entities:
-      - switch.twitter_laptop_wol
       - light.master_bathroom_light_2
       - switch.3d_printer
-      - switch.twitter_laptop_wol
       - sensor.dark_sky_daily_low_temperature
       - sensor.dark_sky_daily_high_temperature
       - sensor.dark_sky_temperature
@@ -219,11 +217,6 @@ panel_custom:
     url_path: zwave
 
 switch:
-  - platform: wake_on_lan
-    name: "Twitter Laptop WOL"
-    # mac: "F4-5C-89-A3-A7-73" # Twitter Laptop Wifi
-    mac: "0C-4D-E9-AA-C6-52" # Thunderbolt ethernet (with 'tw' on it)
-    host: tw-mbp-jboiles.local
   - platform: template
     switches:
       hvac_fan:

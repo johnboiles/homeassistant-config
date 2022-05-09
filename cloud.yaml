@@ -9,7 +9,6 @@ alexa:
       - timer
       - media_player
     exclude_entities:
-      - switch.twitter_laptop_wol
       - light.master_bathroom_light_2
       - switch.3d_printer
       - sensor.octoprint_target_bed_temp
