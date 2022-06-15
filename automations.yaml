@@ -1078,3 +1078,17 @@
             critical: 1
             volume: 1
   mode: single
+- id: '1655322515675'
+  alias: 'Basement: Update number sign with number of days since last charge'
+  description: ''
+  trigger:
+  - platform: time
+    at: '16:10:00'
+  condition: []
+  action:
+  - service: mqtt.publish
+    data:
+      topic: splitflap
+      payload_template: '{{ ''%04d'' | format(((as_timestamp(now()) - states.input_datetime.last_glasses_charge.attributes.timestamp)
+        | int /60/1440) | round(0)) | replace(''0'', ''.'') }}'
+  mode: single

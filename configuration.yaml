@@ -304,3 +304,9 @@ media_player:
             {%- elif source == 'Digital' -%}
               0x36C9
             {%- endif -%}
+
+input_datetime:
+  last_glasses_charge:
+    name: Last Glasses Charge
+    has_date: true
+    has_time: true
