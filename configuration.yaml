@@ -76,11 +76,6 @@ conversation:
 ecobee:
   api_key: !secret ecobee_api_key
 
-octoprint:
-  host: 10.0.2.17
-  api_key: !secret octoprint_api_key
-  bed: true
-
 eight_sleep:
   username: !secret eight_sleep_email
   password: !secret eight_sleep_password

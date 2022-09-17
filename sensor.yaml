@@ -95,12 +95,6 @@
 #     - conductivity
 #     - battery
 
-- platform: octoprint
-  name: OctoPrint
-  monitored_conditions:
-    - Current State
-    - Job Percentage
-
 - platform: thermal_comfort
   sensors:
     basement:
