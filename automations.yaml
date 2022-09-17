@@ -116,37 +116,6 @@
     data:
       entity_id: switch.bedroom_lamp
   mode: single
-- id: b5d3da4e0d33496ab4965ee577aac543
-  alias: 'Bathroom: Run fan for 20min after a double tap down on the fan switch'
-  trigger:
-  - event_type: zwave_js_value_notification
-    event_data:
-      node_id: 38
-      property_key: '001'
-      value: KeyPressed2x
-    platform: event
-  action:
-  - service: script.inovelli_led
-    data:
-      entity_id: switch.master_bathroom_fan
-      model: switch
-      color: green
-      duration: 2 seconds
-      effect: breath
-  - type: turn_on
-    device_id: ce840b60085a24a1500c3f6db552a3d2
-    entity_id: switch.master_bathroom_fan
-    domain: switch
-  - type: turn_off
-    device_id: b25ce08e59828c6afe04d62923600a4f
-    entity_id: light.master_bathroom_light
-    domain: light
-  - delay: 00:20
-  - type: turn_off
-    device_id: ce840b60085a24a1500c3f6db552a3d2
-    entity_id: switch.master_bathroom_fan
-    domain: switch
-  mode: restart
 - id: 33e78170ee6f40cbb028622f9a501a66
   alias: 'Notification: Garage Door Open'
   description: Send a critical notification if the garage door is left open for 30
@@ -656,35 +625,10 @@
     for: 00:45:00
   condition: []
   action:
-  - type: turn_off
-    device_id: ce840b60085a24a1500c3f6db552a3d2
+  - service: switch.turn_off
     entity_id: switch.master_bathroom_fan
-    domain: switch
-  - type: turn_off
-    device_id: b25ce08e59828c6afe04d62923600a4f
+  - service: switch.turn_off
     entity_id: light.master_bathroom_light
-    domain: light
-  mode: single
-- id: '1611029049758'
-  alias: 'Bathroom: Light on with motion'
-  description: ''
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.master_bathroom_motion_detected
-    to: 'on'
-  condition:
-  - condition: state
-    entity_id: sun.sun
-    state: below_horizon
-  - condition: state
-    entity_id: light.master_bathroom_light
-    state: 'off'
-    for:
-      minutes: 1
-  action:
-  - service: light.turn_on
-    data:
-      entity_id: light.master_bathroom_light
   mode: single
 - id: '1612232509176'
   alias: 'Izzy''s Room: Lamp to Green at Wakeup Time'
@@ -875,14 +819,14 @@
   - delay:
       hours: 0
       minutes: 0
-      seconds: 10
+      seconds: 15
       milliseconds: 0
   - service: switch.turn_on
     target:
-      device_id: 2a53f154c85a957d90b00631e8e06d1c
+      entity_id: switch.master_bathroom_fan
   - service: light.turn_off
     target:
-      device_id: afd495d7e6d5db432f159256c1409954
+      entity_id: light.master_bathroom_light
   mode: restart
 - id: '1630473928636'
   alias: 'Izzy''s Room: Turn off Light at 10pm'
