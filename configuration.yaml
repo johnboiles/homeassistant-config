@@ -192,6 +192,44 @@ camera:
 
 sensor: !include sensor.yaml
 
+mqtt:
+  sensor:
+    - state_topic: 'rtl_433/raw'
+      name: 'Outside Temperature'
+      unit_of_measurement: '°F'
+      expire_after: 600
+      value_template: '{{ value_json.temperature_F if value_json.channel == 2 else states.sensor.outside_temperature.state }}'
+
+    - state_topic: 'rtl_433/raw'
+      name: 'Outside Humidity'
+      unit_of_measurement: '%'
+      expire_after: 600
+      value_template: '{{ value_json.humidity if value_json.channel == 2 else states.sensor.outside_humidity.state}}'
+
+    - state_topic: 'rtl_433/raw'
+      name: 'Basement Temperature'
+      unit_of_measurement: '°F'
+      expire_after: 600
+      value_template: '{{ value_json.temperature_F if value_json.channel == 5 else states.sensor.basement_temperature.state}}'
+
+    - state_topic: 'rtl_433/raw'
+      name: 'Basement Humidity'
+      unit_of_measurement: '%'
+      expire_after: 600
+      value_template: '{{ value_json.humidity if value_json.channel == 5 else states.sensor.basement_humidity.state}}'
+
+    - state_topic: 'rtl_433/raw'
+      name: 'Izzy Room Temperature'
+      unit_of_measurement: '°F'
+      expire_after: 600
+      value_template: '{{ value_json.temperature_F if value_json.channel == 7 else states.sensor.izzy_room_temperature.state}}'
+
+    - state_topic: 'rtl_433/raw'
+      name: 'Izzy Room Humidity'
+      unit_of_measurement: '%'
+      expire_after: 600
+      value_template: '{{ value_json.humidity if value_json.channel == 7 else states.sensor.izzy_room_humidity.state}}'
+
 binary_sensor:
   - platform: octoprint
     monitored_conditions:
