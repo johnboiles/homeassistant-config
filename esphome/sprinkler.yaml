@@ -8,7 +8,7 @@ esphome:
     then:
       - delay: 30s
       - homeassistant.service:
-          service: notify.mobile_app_iphone
+          service: notify.mobile_app_johnboiles
           data:
             message: "Sprinkler controller rebooted."
       - homeassistant.service:
