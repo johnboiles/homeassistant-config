@@ -30,6 +30,7 @@ http:
 # mobile_app, person, script, ssdp, sun, system_health, zeroconf
 
 # default_config:
+energy:
 
 automation: !include automations.yaml
 
