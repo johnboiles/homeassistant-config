@@ -159,6 +159,10 @@ homekit:
       - switch.this_device_do_not_disturb_switch
       - sensor.mh_z19_co2_value
       - light.stinas_bed_lamp
+      - select.55_tcl_roku_tv_channel
+      - button.octoprint_pause_job
+      - button.octoprint_resume_job
+      - button.octoprint_stop_job
 
 route53:
   aws_access_key_id: !secret route53_access_key_id

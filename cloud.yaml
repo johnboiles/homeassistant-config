@@ -39,3 +39,7 @@ alexa:
       - switch.unifi_poe_20_2e_5d_55_a4_83
       - binary_sensor.front_door_tampering_cover_removed
       - switch.unifi_poe_00_00_00_00_00_01
+      - select.55_tcl_roku_tv_channel
+      - button.octoprint_pause_job
+      - button.octoprint_resume_job
+      - button.octoprint_stop_job
