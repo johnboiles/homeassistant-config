@@ -1,0 +1,8 @@
+keymaster_front_door_manual_notify:
+  alias: 'keymaster: front door manual notify'
+  sequence:
+  - service: notify.mobile_app_johnboiles
+    data:
+      title: '{{ title }}'
+      message: '{{ message }}'
+  mode: parallel

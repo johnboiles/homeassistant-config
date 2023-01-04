@@ -12,6 +12,8 @@ homeassistant:
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: America/Los_Angeles
   customize: !include customize.yaml
+  country: US
+  packages: !include_dir_named packages
 
 recorder:
   db_url: !secret mysql_db_url
@@ -123,6 +125,8 @@ homekit:
       - binary_sensor
       - person
       - alarm_control_panel
+      - input_boolean
+      - input_text
     exclude_entities:
       - light.master_bathroom_light_2
       - switch.3d_printer
