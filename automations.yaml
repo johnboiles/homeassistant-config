@@ -1036,3 +1036,37 @@
       payload_template: '{{ ''%04d'' | format(((as_timestamp(now()) - states.input_datetime.last_glasses_charge.attributes.timestamp)
         | int /60/1440) | round(0)) | replace(''0'', ''.'') }}'
   mode: single
+- id: '1676703714440'
+  alias: 'Basement: Fan on when Glowforge Running'
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: sensor.glowforge_power_consuption
+    above: 50
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 5
+  condition: []
+  action:
+  - service: fan.turn_on
+    data: {}
+    target:
+      entity_id: fan.basement_fan
+  mode: single
+- id: '1676703799745'
+  alias: 'Basement: Fan off 1min after Glowforge is finished'
+  description: ''
+  trigger:
+  - platform: numeric_state
+    entity_id: switch.glowforge_power
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+    below: 50
+  condition: []
+  action:
+  - service: fan.turn_off
+    data: {}
+  mode: single
