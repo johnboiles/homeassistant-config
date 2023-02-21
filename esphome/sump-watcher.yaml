@@ -18,6 +18,8 @@ ota:
 
 # Enable Home Assistant API
 api:
+  encryption:
+    key: !secret esphome_encryption_key
 
 sensor:
   - platform: ct_clamp
