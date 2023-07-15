@@ -1072,3 +1072,35 @@
     target:
       entity_id: fan.basement_fan
   mode: single
+- id: '1679848762520'
+  alias: 'Basement: Turn on Unifi OLED when basement light is on'
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: 3ee2f5d36faf584ae8217d8f5364ff7e
+    entity_id: switch.basement_light
+    domain: switch
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 08362b14dfa30c33e23cde5ec4d468b7
+    entity_id: switch.unifi_pi_oled
+    domain: switch
+  mode: single
+- id: '1679848785607'
+  alias: 'Basement: Turn off Unifi OLED when basement light turns off'
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_off
+    device_id: 3ee2f5d36faf584ae8217d8f5364ff7e
+    entity_id: switch.basement_light
+    domain: switch
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 08362b14dfa30c33e23cde5ec4d468b7
+    entity_id: switch.unifi_pi_oled
+    domain: switch
+  mode: single
