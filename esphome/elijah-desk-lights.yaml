@@ -66,10 +66,12 @@ light:
       - pulse:
   - platform: neopixelbus
     type: GRBW
+    color_correct: [60%, 60%, 60%, 100%]
     variant: SK6812
     pin: GPIO3 # RX pin
     num_leds: 83
     name: "Elijah Desk Lights"
+    restore_mode: RESTORE_DEFAULT_OFF
     effects:
       - addressable_fireworks:
       - addressable_flicker:
