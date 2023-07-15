@@ -1059,7 +1059,7 @@
   description: ''
   trigger:
   - platform: numeric_state
-    entity_id: switch.glowforge_power
+    entity_id: sensor.glowforge_power_consuption
     for:
       hours: 0
       minutes: 1
@@ -1069,4 +1069,6 @@
   action:
   - service: fan.turn_off
     data: {}
+    target:
+      entity_id: fan.basement_fan
   mode: single
