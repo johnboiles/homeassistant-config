@@ -30,11 +30,11 @@ api:
 ota:
 
 uart:
-  - id: "uart1"
+  - id: "mhz19_uart"
     tx_pin: 17
     rx_pin: 16
     baud_rate: 9600
-  - id: "uart2"
+  - id: "pms5003_uart"
     tx_pin: 18
     rx_pin: 5
     baud_rate: 9600
@@ -60,10 +60,10 @@ sensor:
             send_every: 6
     update_interval: 10s
     automatic_baseline_calibration: true
-    uart_id: "uart1"
+    uart_id: "mhz19_uart"
   - platform: pmsx003
     type: PMSX003
-    uart_id: "uart2"
+    uart_id: "pms5003_uart"
     pm_1_0:
       name: "PM <1.0µm µg/m³"
       filters:
