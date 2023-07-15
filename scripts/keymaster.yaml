@@ -1,7 +1,7 @@
 keymaster_front_door_manual_notify:
   alias: 'keymaster: front door manual notify'
   sequence:
-  - service: notify.mobile_app_johnboiles
+  - service: notify.mobile_app_iphone_13_mini
     data:
       title: '{{ title }}'
       message: '{{ message }}'
