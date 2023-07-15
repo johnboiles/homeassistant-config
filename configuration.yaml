@@ -176,11 +176,6 @@ route53:
   records:
     - house
 
-tplink:
-  discovery: false
-  switch:
-    - host: 10.0.2.40
-
 ## Section: Component configuration 
 
 group: !include group.yaml
@@ -192,12 +187,6 @@ discovery:
   ignore:
     - apple_tv
     - yeelight
-
-camera:
-  - platform: mjpeg
-    name: OctoPrint Camera
-    mjpeg_url: http://10.0.2.17/webcam/?action=stream
-    still_image_url: http://10.0.2.17/webcam/?action=snapshot
 
 sensor: !include sensor.yaml
 
@@ -238,12 +227,6 @@ mqtt:
       unit_of_measurement: '%'
       expire_after: 600
       value_template: '{{ value_json.humidity if value_json.channel == 7 else states.sensor.izzy_room_humidity.state}}'
-
-binary_sensor:
-  - platform: octoprint
-    monitored_conditions:
-      - Printing
-      - Printing Error
 
 panel_iframe:
   jupyterlab:

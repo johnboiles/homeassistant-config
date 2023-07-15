@@ -8,22 +8,6 @@
     - alerts
     - firmware
 
-- platform: darksky
-  api_key: !secret darksky_api_key
-  monitored_conditions:
-    - summary
-    - temperature
-    - precip_probability
-    - nearest_storm_distance
-    - wind_speed
-    - wind_bearing
-
-- platform: command_line
-  name: CPU Temp
-  command: "/bin/cat /sys/class/thermal/thermal_zone0/temp"
-  unit_of_measurement: "ºC"
-  value_template: '{{ value | multiply(0.001) | round(2) }}'
-
 - platform: systemmonitor
   resources:
   - type: disk_use_percent
@@ -92,17 +76,6 @@
         {%- endif -%}
       friendly_name: 'Basement Smoke Alarm'
       icon_template: hass:smoke-detector
-
-- platform: nut
-  host: 10.0.0.6
-  alias: ups
-  resources:
-    - ups.load
-    - ups.realpower.nominal
-    - input.voltage
-    - battery.runtime
-    - battery.charge
-    - battery.voltage
 
 - platform: history_stats
   name: Maple Sprinkler Runtime Today
