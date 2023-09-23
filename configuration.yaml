@@ -334,4 +334,4 @@ notify:
   - name: all_devices
     platform: group
     services:
-      - service: mobile_app_iphone_13_mini
+      - service: mobile_app_iphone_15_pro
