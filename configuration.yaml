@@ -329,3 +329,9 @@ input_datetime:
     name: Last Glasses Charge
     has_date: true
     has_time: true
+
+notify:
+  - name: all_devices
+    platform: group
+    services:
+      - service: mobile_app_johnboiles

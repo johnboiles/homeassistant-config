@@ -10,7 +10,7 @@
     data:
       entity_id: camera.octoprint_camera
       filename: /config/www/camera/3d-print.jpg
-  - service: notify.mobile_app_iphone_13_mini
+  - service: notify.all_devices
     data:
       message: 3D print has finished
       data:
@@ -126,7 +126,7 @@
     entity_id: cover.garage_door
     state: open
   action:
-  - service: notify.mobile_app_iphone_13_mini
+  - service: notify.all_devices
     data:
       message: Garage Door is Open
       data:
@@ -153,7 +153,7 @@
     to: 'on'
     for: 0:50:00
   action:
-  - service: notify.mobile_app_iphone_13_mini
+  - service: notify.all_devices
     data:
       message: Sprinkler has been running for > 30 min
       data:
@@ -368,7 +368,7 @@
     entity_id: sensor.nut_ups_input_voltage
     below: '60'
   action:
-  - service: notify.mobile_app_iphone_13_mini
+  - service: notify.all_devices
     data:
       message: Power is out
       data:
@@ -397,7 +397,7 @@
   - condition: template
     value_template: '{{ not is_state("sensor.basement_smoke_alarm_state", "Unknown") }}'
   action:
-  - service: notify.mobile_app_iphone_13_mini
+  - service: notify.all_devices
     data:
       title: Smoke alarm
       message: Basement smoke alarm is triggered!
@@ -419,7 +419,7 @@
     entity_id: binary_sensor.upstairs_smoke_alarms
     to: 'on'
   action:
-  - service: notify.mobile_app_iphone_13_mini
+  - service: notify.all_devices
     data:
       title: Smoke alarm
       message: Upstairs smoke alarm is triggered!
@@ -441,7 +441,7 @@
     entity_id: sensor.unifi_gateway_firmware_upgradable
     from: '0'
   action:
-  - service: notify.mobile_app_iphone_13_mini
+  - service: notify.all_devices
     data_template:
       message: New Unifi firmware is available.
   - service: persistent_notification.create
@@ -456,7 +456,7 @@
     entity_id: sensor.unifi_gateway_alerts
     from: '0'
   action:
-  - service: notify.mobile_app_iphone_13_mini
+  - service: notify.all_devices
     data_template:
       message: Unifi controller has new alerts.
   mode: single
@@ -485,7 +485,7 @@
       hours: 4
   action:
   - service: esphome.airsensor_mhz19_calibrate_zero
-  - service: notify.mobile_app_iphone_13_mini
+  - service: notify.all_devices
     data:
       message: Calibrating CO2 sensor.
   mode: single
@@ -919,7 +919,7 @@
       milliseconds: 0
   condition: []
   action:
-  - service: notify.mobile_app_iphone_13_mini
+  - service: notify.all_devices
     data:
       message: Home Assistant reconnected to cloud!
       title: Internet is back!
@@ -1003,7 +1003,7 @@
     domain: binary_sensor
   condition: []
   action:
-  - service: notify.mobile_app_iphone_13_mini
+  - service: notify.all_devices
     data:
       title: Leak detected!
       message: '{{ trigger.from_state.attributes.friendly_name }} triggered'
@@ -1115,7 +1115,7 @@
     data:
       entity_id: camera.octoprint_camera
       filename: /config/www/camera/3d-print.jpg
-  - service: notify.mobile_app_iphone_13_mini
+  - service: notify.all_devices
     data:
       message: 3D print paused (possibly out of filament?)
       data:
