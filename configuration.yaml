@@ -182,12 +182,6 @@ group: !include group.yaml
 
 python_script:
 
-# Discover some devices automatically
-discovery:
-  ignore:
-    - apple_tv
-    - yeelight
-
 sensor: !include sensor.yaml
 
 mqtt:
