@@ -1096,3 +1096,28 @@
     entity_id: switch.unifi_pi_oled
     domain: switch
   mode: single
+- id: '1693690036157'
+  alias: 'Notification: 3d Print Paused'
+  description: Notify when the print has paused for a minute. This could indicate
+    out of filament.
+  trigger:
+  - platform: state
+    entity_id:
+    - sensor.octoprint_current_state
+    to: Paused
+    for:
+      hours: 0
+      minutes: 1
+      seconds: 0
+  condition: []
+  action:
+  - service: camera.snapshot
+    data:
+      entity_id: camera.octoprint_camera
+      filename: /config/www/camera/3d-print.jpg
+  - service: notify.mobile_app_iphone_13_mini
+    data:
+      message: 3D print paused (possibly out of filament?)
+      data:
+        image: /local/camera/3d-print.jpg
+  mode: single
