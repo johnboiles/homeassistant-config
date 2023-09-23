@@ -66,27 +66,19 @@
       value: KeyPressed3x
   action:
   - service: light.turn_off
-    data:
-      entity_id: light.kitchen_light
-  - service: light.turn_off
-    data:
-      entity_id: light.kitchen_island_light
-  - service: light.turn_off
-    data:
-      entity_id: light.dining_room_light
-  - service: light.turn_off
-    data:
-      entity_id: light.dining_room_chandelier
-  - service: light.turn_off
-    data:
-      entity_id: light.living_room_light
-  - service: light.turn_off
-    data:
-      entity_id: light.kitchen_hallway_light
-  - device_id: c985abd1e1a57459ed18ae54fe3c6d25
-    domain: lock
-    entity_id: lock.front_door_lock
-    type: lock
+    data: {}
+    target:
+      entity_id:
+      - light.kitchen_light
+      - light.kitchen_island_light
+      - light.dining_room_light
+      - light.dining_room_chandelier
+      - light.living_room_light
+      - light.kitchen_hallway_light
+  - service: lock.lock
+    data: {}
+    target:
+      entity_id: lock.front_door_lock
   mode: single
 - id: 08182ba3f3554d85a534a5b658d40104
   alias: 'Bedroom: Turn on lamp with double tap up'
