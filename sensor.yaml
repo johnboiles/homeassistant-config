@@ -8,15 +8,6 @@
     - alerts
     - firmware
 
-- platform: systemmonitor
-  resources:
-  - type: disk_use_percent
-    arg: /
-  - type: memory_free
-  - type: memory_use_percent
-  - type: processor_use
-  - type: last_boot
-
 # - platform: miflora
 #   mac: 'C4:7C:8D:62:73:AC'
 #   name: Peace Lily
@@ -124,11 +115,6 @@
   type: time
   start: '{{ now().replace(hour=0, minute=0, second=0) }}'
   end: '{{ now() }}'
-
-- platform: waqi
-  token: !secret aqicn_api_token
-  locations:
-    - berkeley
 
 - platform: filter
   name: "Filtered TVOC"

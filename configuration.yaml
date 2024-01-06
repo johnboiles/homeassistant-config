@@ -79,10 +79,6 @@ conversation:
 ecobee:
   api_key: !secret ecobee_api_key
 
-eight_sleep:
-  username: !secret eight_sleep_email
-  password: !secret eight_sleep_password
-
 homekit:
   entity_config:
     switch.maple_sprinkler:
