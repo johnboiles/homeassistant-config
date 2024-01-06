@@ -1,23 +1,15 @@
 esphome:
   name: garage-door
-  platform: ESP8266
-  board: esp01_1m
+  platform: ESP32
+  board: esp32dev
 
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
   fast_connect: true
 
-  # Enable fallback hotspot (captive portal) in case wifi connection fails
-  ap:
-    ssid: "Garage Door Fallback Hotspot"
-    password: !secret wifi_ap_password
-
-captive_portal:
-
 # Enable logging
 logger:
-  baud_rate: 0
 
 # Enable Home Assistant API
 api:
@@ -26,23 +18,52 @@ api:
 
 ota:
 
+sensor:
+  - platform: ct_clamp
+    internal: true
+    sensor: adc_sensor
+    name: "Measured Current"
+    id: "sump_current"
+    update_interval: 1s
+    filters:
+      - calibrate_linear:
+        - 0 -> 0
+        # Based on my Bonavita 1000w kettle
+        - 0.2 -> 8.33333333
+  - platform: adc
+    internal: true
+    pin: 34
+    id: adc_sensor
+
 switch:
   - platform: gpio
     internal: true
-    pin: 3
+    pin: 12
     id: garage_door_relay
+  - platform: gpio
+    internal: true
+    pin: 13
+    id: debug_led
 
 binary_sensor:
-- id: garage_door_sensor
-  internal: true
-  platform: gpio
-  pin:
-    number: 1
-    mode: INPUT_PULLUP
-    inverted: False
-  device_class: garage_door
-  filters:
-    - delayed_on_off: 20ms
+  - id: garage_door_sensor
+    internal: true
+    platform: gpio
+    pin:
+      number: 27
+      mode: INPUT_PULLUP
+      inverted: False
+    device_class: garage_door
+    filters:
+      - delayed_on_off: 20ms
+  - platform: template
+    name: "Sump Pump"
+    lambda: |-
+      if (id(sump_current).state > 2) {
+        return true;
+      } else {
+        return false;
+      }
 
 cover:
   - platform: template
