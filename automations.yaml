@@ -826,6 +826,14 @@
   trigger:
   - platform: time
     at: '22:00:00'
+  - platform: time
+    at: '22:30:00'
+  - platform: time
+    at: '23:00:00'
+  - platform: time
+    at: '23:30:00'
+  - platform: time
+    at: 00:00:00
   condition: []
   action:
   - service: light.turn_off
@@ -929,12 +937,13 @@
   description: ''
   trigger:
   - platform: time
-    at: 07:00:00
+    at: 08:00:00
   condition: []
   action:
   - service: switch.turn_on
     target:
       entity_id: switch.christmas_tree_lights
+    data: {}
   mode: single
 - id: '1640449448359'
   alias: 'Living Room: No TV in the morning'
