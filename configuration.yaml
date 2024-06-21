@@ -228,15 +228,6 @@ panel_custom:
     url_path: zwave
 
 switch:
-  - platform: wake_on_lan
-    name: "Shadowfax WOL"
-    mac: "D8-BB-C1-93-D0-82"
-    host: shadowfax.local
-    turn_off:
-      service: hassio.addon_stdin
-      data:
-        addon: core_rpc_shutdown
-        input: shadowfax
   - platform: template
     switches:
       hvac_fan:
