@@ -62,7 +62,6 @@ sensor:
         - or:
           - throttle: 60s
           - delta: 5.0
-    update_interval: 1s
 
 switch:
   - platform: gpio
