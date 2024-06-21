@@ -69,6 +69,8 @@ system_health:
 
 zeroconf:
 
+media_source:
+
 ## Section: Integration Config
 
 ios:
