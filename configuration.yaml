@@ -220,12 +220,6 @@ mqtt:
       expire_after: 600
       value_template: '{{ value_json.humidity if value_json.channel == 7 else states.sensor.izzy_room_humidity.state}}'
 
-panel_iframe:
-  jupyterlab:
-    title: JupyterLab
-    icon: mdi:flask
-    url: http://10.0.0.2:7777
-
 # From https://gist.github.com/AdamNaj/cbf4d792a22f443fe9d354e4dca4de00
 panel_custom:
   - name: zwavegraph2
