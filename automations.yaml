@@ -195,7 +195,8 @@
         {%- endif -%}
   mode: single
 - id: 02ac6c6160e74ce2b91d7cd142cd4eda
-  alias: 'Lighting: Set default level for WD100 when turned off after hours'
+  alias: Set default level for WD100 when turned off after hours
+  description: ''
   trigger:
   - platform: state
     entity_id:
@@ -223,7 +224,8 @@
         {%- endif -%}
   mode: single
 - id: fbd91d4f47f44fc4964c7b38d3a0b9a2
-  alias: 'Lighting: Set default level at night'
+  alias: Set default level at night
+  description: ''
   trigger:
   - platform: time
     at: '21:00:00'
@@ -259,7 +261,8 @@
       value: 15
   mode: single
 - id: 82d04dd7c79e4972834845b48035f831
-  alias: 'Lighting: Set default level for Elijah & Izzys rooms'
+  alias: Set default level for Elijah & Izzys rooms
+  description: ''
   trigger:
   - platform: time
     at: '19:00:00'
@@ -267,7 +270,7 @@
   - service: zwave_js.set_config_parameter
     data:
       parameter: '9'
-      value: '1'
+      value: '20'
     target:
       entity_id: light.elijahs_room_light
   - service: zwave_js.set_config_parameter
@@ -275,7 +278,7 @@
       entity_id: light.izzys_room_light
     data:
       parameter: '9'
-      value: '1'
+      value: '20'
   - delay:
       hours: 0
       minutes: 0
@@ -284,7 +287,7 @@
   - service: zwave_js.set_config_parameter
     data:
       parameter: '10'
-      value: '1'
+      value: '20'
     target:
       entity_id: light.elijahs_room_light
   - service: zwave_js.set_config_parameter
@@ -292,10 +295,11 @@
       entity_id: light.izzys_room_light
     data:
       parameter: '10'
-      value: '1'
+      value: '20'
   mode: single
 - id: 5414ebf2b25c4a0a88bb4115c6a2758d
-  alias: 'Lighting: Set default level in the morning'
+  alias: Set default level in the morning
+  description: ''
   trigger:
   - platform: time
     at: 07:00:00
@@ -450,7 +454,8 @@
       title: Update available
   mode: single
 - id: 8fae181b865a49a6bf04128f2e2e9c84
-  alias: 'Notification: Unifi Gateway New Alerts'
+  alias: Unifi Gateway New Alerts
+  description: ''
   trigger:
   - platform: state
     entity_id: sensor.unifi_gateway_alerts
@@ -598,14 +603,16 @@
     for: 00:15:00
   condition: []
   action:
-  - type: turn_off
-    device_id: 0e47181916be7034f083d15852874a08
-    entity_id: switch.basement_light
-    domain: switch
-  - type: turn_off
-    device_id: dad36f9de4021e97413220d85d5a5a4e
-    entity_id: switch.basement_heater
-    domain: switch
+  - service: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.basement_light
+  - service: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.basement_heater
   mode: single
 - id: '1611013519767'
   alias: 'Bathroom: Light and fan off after 45min of no motion'
@@ -621,23 +628,6 @@
     entity_id: switch.master_bathroom_fan
   - service: switch.turn_off
     entity_id: light.master_bathroom_light
-  mode: single
-- id: '1612232509176'
-  alias: 'Izzy''s Room: Lamp to Green at Wakeup Time'
-  description: ''
-  trigger:
-  - platform: time
-    at: 07:00:00
-  condition: []
-  action:
-  - service: light.turn_on
-    data:
-      entity_id: light.izzys_lamp
-      rgb_color:
-      - 0
-      - 100
-      - 0
-    entity_id: light.izzys_lamp
   mode: single
 - id: '1614471277466'
   alias: 'Living Room: TV off after 1.5 hours on the weekends'
@@ -698,10 +688,11 @@
     event: sunset
   condition: []
   action:
-  - device_id: c985abd1e1a57459ed18ae54fe3c6d25
-    domain: lock
-    entity_id: lock.front_door_lock
-    type: lock
+  - service: lock.lock
+    metadata: {}
+    data: {}
+    target:
+      device_id: 85a08776dab4ed63a75d09d78521ddc7
   mode: single
 - id: '1614914289466'
   alias: 'Outside: Turn on Porch Light at Sunset'
@@ -711,10 +702,11 @@
     event: sunset
   condition: []
   action:
-  - type: turn_on
-    device_id: e1df5a4f30fa0c2c35fb68360f3572df
-    entity_id: switch.porch_light
-    domain: switch
+  - service: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.porch_light
   mode: single
 - id: '1614914335846'
   alias: 'Outside: Turn Off Porch Light At Sunrise'
@@ -724,10 +716,11 @@
     event: sunrise
   condition: []
   action:
-  - type: turn_off
-    device_id: e1df5a4f30fa0c2c35fb68360f3572df
-    entity_id: switch.porch_light
-    domain: switch
+  - service: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.porch_light
   mode: single
 - id: '1615076634661'
   alias: 'Basement: Set Splitflap From Input'
@@ -821,7 +814,7 @@
       entity_id: light.master_bathroom_light
   mode: restart
 - id: '1630473928636'
-  alias: 'Izzy''s Room: Turn off Light at 10pm'
+  alias: Turn off kids lights after 10pm
   description: ''
   trigger:
   - platform: time
@@ -834,13 +827,20 @@
     at: '23:30:00'
   - platform: time
     at: 00:00:00
+  - platform: time
+    at: '22:15:00'
+  - platform: time
+    at: '22:45:00'
   condition: []
   action:
   - service: light.turn_off
     target:
-      entity_id: light.izzys_room_light
+      entity_id:
+      - light.izzys_room_light
+      - light.elijah_desk_lights
+      - light.elijahs_room_light
     data:
-      transition: 13
+      transition: 300
   mode: single
 - id: '1633272415315'
   alias: 'Living Room: Announce TV time is half over'
@@ -1129,4 +1129,152 @@
       message: 3D print paused (possibly out of filament?)
       data:
         image: /local/camera/3d-print.jpg
+  mode: single
+- id: '1706157750755'
+  alias: Turn off Elijah's lights slowly at bedtime
+  description: ''
+  trigger:
+  - platform: time
+    at: '21:15:00'
+  - platform: time
+    at: '21:30:00'
+  condition:
+  - condition: or
+    conditions:
+    - condition: time
+      weekday:
+      - sun
+      - mon
+      - tue
+      - wed
+      - thu
+      after: 09:15:00
+    - condition: time
+      after: 09:30:00
+      weekday:
+      - sat
+      - fri
+  action:
+  - service: light.turn_off
+    metadata: {}
+    data:
+      transition: 300
+    target:
+      entity_id:
+      - light.elijahs_room_light
+  mode: single
+- id: '1706158019386'
+  alias: Turn on kids lights slowly in the morning
+  description: ''
+  trigger:
+  - platform: time
+    at: 07:45:00
+  condition:
+  - condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  action:
+  - service: light.turn_on
+    target:
+      entity_id:
+      - light.elijahs_room_light
+      - light.izzys_room_light
+    data:
+      transition: 300
+      brightness_pct: 100
+  mode: single
+- id: '1706158315722'
+  alias: Dim Elijah's light at 8:30
+  description: ''
+  trigger:
+  - platform: time
+    at: '20:30:00'
+  condition:
+  - condition: state
+    entity_id: light.elijahs_room_light
+    state: 'on'
+  - condition: numeric_state
+    entity_id: light.elijahs_room_light
+    attribute: brightness
+    above: 40
+  action:
+  - service: light.turn_on
+    target:
+      entity_id: light.elijahs_room_light
+    data:
+      transition: 300
+      brightness_pct: 40
+  mode: single
+- id: '1706158389767'
+  alias: Dim Izzy's Light at 8:30
+  description: ''
+  trigger:
+  - platform: time
+    at: '20:30:00'
+  condition:
+  - condition: state
+    state: 'on'
+    entity_id: light.izzys_room_light
+  - condition: numeric_state
+    entity_id: light.izzys_room_light
+    attribute: brightness
+    above: 40
+  action:
+  - service: light.turn_on
+    target:
+      entity_id:
+      - light.izzys_room_light
+    data:
+      transition: 300
+      brightness_pct: 40
+  mode: single
+- id: '1706159811658'
+  alias: Dim Izzy Light at 9:15
+  description: ''
+  trigger:
+  - platform: time
+    at: '21:15:00'
+  condition:
+  - condition: state
+    state: 'on'
+    entity_id: light.izzys_room_light
+  - condition: numeric_state
+    entity_id: light.izzys_room_light
+    attribute: brightness
+    above: 10
+  action:
+  - service: light.turn_on
+    target:
+      entity_id:
+      - light.izzys_room_light
+    data:
+      transition: 300
+      brightness_pct: 10
+  mode: single
+- id: '1710307660366'
+  alias: Hallway light off after 10
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - light.kitchen_hallway_light
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 20
+      seconds: 0
+  condition:
+  - condition: time
+    after: '22:00:00'
+  action:
+  - service: light.turn_off
+    metadata: {}
+    data:
+      transition: 300
+    target:
+      entity_id: light.kitchen_hallway_light
   mode: single
