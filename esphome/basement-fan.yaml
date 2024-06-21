@@ -3,27 +3,8 @@ esphome:
   platform: ESP8266
   board: d1_mini
 
-wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
-  fast_connect: true
-
-  # Enable fallback hotspot (captive portal) in case wifi connection fails
-  ap:
-    ssid: "Basement Fan Fallback Hotspot"
-    password: !secret wifi_ap_password
-
-captive_portal:
-
-# Enable logging
-logger:
-
-ota:
-
-# Enable Home Assistant API
-api:
-  encryption:
-    key: !secret esphome_encryption_key
+packages:
+  common: !include common/common.yaml
 
 output:
   - platform: gpio

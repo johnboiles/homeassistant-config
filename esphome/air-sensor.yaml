@@ -3,31 +3,14 @@ esphome:
   platform: ESP32
   board: wemos_d1_mini32
 
-wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
-  fast_connect: true
+packages:
+  common: !include common/common.yaml
 
-  # Enable fallback hotspot (captive portal) in case wifi connection fails
-  ap:
-    ssid: "Air Sensor Fallback Hotspot"
-    password: !secret wifi_ap_password
-
-captive_portal:
-
-# Enable logging
-logger:
-
-# Enable Home Assistant API
 api:
-  encryption:
-    key: !secret esphome_encryption_key
   services:
     - service: mhz19_calibrate_zero
       then:
         - mhz19.calibrate_zero: mhz19_sensor
-
-ota:
 
 uart:
   - id: "mhz19_uart"

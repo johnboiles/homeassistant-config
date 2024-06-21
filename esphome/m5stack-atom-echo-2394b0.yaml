@@ -1,17 +1,12 @@
 substitutions:
   name: m5stack-atom-echo-2394b0
   friendly_name: basement-atom-echo
+
 packages:
   m5stack.atom-echo-voice-assistant: github://esphome/firmware/voice-assistant/m5stack-atom-echo.yaml@main
+  common: !include common/common.yaml
+
 esphome:
   name: ${name}
   name_add_mac_suffix: false
   friendly_name: ${friendly_name}
-api:
-  encryption:
-    key: FUHLvNPjvAqd+kuSfTreZKht/r1GZCWh5DFNKO1mtfI=
-
-
-wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
