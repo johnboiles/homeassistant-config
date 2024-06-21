@@ -1,8 +1,0 @@
-keymaster_front_door_manual_notify:
-  alias: 'keymaster: front door manual notify'
-  sequence:
-  - service: notify.all_devices
-    data:
-      title: '{{ title }}'
-      message: '{{ message }}'
-  mode: parallel
