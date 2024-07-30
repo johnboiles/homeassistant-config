@@ -1042,7 +1042,7 @@
   description: ''
   trigger:
   - platform: numeric_state
-    entity_id: sensor.glowforge_power_consuption
+    entity_id: sensor.glowforge_power_consumption
     above: 50
     for:
       hours: 0
@@ -1060,7 +1060,7 @@
   description: ''
   trigger:
   - platform: numeric_state
-    entity_id: sensor.glowforge_power_consuption
+    entity_id: sensor.glowforge_power_consumption
     for:
       hours: 0
       minutes: 1

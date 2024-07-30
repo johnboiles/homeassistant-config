@@ -40,7 +40,7 @@ sensor:
           - throttle: 60s
           - delta: 5.0
     power:
-      name: "Glowforge Power Consuption"
+      name: "Glowforge Power Consumption"
       accuracy_decimals: 1
       filters:
         - or:
