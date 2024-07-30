@@ -3,16 +3,13 @@ substitutions:
   friendly_name: basement-atom-echo
 
 packages:
-  m5stack.atom-echo-voice-assistant: github://esphome/firmware/voice-assistant/m5stack-atom-echo.yaml@main
+  m5stack-atom-echo: github://esphome/firmware/wake-word-voice-assistant/m5stack-atom-echo.adopted.yaml@main
   common: !include common/common.yaml
 
 ota:
   - id: !remove ota_esphome
 
-wifi:
-  use_address: m5stack-atom-echo-2394b0.local
-
 esphome:
-  name: m5stack-atom-echo-2394b0
+  name: ${name}
   name_add_mac_suffix: false
   friendly_name: ${friendly_name}
