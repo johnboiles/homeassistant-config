@@ -19,6 +19,7 @@ entity_registry.yaml
 /esphome/air_sensor
 /esphome/garage_door
 /esphome/ir_blaster
+/esphome/scratch
 !panels
 !panels/*.html
 .DS_Store
