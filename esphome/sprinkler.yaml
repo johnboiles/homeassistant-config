@@ -17,29 +17,8 @@ esphome:
             message: "Sprinkler controller rebooted. If this was expected, disregard."
             title: "Sprinkler restart"
 
-wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
-  fast_connect: true
-
-  # Enable fallback hotspot (captive portal) in case wifi connection fails
-  ap:
-    ssid: "Sprinker Fallback Hotspot"
-    password: !secret wifi_ap_password
-
-captive_portal:
-
-# Enable logging
-logger:
-
-ota:
-  - platform: esphome
-    password: !secret ota_password
-
-# Enable Home Assistant API
-api:
-  encryption:
-    key: !secret esphome_encryption_key
+packages:
+  common: !include common/common.yaml
 
 switch:
   - platform: gpio
