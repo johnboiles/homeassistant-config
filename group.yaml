@@ -3,11 +3,6 @@ all_people:
     - person.john_boiles
     - person.christina_boiles
 
-all_occupancy:
-  entities:
-    - binary_sensor.bedroom_occupancy
-    - binary_sensor.living_room_occupancy
-
 batteries:
   entities:
     - sensor.lock_battery_level
