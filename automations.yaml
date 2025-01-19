@@ -1278,3 +1278,19 @@
     target:
       entity_id: light.kitchen_hallway_light
   mode: single
+- id: '1737248486404'
+  alias: Turn off Kids' fans at 9a
+  description: ''
+  triggers:
+  - trigger: time
+    at: 09:00:00
+  conditions: []
+  actions:
+  - action: button.press
+    metadata: {}
+    data: {}
+    target:
+      entity_id:
+      - button.elijah_fan_turn_off
+      - button.izzy_fan_turn_off
+  mode: single
