@@ -1,0 +1,29 @@
+esphome:
+  name: basement-stereo
+  friendly_name: Basement Stereo
+
+esp32:
+  board: esp32dev
+  variant: esp32
+  framework:
+    type: arduino
+
+packages:
+  common: !include common/common.yaml
+
+wifi:
+  power_save_mode: none
+
+i2s_audio:
+  - id: i2s_audio_bus
+    i2s_lrclk_pin: GPIO21
+    i2s_bclk_pin: GPIO18
+    # i2s_mclk_pin: GPIO19
+
+media_player:
+  - platform: i2s_audio
+    id: media_out
+    name: None
+    dac_type: external
+    i2s_dout_pin: GPIO19
+    mode: stereo
