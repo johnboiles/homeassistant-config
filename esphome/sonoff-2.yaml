@@ -1,60 +1,6 @@
-esphome:
-  name: sonoff-2
-  platform: ESP8266
-  board: esp01_1m
+substitutions:
+  device_name: sonoff-2
+  friendly_name: Sonoff 2
 
 packages:
-  common: !include common/common.yaml
-
-logger:
-  baud_rate: 0 # (UART logging interferes with cse7766)
-
-uart:
-  rx_pin: RX
-  baud_rate: 4800
-  parity: EVEN
-
-binary_sensor:
-  - platform: gpio
-    pin:
-      number: GPIO0
-      mode: INPUT_PULLUP
-      inverted: True
-    name: "Sonoff 2 Button"
-    on_press:
-      - switch.toggle: relay
-
-sensor:
-  - platform: cse7766
-    current:
-      name: "Sonoff 2 Current"
-      accuracy_decimals: 1
-      filters:
-        - or:
-          - throttle: 60s
-          - delta: 0.1
-    voltage:
-      name: "Sonoff 2 Input Voltage"
-      accuracy_decimals: 1
-      filters:
-        - or:
-          - throttle: 60s
-          - delta: 5.0
-    power:
-      name: "Sonoff 2 Power Consumption"
-      accuracy_decimals: 1
-      filters:
-        - or:
-          - throttle: 60s
-          - delta: 5.0
-
-switch:
-  - platform: gpio
-    name: "Sonoff 2"
-    pin: GPIO12
-    id: relay
-
-status_led:
-  pin:
-    number: GPIO13
-    inverted: True
+  common: !include common/sonoff-s31.yaml

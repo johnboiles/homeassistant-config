@@ -1,0 +1,63 @@
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+  platform: ESP8266
+  board: esp01_1m
+
+packages:
+  common: !include common.yaml
+
+logger:
+  baud_rate: 0 # (UART logging interferes with cse7766)
+
+uart:
+  rx_pin: RX
+  baud_rate: 4800
+  parity: EVEN
+
+binary_sensor:
+  - platform: gpio
+    id: side_button
+    name: "Button"
+    pin:
+      number: GPIO0
+      mode: INPUT_PULLUP
+      inverted: True
+    on_press:
+      - switch.toggle: relay
+
+sensor:
+  - platform: cse7766
+    id: power
+    current:
+      name: "Current"
+      accuracy_decimals: 1
+      filters:
+        - or:
+          - throttle: 60s
+          - delta: 0.1
+    voltage:
+      name: "Input Voltage"
+      accuracy_decimals: 1
+      filters:
+        - or:
+          - throttle: 60s
+          - delta: 5.0
+    power:
+      name: "Power Consumption"
+      accuracy_decimals: 1
+      filters:
+        - or:
+          - throttle: 60s
+          - delta: 5.0
+
+switch:
+  - platform: gpio
+    id: relay    
+    pin: GPIO12
+    name: "Power"
+
+status_led:
+  pin:
+    number: GPIO13
+    inverted: True

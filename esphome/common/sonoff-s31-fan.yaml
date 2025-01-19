@@ -1,0 +1,23 @@
+packages:
+  common: !include sonoff-s31.yaml
+
+binary_sensor:
+  - id: !extend side_button
+    on_press:
+      - switch.turn_off: relay
+      - delay: 1s
+      - switch.turn_on: relay
+
+switch:
+  - id: !extend relay
+    internal: true
+    restore_mode: ALWAYS_ON
+
+button:
+  - platform: template
+    name: "Turn Off"
+    on_press:
+      then:
+        - switch.turn_off: relay
+        - delay: 1s
+        - switch.turn_on: relay
