@@ -164,6 +164,10 @@ homekit:
       - button.octoprint_pause_job
       - button.octoprint_resume_job
       - button.octoprint_stop_job
+      - button.elijah_fan_turn_off
+      - button.izzy_fan_turn_off
+      - switch.john_s_eight_sleep_side_next_alarm
+      - switch.christina_s_eight_sleep_side_next_alarm
 
 route53:
   aws_access_key_id: !secret route53_access_key_id
