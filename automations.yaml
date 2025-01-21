@@ -520,44 +520,6 @@
           0x37C8
         {%- endif -%}
   mode: single
-- id: '1591884118185'
-  alias: 'Outside: Turn on Step lights With Bistro Lights'
-  description: ''
-  trigger:
-  - device_id: a9fb08898aae4a7a81c1a9e68ea3cde6
-    domain: light
-    entity_id: light.backyard_bistro_lights
-    platform: device
-    type: turned_on
-  condition: []
-  action:
-  - data:
-      brightness_pct: 50
-      rgbw_color:
-      - 255
-      - 162
-      - 71
-      - 150
-      effect: Fake Surround Louvres
-    service: light.turn_on
-    target:
-      entity_id: light.backyard_step_lights
-  mode: single
-- id: '1591884206093'
-  alias: 'Outside: Turn off step lights with bistro lights'
-  description: ''
-  trigger:
-  - device_id: a9fb08898aae4a7a81c1a9e68ea3cde6
-    domain: light
-    entity_id: light.backyard_bistro_lights
-    platform: device
-    type: turned_off
-  condition: []
-  action:
-  - data: {}
-    entity_id: light.backyard_step_lights
-    service: light.turn_off
-  mode: single
 - id: '1609711538194'
   alias: 'Basement: Light On Motion'
   description: ''
@@ -567,18 +529,6 @@
       motion_sensor: binary_sensor.basement_motion_detected
       target_entity: switch.basement_light
       no_motion_wait: '500'
-- id: '1609712117326'
-  alias: Basement Motion Image
-  description: ''
-  use_blueprint:
-    path: vorion/send-camera-snapshot-notification-on-motion.yaml
-    input:
-      delay: 3
-      motion_sensor: binary_sensor.basement_motion_detected
-      camera: camera.esp_camera
-      notify_device: 01945bd05deb4009b1bc0020fc562b68
-      is_ios: true
-      notification_title: Basement Motion Detected
 - id: '1609728044097'
   alias: 'Basement: Light with Garage Door'
   description: Turn on the Basement Light when the Garage Door opens.
