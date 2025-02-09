@@ -77,9 +77,6 @@ ios:
 # Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
 
-ecobee:
-  api_key: !secret ecobee_api_key
-
 homekit:
   entity_config:
     switch.maple_sprinkler:
