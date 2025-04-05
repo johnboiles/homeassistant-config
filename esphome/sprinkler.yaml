@@ -1,7 +1,5 @@
 esphome:
   name: sprinkler
-  platform: ESP8266
-  board: d1_mini_lite
   on_boot:
     priority: -100
     # Send a push notification on reboot in case something went wonky when running sprinkers
@@ -16,6 +14,9 @@ esphome:
           data:
             message: "Sprinkler controller rebooted. If this was expected, disregard."
             title: "Sprinkler restart"
+
+esp8266:
+  board: d1_mini_lite
 
 packages:
   common: !include common/common.yaml

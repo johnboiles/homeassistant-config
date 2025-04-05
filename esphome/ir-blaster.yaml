@@ -1,9 +1,10 @@
 esphome:
   name: ir-blaster
-  platform: ESP8266
-  board: d1_mini
   platformio_options:
     board_build.f_cpu: 160000000L
+
+esp8266:
+  board: d1_mini
 
 packages:
   common: !include common/common.yaml
