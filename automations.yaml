@@ -438,21 +438,6 @@
       message: Upstairs smoke alarm is triggered!
       title: Smoke alarm
   mode: single
-- id: 4b1f0b626a9049ab892a56f512106af7
-  alias: 'Notification: Unifi Firmware Available'
-  trigger:
-  - platform: state
-    entity_id: sensor.unifi_gateway_firmware_upgradable
-    from: '0'
-  action:
-  - service: notify.all_devices
-    data_template:
-      message: New Unifi firmware is available.
-  - service: persistent_notification.create
-    data:
-      message: New Unifi firmware is available.
-      title: Update available
-  mode: single
 - id: 8fae181b865a49a6bf04128f2e2e9c84
   alias: Unifi Gateway New Alerts
   description: ''
@@ -944,26 +929,30 @@
 - id: '1641674852044'
   alias: 'Notification: Critical notification for leak sensors'
   description: ''
-  trigger:
+  triggers:
   - type: turned_on
-    platform: device
     device_id: f2240ba5b3a586a5fa3cdce7415cf5e4
     entity_id: binary_sensor.dishwasher_leak_sensor_water
     domain: binary_sensor
+    trigger: device
   - type: turned_on
-    platform: device
     device_id: 434292cbb0748b0427bf8840c7a5cab6
     entity_id: binary_sensor.washing_machine_leak_sensor_water
     domain: binary_sensor
+    trigger: device
   - type: turned_on
-    platform: device
     device_id: 405743db70972b84745d0d1c6c2cf804
-    entity_id: binary_sensor.fridge_leak_sensor_water
+    entity_id: f1473eb1b20da8a1b7293cff4a43d414
     domain: binary_sensor
-  condition: []
-  action:
-  - service: notify.all_devices
-    data:
+    trigger: device
+  - type: turned_on
+    device_id: d4d430b97d8ddf49266596c6446d9efc
+    entity_id: 660ed5dc4638269dd5f6c38123e37d11
+    domain: binary_sensor
+    trigger: device
+  conditions: []
+  actions:
+  - data:
       title: Leak detected!
       message: '{{ trigger.from_state.attributes.friendly_name }} triggered'
       data:
@@ -972,6 +961,7 @@
             name: default
             critical: 1
             volume: 1
+    action: notify.all_devices
   mode: single
 - id: '1655322515675'
   alias: 'Basement: Update number sign with number of days since last charge'
@@ -1211,4 +1201,42 @@
       entity_id:
       - button.elijah_fan_turn_off
       - button.izzy_fan_turn_off
+  mode: single
+- id: '1752337303932'
+  alias: 'Notification: Fridge Temp High'
+  description: ''
+  triggers:
+  - trigger: numeric_state
+    entity_id:
+    - sensor.sonoff_snzb_02d_temperature
+    for:
+      hours: 0
+      minutes: 20
+      seconds: 0
+    above: 41
+  conditions: []
+  actions:
+  - action: notify.notify
+    metadata: {}
+    data:
+      message: Fridge Temp Above 40
+  mode: single
+- id: '1752338448236'
+  alias: 'Notification: Fridge Temp Low'
+  description: ''
+  triggers:
+  - trigger: numeric_state
+    entity_id:
+    - sensor.sonoff_snzb_02d_temperature
+    for:
+      hours: 0
+      minutes: 20
+      seconds: 0
+    below: 32
+  conditions: []
+  actions:
+  - action: notify.notify
+    metadata: {}
+    data:
+      message: Fridge Temp Below 32ºF for 20 mins
   mode: single
