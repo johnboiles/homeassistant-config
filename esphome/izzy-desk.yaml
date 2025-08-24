@@ -1,0 +1,29 @@
+esphome:
+  name: izzy-desk
+
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+    # type: arduino
+
+packages:
+  common: !include common/common.yaml
+
+light:
+  # - platform: neopixelbus
+  #   type: GRBW
+  #   color_correct: [60%, 60%, 60%, 100%]
+  #   variant: SK6812
+  #   pin: GPIO14
+  #   num_leds: 140
+  #   name: "Izzy's Desk Lights"
+  #   restore_mode: RESTORE_DEFAULT_OFF
+  - platform: esp32_rmt_led_strip
+    pin: GPIO14
+    num_leds: 169
+    chipset: SK6812
+    rgb_order: GRB
+    is_rgbw: true
+    name: "Izzy's Desk Lights"
+    restore_mode: RESTORE_DEFAULT_OFF
