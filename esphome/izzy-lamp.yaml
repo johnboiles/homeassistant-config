@@ -1,0 +1,78 @@
+esphome:
+  name: izzy-lamp
+
+esp8266:
+  board: d1_mini
+
+packages:
+  common: !include common/common.yaml
+
+output:
+  - platform: esp8266_pwm
+    pin:
+      number: D3
+      inverted: true
+      mode: OUTPUT_OPEN_DRAIN
+    frequency: 1000 Hz
+    id: pwm_output
+
+binary_sensor:
+  - platform: gpio
+    internal: true
+    pin:
+      number: D4
+      inverted: true
+      mode: INPUT_PULLUP
+    name: "Button"
+    on_multi_click:
+      - timing:
+          - ON for at most 1s
+          - OFF for at most 1s
+          - ON for at most 1s
+          - OFF for at least 0.2s
+        then:
+          - logger.log: "Double Clicked"
+          - homeassistant.action:
+              action: light.toggle
+              data:
+                entity_id: light.izzy_desk_lights
+      - timing:
+          - ON for 1s to 2s
+          - OFF for at least 0.5s
+        then:
+          - logger.log: "Single Long Clicked"
+      - timing:
+          - ON for at most 1s
+          - OFF for at least 0.5s
+        then:
+          - logger.log: "Single Short Clicked"
+          - light.toggle: leds
+
+# Example usage in a light
+light:
+  - platform: monochromatic
+    output: pwm_output
+    name: "Button Light"
+    effects:
+      - pulse:
+  - id: leds
+    platform: neopixelbus
+    type: GRBW
+    color_correct: [60%, 60%, 60%, 100%]
+    variant: SK6812
+    pin: GPIO3 # RX pin
+    num_leds: 14
+    name: "LEDs"
+    restore_mode: RESTORE_DEFAULT_OFF
+    effects:
+      - addressable_fireworks:
+      - addressable_flicker:
+      - addressable_rainbow:
+      - addressable_color_wipe:
+      - addressable_scan:
+      - addressable_random_twinkle:
+      - addressable_twinkle:
+      - addressable_twinkle:
+          name: Custom Twinkle Effect
+          twinkle_probability: 30%
+          progress_interval: 4ms
