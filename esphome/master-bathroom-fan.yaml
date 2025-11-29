@@ -1,0 +1,69 @@
+esphome:
+  name: master-bathroom-fan
+  comment: Panasonic WhisperGreen FV-0511VKSL3 fan
+
+esp32:
+  board: nodemcu-32s
+  framework:
+    type: arduino
+
+packages:
+  common: !include common/common.yaml
+
+logger:
+  level: VERBOSE
+
+external_components:
+  - source:
+      type: git
+      url: https://github.com/johnboiles/panasonic-whispergreen-esphome
+    components: [panasonic_whispergreen]
+  # - source:
+  #     type: local
+  #     path: |-
+  #       /Users/johnboiles/Developer/repos/johnboiles/panasonic-whispergreen-uart/esphome/components
+  #   components: [panasonic_whispergreen]
+
+uart:
+  id: whispergreen_uart
+  baud_rate: 4800
+  data_bits: 8
+  parity: EVEN
+  stop_bits: 1
+  tx_pin:
+    number: 19
+    inverted: true
+  rx_pin:
+    number: 18
+    inverted: true
+
+panasonic_whispergreen:
+  id: whispergreen_bus
+  uart_id: whispergreen_uart
+
+fan:
+  - platform: panasonic_whispergreen
+    name: "Master Bathroom Fan"
+    panasonic_whispergreen_id: whispergreen_bus
+
+light:
+  - platform: panasonic_whispergreen
+    name: "Master Bathroom Fan Light"
+    panasonic_whispergreen_id: whispergreen_bus
+
+binary_sensor:
+  - platform: panasonic_whispergreen
+    name: "WhisperGreen Occupancy"
+    panasonic_whispergreen_id: whispergreen_bus
+    device_class: occupancy
+
+sensor:
+  - platform: panasonic_whispergreen
+    name: "Master Bathroom Fan Power"
+    panasonic_whispergreen_id: whispergreen_bus
+    power_multiplier: 0.04
+    power_offset: 4.0
+  - platform: panasonic_whispergreen
+    name: "Master Bathroom Fan Speed"
+    panasonic_whispergreen_id: whispergreen_bus
+    kind: speed
