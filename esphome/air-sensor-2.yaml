@@ -1,0 +1,41 @@
+esphome:
+  name: air-sensor-2
+
+esp32:
+  board: esp32dev
+
+packages:
+  common: !include common/common.yaml
+
+i2c:
+  sda: 12
+  scl: 27
+  scan: true
+  id: bus_a
+
+sensor:
+  - platform: sen5x
+    id: sen54
+    pm_1_0:
+      name: PM <1µm Weight concentration
+    pm_2_5:
+      name: PM <2.5µm Weight concentration
+    pm_4_0:
+      name: PM <4µm Weight concentration
+    pm_10_0:
+      name: PM <10µm Weight concentration
+    temperature:
+      name: Temperature
+    humidity:
+      name: Humidity
+    voc:
+      name: VOC
+    nox:
+      name: NOX
+  - platform: scd4x
+    co2:
+      name: "CO2"
+    temperature:
+      name: "SCD Temperature"
+    humidity:
+      name: "SCD Humidity"
