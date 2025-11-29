@@ -28,6 +28,9 @@ binary_sensor:
       - switch.toggle: relay
 
 sensor:
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    update_interval: 60s
   - platform: cse7766
     id: power
     current:
@@ -46,17 +49,42 @@ sensor:
           - delta: 5.0
     power:
       name: "Power Consumption"
+      device_class: power
+      unit_of_measurement: "W"
       accuracy_decimals: 1
+      id: cse_power
       filters:
         - or:
           - throttle: 60s
           - delta: 5.0
+    energy:
+      name: "Energy"
+      accuracy_decimals: 2
+      filters:
+        - throttle: 60s
+    apparent_power:
+      name: "Apparent Power"
+      filters:
+        - throttle_average: 60s
+    power_factor:
+      name: "Power Factor"
+      accuracy_decimals: 2
+      filters:
+        - throttle_average: 60s
+  - platform: total_daily_energy
+    name: "Daily Energy"
+    power_id: cse_power
+    accuracy_decimals: 2
 
 switch:
   - platform: gpio
     id: relay    
     pin: GPIO12
     name: "Power"
+
+time:
+  - platform: sntp
+    id: common_time
 
 status_led:
   pin:

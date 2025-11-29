@@ -1,0 +1,10 @@
+substitutions:
+  device_name: sonoff-4
+  friendly_name: Sonoff 4
+
+packages:
+  common: !include common/sonoff-s31.yaml
+
+switch:
+  - id: !extend relay
+    restore_mode: ALWAYS_ON

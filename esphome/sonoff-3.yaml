@@ -1,0 +1,6 @@
+substitutions:
+  device_name: sonoff-3
+  friendly_name: Sonoff 3
+
+packages:
+  common: !include common/sonoff-s31.yaml
