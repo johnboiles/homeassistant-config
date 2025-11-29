@@ -13,12 +13,14 @@ sensor:
     sensor: adc_sensor
     name: "Measured Current"
     id: "sump_current"
-    update_interval: 1s
     filters:
       - calibrate_linear:
         - 0 -> 0
         # Based on my Bonavita 1000w kettle
         - 0.2 -> 8.33333333
+      - or:
+        - throttle: 60s
+        - delta: 0.1
   - platform: adc
     internal: true
     pin: 34
