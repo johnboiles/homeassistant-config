@@ -79,24 +79,24 @@ conversation:
 
 homekit:
   entity_config:
-    switch.maple_sprinkler:
-      type: sprinkler
-    switch.apple_and_lemon_sprinkler:
-      type: sprinkler
-    switch.vegetable_box_sprinkler:
-      type: sprinkler
-    switch.orange_tree_sprinkler:
-      type: sprinkler
-    switch.lime_tree_sprinkler:
-      type: sprinkler
-    switch.curb_sprinkler:
-      type: sprinkler
+    # switch.maple_sprinkler:
+    #   type: sprinkler
+    # switch.apple_and_lemon_sprinkler:
+    #   type: sprinkler
+    # switch.vegetable_box_sprinkler:
+    #   type: sprinkler
+    # switch.orange_tree_sprinkler:
+    #   type: sprinkler
+    # switch.lime_tree_sprinkler:
+    #   type: sprinkler
+    # switch.curb_sprinkler:
+    #   type: sprinkler
     binary_sensor.front_door:
       linked_battery_sensor: sensor.front_door_battery_level
     binary_sensor.back_door:
       linked_battery_sensor: sensor.back_door_battery_level
-    camera.octoprint_camera:
-      stream_source: http://10.0.2.17/webcam/?action=stream
+    # camera.octoprint_camera:
+    #   stream_source: http://10.0.2.17/webcam/?action=stream
   filter:
     include_entities:
       - binary_sensor.front_door
@@ -115,56 +115,27 @@ homekit:
       - automation
       - script
       - device_tracker
-      - climate
       - binary_sensor
       - person
       - alarm_control_panel
       - input_boolean
       - input_text
+    exclude_entity_globs:
+      - switch.schedule_*
+      - '*.octoprint_*'
+      - switch.heat_pump_*
+      - '*basement_stereo_*'
+      - sensor.pg_e_*
+      - switch.*_sprinkler
     exclude_entities:
-      - light.master_bathroom_light_2
       - switch.3d_printer
-      - sensor.dark_sky_daily_low_temperature
-      - sensor.dark_sky_daily_high_temperature
-      - sensor.dark_sky_temperature
-      - sensor.octoprint_target_bed_temp
-      - sensor.octoprint_actual_bed_temp
-      - sensor.outside_heatindex
-      - sensor.outside_dewpoint
-      - sensor.inside_heatindex
-      - sensor.inside_dewpoint
-      - sensor.basement_heatindex
-      - sensor.basement_dewpoint
-      - switch.home_assistant_pi4
-      - sensor.bedroom_temperature
-      - sensor.dht22_absolutehumidity
-      - sensor.dht22_dewpoint
-      - sensor.dht22_heatindex
-      - sensor.living_room_temperature
-      - sensor.mh_z19_temperature
-      - sensor.ccs811_eco2_value
-      - switch.unifi_controller_pi_eth0
-      - switch.unifi_controller_pi
-      - switch.unifi_poe_00_00_00_00_00_01
-      - switch.unifi_poe_20_2e_5d_55_a4_83
-      - remote.55_tcl_roku_tv
-      - switch.schedule_24610b
-      - switch.schedule_461866
-      - switch.schedule_627e53
-      - switch.schedule_938896
-      - switch.schedule_d62501
       - switch.shutoff_valve
-      - switch.this_device_do_not_disturb_switch
-      - sensor.mh_z19_co2_value
-      - light.stinas_bed_lamp
-      - select.55_tcl_roku_tv_channel
-      - button.octoprint_pause_job
-      - button.octoprint_resume_job
-      - button.octoprint_stop_job
       - button.elijah_fan_turn_off
       - button.izzy_fan_turn_off
       - switch.john_s_eight_sleep_side_next_alarm
       - switch.christina_s_eight_sleep_side_next_alarm
+      - switch.shelly_em1_shelly_em_switch
+      - switch.heat_pump_power
 
 route53:
   aws_access_key_id: !secret route53_access_key_id
