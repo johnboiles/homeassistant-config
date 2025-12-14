@@ -1,5 +1,5 @@
 esphome:
-  name: basement-stereo
+  name: basement-stereo-2
   friendly_name: Basement Stereo
 
 esp32:
@@ -73,19 +73,28 @@ wifi:
 
 i2s_audio:
   - id: i2s_output
-    i2s_lrclk_pin: GPIO41
-    i2s_bclk_pin: GPIO39
+    i2s_lrclk_pin: GPIO39
+    i2s_bclk_pin: GPIO41
     # i2s_mclk_pin: GPIO40
 
 speaker:
+  # - platform: i2s_audio
+  #   id: i2s_audio_speaker
+  #   sample_rate: 48000
+  #   i2s_dout_pin: GPIO38
+  #   bits_per_sample: 32bit
+  #   i2s_audio_id: i2s_output
+  #   dac_type: external
+  #   channel: stereo
+  #   timeout: never
+  #   buffer_duration: 100ms
+  # Config for PCM5102A
   - platform: i2s_audio
     id: i2s_audio_speaker
     sample_rate: 48000
-    # i2s_mode: secondary
-    i2s_comm_fmt: pcm
     i2s_dout_pin: GPIO38
-    bits_per_sample: 32bit
     i2s_audio_id: i2s_output
+    # i2s_comm_fmt: pcm
     dac_type: external
     channel: stereo
     timeout: never
