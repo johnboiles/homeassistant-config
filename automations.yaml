@@ -751,31 +751,32 @@
 - id: '1630473928636'
   alias: Turn off kids lights after 10pm
   description: ''
-  trigger:
-  - platform: time
-    at: '22:00:00'
-  - platform: time
-    at: '22:30:00'
-  - platform: time
-    at: '23:00:00'
-  - platform: time
-    at: '23:30:00'
-  - platform: time
-    at: 00:00:00
-  - platform: time
-    at: '22:15:00'
-  - platform: time
-    at: '22:45:00'
-  condition: []
-  action:
-  - service: light.turn_off
-    target:
+  triggers:
+  - at: '22:00:00'
+    trigger: time
+  - at: '22:30:00'
+    trigger: time
+  - at: '23:00:00'
+    trigger: time
+  - at: '23:30:00'
+    trigger: time
+  - at: 00:00:00
+    trigger: time
+  - at: '22:15:00'
+    trigger: time
+  - at: '22:45:00'
+    trigger: time
+  conditions: []
+  actions:
+  - target:
       entity_id:
       - light.izzys_room_light
       - light.elijah_desk_lights
       - light.elijahs_room_light
+      - light.izzy_desk_izzy_s_desk_lights
     data:
       transition: 300
+    action: light.turn_off
   mode: single
 - id: '1633272415315'
   alias: 'Living Room: Announce TV time is half over'
