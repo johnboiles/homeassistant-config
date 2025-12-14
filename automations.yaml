@@ -472,15 +472,6 @@
           0x37C8
         {%- endif -%}
   mode: single
-- id: '1609711538194'
-  alias: 'Basement: Light On Motion'
-  description: ''
-  use_blueprint:
-    path: freakshock88/motion_illuminance_activated_entity.yaml
-    input:
-      motion_sensor: binary_sensor.basement_motion_detected
-      target_entity: switch.basement_light
-      no_motion_wait: '500'
 - id: '1609728044097'
   alias: 'Basement: Light with Garage Door'
   description: Turn on the Basement Light when the Garage Door opens.
@@ -527,72 +518,7 @@
     data: {}
     target:
       entity_id: switch.basement_heater
-  mode: single
-- id: '1611013519767'
-  alias: 'Bathroom: Light and fan off after 45min of no motion'
-  description: ''
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.master_bathroom_motion_detected
-    to: 'off'
-    for: 00:45:00
-  condition: []
-  action:
-  - service: switch.turn_off
-    entity_id: switch.master_bathroom_fan
-  - service: switch.turn_off
-    entity_id: light.master_bathroom_light
-  mode: single
-- id: '1614471277466'
-  alias: 'Living Room: TV off after 1.5 hours on the weekends'
-  description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.tv_on_today
-    above: '1.5'
-  condition:
-  - condition: time
-    before: '9:30:00'
-    weekday:
-    - sat
-    - sun
-  action:
-  - service: script.tech_time_over
-    data:
-      message: Tech time is over. Go have fun with Legos books or games!
-  mode: single
-- id: '1614471752933'
-  alias: 'Living Room: TV turns back off after limits.'
-  description: ''
-  trigger:
-  - platform: state
-    entity_id: media_player.55_tcl_roku_tv
-    to: 'on'
-  - platform: state
-    entity_id: media_player.55_tcl_roku_tv
-    to: playing
-  condition:
-  - condition: or
-    conditions:
-    - condition: time
-      weekday:
-      - sat
-      - sun
-      before: '7:00'
-    - condition: and
-      conditions:
-      - condition: time
-        weekday:
-        - sat
-        - sun
-        before: '9:30'
-      - condition: numeric_state
-        entity_id: sensor.tv_on_today
-        above: '1.5'
-  action:
-  - service: media_player.turn_off
-    target:
-      entity_id: media_player.55_tcl_roku_tv
+    action: switch.turn_off
   mode: single
 - id: '1614914257006'
   alias: 'Outside: Lock Door at Sunset'
@@ -696,37 +622,6 @@
           seconds: 0
           milliseconds: 500
   mode: single
-- id: '1629675387087'
-  alias: 'Bathroom: Run fan after double double tap up on the fan switch'
-  description: ''
-  trigger:
-  - event_type: zwave_js_value_notification
-    event_data:
-      node_id: 38
-      property_key: '002'
-      value: KeyPressed2x
-    platform: event
-  condition: []
-  action:
-  - service: script.inovelli_led
-    data:
-      entity_id: switch.master_bathroom_fan
-      model: switch
-      color: Green
-      effect: Breath
-      duration: 2 Seconds
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 15
-      milliseconds: 0
-  - service: switch.turn_on
-    target:
-      entity_id: switch.master_bathroom_fan
-  - service: light.turn_off
-    target:
-      entity_id: light.master_bathroom_light
-  mode: restart
 - id: '1630473928636'
   alias: Turn off kids lights after 10pm
   description: ''
@@ -745,87 +640,18 @@
     trigger: time
   - at: '22:45:00'
     trigger: time
+  - trigger: time
+    at: 00:00:00
   conditions: []
   actions:
   - target:
       entity_id:
       - light.izzys_room_light
-      - light.elijah_desk_lights
       - light.elijahs_room_light
-      - light.izzy_desk_izzy_s_desk_lights
+      - light.izzy_desk_lights
     data:
       transition: 300
     action: light.turn_off
-  mode: single
-- id: '1633272415315'
-  alias: 'Living Room: Announce TV time is half over'
-  description: ''
-  trigger:
-  - platform: numeric_state
-    entity_id: sensor.tv_on_today
-    above: '.75'
-  condition:
-  - condition: time
-    before: 09:30:00
-    weekday:
-    - sat
-    - sun
-  action:
-  - service: media_player.select_source
-    target:
-      entity_id: media_player.soundbar
-    data:
-      source: Aux 1
-  - service: notify.alexa_media_living_room
-    data:
-      data:
-        type: tts
-      message: tech time is half way over. Time to switch turns
-  - delay:
-      hours: 0
-      minutes: 0
-      seconds: 8
-      milliseconds: 0
-  - service: media_player.select_source
-    target:
-      entity_id: media_player.soundbar
-    data:
-      source: Optical
-  mode: single
-- id: '1634435731298'
-  alias: 'Elijah''s Room: Button light on at 7:40a on weekdays'
-  description: ''
-  trigger:
-  - platform: time
-    at: 07:30:00
-  condition:
-  - condition: time
-    weekday:
-    - mon
-    - tue
-    - wed
-    - thu
-    - fri
-    after: 07:00:00
-    before: 08:00:00
-  action:
-  - service: light.turn_on
-    target:
-      entity_id: light.elijah_button_light
-    data:
-      effect: Pulse
-  mode: single
-- id: '1634435791980'
-  alias: 'Elijah''s Room: Button light off at 8:15a'
-  description: ''
-  trigger:
-  - platform: time
-    at: 08:15:00
-  condition: []
-  action:
-  - service: light.turn_off
-    target:
-      entity_id: light.elijah_button_light
   mode: single
 - id: '1635877623449'
   alias: 'System: Notify when internet comes back'
@@ -859,52 +685,6 @@
     target:
       entity_id: switch.christmas_tree_lights
     data: {}
-  mode: single
-- id: '1640449448359'
-  alias: 'Living Room: No TV in the morning'
-  description: ''
-  trigger:
-  - platform: state
-    entity_id: media_player.55_tcl_roku_tv
-    to: 'on'
-  - platform: state
-    entity_id: media_player.55_tcl_roku_tv
-    to: playing
-  condition:
-  - condition: time
-    before: 09:00:00
-  action:
-  - service: media_player.turn_off
-    target:
-      entity_id: media_player.55_tcl_roku_tv
-  mode: single
-- id: '1641536934201'
-  alias: 'Climate: Set thermostat to 70 in the morning'
-  description: ''
-  trigger:
-  - platform: time
-    at: 07:00:00
-  condition: []
-  action:
-  - service: climate.set_temperature
-    target:
-      device_id: a907903c294bb822add66ad09f815382
-    data:
-      temperature: 70
-  mode: single
-- id: '1641537015983'
-  alias: 'Climate: Set thermostat to 65 at night'
-  description: ''
-  trigger:
-  - platform: time
-    at: '21:00:00'
-  condition: []
-  action:
-  - service: climate.set_temperature
-    target:
-      device_id: a907903c294bb822add66ad09f815382
-    data:
-      temperature: 65
   mode: single
 - id: '1641674852044'
   alias: 'Notification: Critical notification for leak sensors'
@@ -942,20 +722,6 @@
             critical: 1
             volume: 1
     action: notify.all_devices
-  mode: single
-- id: '1655322515675'
-  alias: 'Basement: Update number sign with number of days since last charge'
-  description: ''
-  trigger:
-  - platform: time
-    at: '16:10:00'
-  condition: []
-  action:
-  - service: mqtt.publish
-    data:
-      topic: splitflap
-      payload_template: '{{ ''%04d'' | format(((as_timestamp(now()) - states.input_datetime.last_glasses_charge.attributes.timestamp)
-        | int /60/1440) | round(0)) | replace(''0'', ''.'') }}'
   mode: single
 - id: '1676703714440'
   alias: 'Basement: Fan on when Glowforge Running'
@@ -1050,30 +816,6 @@
     target:
       entity_id:
       - light.elijahs_room_light
-  mode: single
-- id: '1706158019386'
-  alias: Turn on kids lights slowly in the morning
-  description: ''
-  trigger:
-  - platform: time
-    at: 07:45:00
-  condition:
-  - condition: time
-    weekday:
-    - mon
-    - tue
-    - wed
-    - thu
-    - fri
-  action:
-  - service: light.turn_on
-    target:
-      entity_id:
-      - light.elijahs_room_light
-      - light.izzys_room_light
-    data:
-      transition: 300
-      brightness_pct: 100
   mode: single
 - id: '1706158315722'
   alias: Dim Elijah's light at 8:30
