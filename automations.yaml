@@ -112,22 +112,31 @@
   alias: 'Notification: Garage Door Open'
   description: Send a critical notification if the garage door is left open for 30
     minutes.
-  trigger:
-  - platform: state
-    entity_id: cover.garage_door
+  triggers:
+  - entity_id: cover.garage_door
     to: open
     for: 0:30:00
-  - platform: event
-    event_type: timer.finished
+    trigger: state
+  - event_type: timer.finished
     event_data:
       entity_id: timer.garage_door
-  condition:
+    trigger: event
+  conditions:
   - condition: state
     entity_id: cover.garage_door
     state: open
-  action:
-  - service: notify.all_devices
-    data:
+  actions:
+  - entity_id: timer.garage_door
+    action: timer.start
+  - condition: state
+    state:
+    - 'off'
+    entity_id: binary_sensor.basement_motion_detected
+    for:
+      hours: 0
+      minutes: 30
+      seconds: 0
+  - data:
       message: Garage Door is Open
       data:
         push:
@@ -135,8 +144,7 @@
             name: default
             critical: 1
             volume: 1
-  - service: timer.start
-    entity_id: timer.garage_door
+    action: notify.all_devices
   mode: single
 - id: c72b1caa51424d049a2f144c1160d7c7
   alias: 'Notification: Sprinklers left on'
@@ -531,20 +539,32 @@
 - id: '1610226412253'
   alias: 'Basement: Lights and heater off when no motion'
   description: ''
-  trigger:
-  - platform: state
-    entity_id: binary_sensor.basement_motion_detected
+  triggers:
+  - entity_id: binary_sensor.basement_motion_detected
     to: 'off'
     for: 00:15:00
-  condition: []
-  action:
-  - service: switch.turn_off
-    metadata: {}
+    trigger: state
+  - trigger: state
+    entity_id:
+    - cover.garage_door
+    to:
+    - closed
+  conditions:
+  - condition: state
+    entity_id: binary_sensor.basement_motion_detected
+    state:
+    - 'off'
+    for:
+      hours: 0
+      minutes: 15
+      seconds: 0
+  actions:
+  - metadata: {}
     data: {}
     target:
       entity_id: switch.basement_light
-  - service: switch.turn_off
-    metadata: {}
+    action: switch.turn_off
+  - metadata: {}
     data: {}
     target:
       entity_id: switch.basement_heater
