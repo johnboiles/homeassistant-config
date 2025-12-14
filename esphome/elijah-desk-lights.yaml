@@ -1,0 +1,68 @@
+esphome:
+  name: elijah-desk-lights
+
+esp8266:
+  board: d1_mini
+
+packages:
+  common: !include common/common.yaml
+
+output:
+  - platform: esp8266_pwm
+    pin:
+      number: D3
+      inverted: true
+      mode: OUTPUT_OPEN_DRAIN
+    frequency: 1000 Hz
+    id: pwm_output
+
+binary_sensor:
+  - platform: gpio
+    internal: true
+    pin:
+      number: D4
+      inverted: true
+      mode: INPUT_PULLUP
+    name: "Elijah Button"
+    on_double_click:
+      then:
+        - homeassistant.service:
+            service: light.toggle
+            data:
+              entity_id: light.elijahs_room_light
+        - homeassistant.service:
+            service: light.turn_off
+            data:
+              entity_id: light.elijah_desk_lights
+        - homeassistant.service:
+            service: light.turn_off
+            data:
+              entity_id: light.elijah_button_light
+
+# Example usage in a light
+light:
+  - platform: monochromatic
+    output: pwm_output
+    name: "Elijah Button Light"
+    effects:
+      - pulse:
+  - platform: neopixelbus
+    type: GRBW
+    color_correct: [60%, 60%, 60%, 100%]
+    variant: SK6812
+    pin: GPIO3 # RX pin
+    num_leds: 83
+    name: "Elijah Desk Lights"
+    restore_mode: RESTORE_DEFAULT_OFF
+    effects:
+      - addressable_fireworks:
+      - addressable_flicker:
+      - addressable_rainbow:
+      - addressable_color_wipe:
+      - addressable_scan:
+      - addressable_random_twinkle:
+      - addressable_twinkle:
+      - addressable_twinkle:
+          name: Custom Twinkle Effect
+          twinkle_probability: 30%
+          progress_interval: 4ms
