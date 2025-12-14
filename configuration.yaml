@@ -182,6 +182,18 @@ python_script:
 
 sensor: !include sensor.yaml
 
+template:
+  - sensor:
+    - default_entity_id: sensor.basement_smoke_alarm_state
+      icon: hass:smoke-detector
+      name: Basement Smoke Alarm
+      state: "{%- if is_state(\"sensor.basement_smoke_alarm_alarm_level\", \"0\") -%}\n
+        \ Clear\n{%- elif is_state(\"sensor.basement_smoke_alarm_alarm_type\", \"1\")
+        -%}\n  Fire\n{%- elif is_state(\"sensor.basement_smoke_alarm_alarm_type\", \"2\")
+        -%}\n  CO\n{%- elif is_state(\"sensor.basement_smoke_alarm_alarm_type\", \"12\")
+        -%}\n  Testing\n{%- elif is_state(\"sensor.basement_smoke_alarm_alarm_type\",
+        \"13\") -%}\n  Clear\n{% else -%}\n  Unknown\n{%- endif -%}"
+
 # From https://gist.github.com/AdamNaj/cbf4d792a22f443fe9d354e4dca4de00
 panel_custom:
   - name: zwavegraph2

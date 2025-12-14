@@ -37,27 +37,6 @@
 #       temperature_sensor: sensor.dht22_temperature
 #       humidity_sensor: sensor.dht22_humidity
 
-- platform: template
-  sensors:
-    # From https://community.home-assistant.io/t/first-alert-z-wave-smoke-carbon-monoxide-detectors-dont-show-up-in-home-assistant/1332/15
-    basement_smoke_alarm_state:
-      value_template: >-
-        {%- if is_state("sensor.basement_smoke_alarm_alarm_level", "0") -%}
-          Clear
-        {%- elif is_state("sensor.basement_smoke_alarm_alarm_type", "1") -%}
-          Fire
-        {%- elif is_state("sensor.basement_smoke_alarm_alarm_type", "2") -%}
-          CO
-        {%- elif is_state("sensor.basement_smoke_alarm_alarm_type", "12") -%}
-          Testing
-        {%- elif is_state("sensor.basement_smoke_alarm_alarm_type", "13") -%}
-          Clear
-        {% else -%}
-          Unknown
-        {%- endif -%}
-      friendly_name: 'Basement Smoke Alarm'
-      icon_template: hass:smoke-detector
-
 - platform: history_stats
   name: Maple Sprinkler Runtime Today
   entity_id: switch.maple_sprinkler
