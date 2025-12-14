@@ -962,3 +962,175 @@
     data:
       message: Fridge Temp Below 32ºF for 20 mins
   mode: single
+- id: '1761846428112'
+  alias: 'Basement: Dehumidifier on when garage door closed'
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - cover.garage_door
+    to: closed
+  conditions: []
+  actions:
+  - action: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.basement_dehumidifier_power
+  mode: single
+- id: '1761846487611'
+  alias: 'Basement: Dehumidifier off when garage door open'
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - cover.garage_door
+    to: open
+  conditions: []
+  actions:
+  - action: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.basement_dehumidifier_power
+  mode: single
+- id: '1763664736881'
+  alias: 'Master Bathroom: Turn on fan light with double tap'
+  description: ''
+  triggers:
+  - trigger: event
+    event_type: zwave_js_value_notification
+    event_data:
+      node_id: 38
+      property_key: '002'
+      value: KeyPressed2x
+  conditions: []
+  actions:
+  - action: light.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: light.master_bathroom_fan_master_bathroom_fan_light
+  mode: single
+- id: '1763664807693'
+  alias: 'Master Bathroom: Turn off fan light with double tap down'
+  description: ''
+  triggers:
+  - trigger: event
+    event_type: zwave_js_value_notification
+    event_data:
+      node_id: 38
+      property_key: '001'
+      value: KeyPressed2x
+  conditions: []
+  actions:
+  - action: light.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: light.master_bathroom_fan_master_bathroom_fan_light
+  mode: single
+- id: '1763665342959'
+  alias: 'Master Bathroom: Turn off fan with tap down'
+  description: ''
+  triggers:
+  - trigger: event
+    event_type: zwave_js_value_notification
+    event_data:
+      node_id: 38
+      property_key: '001'
+      value: KeyPressed
+  conditions: []
+  actions:
+  - action: fan.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: fan.master_bathroom_fan_master_bathroom_fan
+  mode: single
+- id: '1763665372517'
+  alias: 'Master Bathroom: Turn on fan with tap up'
+  description: ''
+  triggers:
+  - trigger: event
+    event_type: zwave_js_value_notification
+    event_data:
+      node_id: 38
+      property_key: '002'
+      value: KeyPressed
+  conditions: []
+  actions:
+  - action: fan.set_percentage
+    metadata: {}
+    data:
+      percentage: 60
+    target:
+      device_id: 516dc912426cd01b60537ddf825cd64a
+  mode: single
+- id: '1764391469249'
+  alias: 'Master Bathroom: Off with no motion'
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.master_bathroom_motion_detected
+    to:
+    - 'off'
+    from:
+    - 'on'
+    for:
+      hours: 0
+      minutes: 20
+      seconds: 0
+  conditions: []
+  actions:
+  - action: light.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id:
+      - light.master_bathroom_light
+      - light.master_bathroom_fan_master_bathroom_fan_light
+  - action: fan.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: fan.master_bathroom_fan_master_bathroom_fan
+  mode: single
+- id: '1764440161109'
+  alias: 'Master Bathroom: Fan LED On'
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - fan.master_bathroom_fan_master_bathroom_fan
+    to:
+    - 'on'
+  conditions: []
+  actions:
+  - action: script.inovelli_led
+    metadata: {}
+    data:
+      entity_id: sensor.fan_electric_kwh
+      model: switch
+      color: Cyan
+      effect: Solid
+  mode: single
+- id: '1764440217608'
+  alias: 'Master Bathroom: Fan LED Off'
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - fan.master_bathroom_fan_master_bathroom_fan
+    to:
+    - 'off'
+  conditions: []
+  actions:
+  - action: script.inovelli_led
+    metadata: {}
+    data:
+      entity_id: sensor.fan_electric_kwh
+      model: switch
+      effect: 'Off'
+  mode: single
