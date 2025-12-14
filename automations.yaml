@@ -1032,7 +1032,7 @@
     metadata: {}
     data: {}
     target:
-      entity_id: fan.master_bathroom_fan_master_bathroom_fan
+      entity_id: fan.master_bathroom_fan
   mode: single
 - id: '1763665372517'
   alias: 'Master Bathroom: Turn on fan with tap up'
@@ -1081,7 +1081,7 @@
     metadata: {}
     data: {}
     target:
-      entity_id: fan.master_bathroom_fan_master_bathroom_fan
+      entity_id: fan.master_bathroom_fan
   mode: single
 - id: '1764440161109'
   alias: 'Master Bathroom: Fan LED On'
@@ -1089,7 +1089,7 @@
   triggers:
   - trigger: state
     entity_id:
-    - fan.master_bathroom_fan_master_bathroom_fan
+    - fan.master_bathroom_fan
     to:
     - 'on'
   conditions: []
@@ -1108,7 +1108,7 @@
   triggers:
   - trigger: state
     entity_id:
-    - fan.master_bathroom_fan_master_bathroom_fan
+    - fan.master_bathroom_fan
     to:
     - 'off'
   conditions: []
