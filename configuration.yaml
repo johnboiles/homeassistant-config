@@ -193,6 +193,20 @@ template:
         -%}\n  CO\n{%- elif is_state(\"sensor.basement_smoke_alarm_alarm_type\", \"12\")
         -%}\n  Testing\n{%- elif is_state(\"sensor.basement_smoke_alarm_alarm_type\",
         \"13\") -%}\n  Clear\n{% else -%}\n  Unknown\n{%- endif -%}"
+  - switch:
+    - turn_on:
+      - data:
+          entity_id: climate.heat_pump
+          fan_mode: high
+        action: climate.set_fan_mode
+      turn_off:
+      - data:
+          entity_id: climate.heat_pump
+          fan_mode: auto
+        action: climate.set_fan_mode
+      default_entity_id: switch.hvac_fan
+      name: Fan
+      state: '{{ is_state_attr(''climate.heat_pump'', ''fan_mode'', ''high'') }}'
 
 # From https://gist.github.com/AdamNaj/cbf4d792a22f443fe9d354e4dca4de00
 panel_custom:
@@ -200,23 +214,6 @@ panel_custom:
     sidebar_title: Z-Wave Graph
     sidebar_icon: mdi:access-point-network
     url_path: zwave
-
-switch:
-  - platform: template
-    switches:
-      hvac_fan:
-        friendly_name: "Fan"
-        value_template: "{{ is_state_attr('climate.thermostat', 'fan_mode', 'on') }}"
-        turn_on:
-          service: climate.set_fan_mode
-          data:
-            entity_id: climate.thermostat
-            fan_mode: "on"
-        turn_off:
-          service: climate.set_fan_mode
-          data:
-            entity_id: climate.thermostat
-            fan_mode: "auto"
 
 # Used for the automation that notifies every 30 min when the garage is open.
 timer:
