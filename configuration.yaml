@@ -36,7 +36,7 @@ energy:
 automation: !include automations.yaml
 
 # Nabu Casa cloud settings
-cloud: !include cloud.yaml
+cloud:
 
 # Enables configuration UI
 config:
