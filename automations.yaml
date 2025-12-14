@@ -446,47 +446,6 @@
       message: Upstairs smoke alarm is triggered!
       title: Smoke alarm
   mode: single
-- id: 8fae181b865a49a6bf04128f2e2e9c84
-  alias: Unifi Gateway New Alerts
-  description: ''
-  trigger:
-  - platform: state
-    entity_id: sensor.unifi_gateway_alerts
-    from: '0'
-  action:
-  - service: notify.all_devices
-    data_template:
-      message: Unifi controller has new alerts.
-  mode: single
-- id: a26603390cea4af5aadcdc483dc77d2b
-  alias: 'Kitchen: Recalibrate CO2 when nobody is home'
-  trigger:
-  - platform: state
-    entity_id: group.all_people
-    to: not_home
-    for:
-      hours: 4
-  - platform: state
-    entity_id: group.all_occupancy
-    to: 'off'
-    for: '4:00:00'
-  condition:
-  - condition: state
-    entity_id: group.all_people
-    state: not_home
-    for:
-      hours: 4
-  - condition: state
-    entity_id: group.all_occupancy
-    state: 'off'
-    for:
-      hours: 4
-  action:
-  - service: esphome.airsensor_mhz19_calibrate_zero
-  - service: notify.all_devices
-    data:
-      message: Calibrating CO2 sensor.
-  mode: single
 - id: 230724d25e4c428d9370c15e120ebbf9
   alias: 'Living Room: Soundbar to Aux when Alexa is playing music'
   trigger:
