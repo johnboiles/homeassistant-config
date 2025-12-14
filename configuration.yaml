@@ -158,12 +158,13 @@ template:
     - default_entity_id: sensor.basement_smoke_alarm_state
       icon: hass:smoke-detector
       name: Basement Smoke Alarm
-      state: "{%- if is_state(\"sensor.basement_smoke_alarm_alarm_level\", \"0\") -%}\n
-        \ Clear\n{%- elif is_state(\"sensor.basement_smoke_alarm_alarm_type\", \"1\")
-        -%}\n  Fire\n{%- elif is_state(\"sensor.basement_smoke_alarm_alarm_type\", \"2\")
-        -%}\n  CO\n{%- elif is_state(\"sensor.basement_smoke_alarm_alarm_type\", \"12\")
-        -%}\n  Testing\n{%- elif is_state(\"sensor.basement_smoke_alarm_alarm_type\",
-        \"13\") -%}\n  Clear\n{% else -%}\n  Unknown\n{%- endif -%}"
+      state: >-
+        {%- if is_state("sensor.basement_smoke_alarm_alarm_level", "0") -%}Clear
+        {%- elif is_state("sensor.basement_smoke_alarm_alarm_type", "1") -%}Fire
+        {%- elif is_state("sensor.basement_smoke_alarm_alarm_type", "2") -%}CO
+        {%- elif is_state("sensor.basement_smoke_alarm_alarm_type", "12") -%}Testing
+        {%- elif is_state("sensor.basement_smoke_alarm_alarm_type", "13") -%}Clear
+        {% else -%}Unknown{%- endif -%}
   - switch:
     - turn_on:
       - data:
