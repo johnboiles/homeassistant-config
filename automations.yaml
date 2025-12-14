@@ -184,23 +184,15 @@
   - service: zwave_js.set_config_parameter
     data_template:
       entity_id: light.dining_room_chandelier
-      parameter: 13 # Dimmer LED mode
-      value: >-
-        {%- if trigger.to_state.state == 'open' -%}
-          Enable
-        {%- else -%}
-          Disable
-        {%- endif -%}
+      parameter: 13
+      value: "{%- if trigger.to_state.state == 'open' -%}\n  Enable\n{%- else -%}\n
+        \ Disable\n{%- endif -%}"
   - service: zwave_js.set_config_parameter
     data_template:
       entity_id: light.dining_room_chandelier
-      parameter: 21 # Status mode LED 1 (bottom) color
-      value: >-
-        {%- if trigger.to_state.state == 'open' -%}
-          Red
-        {%- else -%}
-          White
-        {%- endif -%}
+      parameter: 21
+      value: "{%- if trigger.to_state.state == 'open' -%}\n  Red\n{%- else -%}\n  White\n{%-
+        endif -%}"
   mode: single
 - id: 02ac6c6160e74ce2b91d7cd142cd4eda
   alias: Set default level for WD100 when turned off after hours
@@ -223,13 +215,9 @@
   action:
   - service: script.set_homeseer_dim_level
     data_template:
-      entity_id: "{{ trigger.entity_id }}"
-      brightness: >-
-        {%- if trigger.entity_id == "light.kitchen_island_light" -%}
-          50
-        {%- else -%}
-          3
-        {%- endif -%}
+      entity_id: '{{ trigger.entity_id }}'
+      brightness: "{%- if trigger.entity_id == \"light.kitchen_island_light\" -%}\n
+        \ 50\n{%- else -%}\n  3\n{%- endif -%}"
   mode: single
 - id: fbd91d4f47f44fc4964c7b38d3a0b9a2
   alias: Set default level at night
@@ -405,9 +393,11 @@
     from: Clear
   condition:
   - condition: template
-    value_template: '{{ not is_state("sensor.basement_smoke_alarm_state", "Clear") }}'
+    value_template: '{{ not is_state("sensor.basement_smoke_alarm_state", "Clear")
+      }}'
   - condition: template
-    value_template: '{{ not is_state("sensor.basement_smoke_alarm_state", "Unknown") }}'
+    value_template: '{{ not is_state("sensor.basement_smoke_alarm_state", "Unknown")
+      }}'
   action:
   - service: notify.all_devices
     data:
@@ -464,13 +454,9 @@
   action:
   - service: esphome.ir_blaster_transmit_nec_string
     data_template:
-      address: 0xFF00
-      command: >-
-        {%- if trigger.to_state.state == 'playing' -%}
-          0x4EB1
-        {%- else -%}
-          0x37C8
-        {%- endif -%}
+      address: 65280
+      command: "{%- if trigger.to_state.state == 'playing' -%}\n  0x4EB1\n{%- else
+        -%}\n  0x37C8\n{%- endif -%}"
   mode: single
 - id: '1609728044097'
   alias: 'Basement: Light with Garage Door'
