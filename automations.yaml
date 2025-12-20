@@ -996,7 +996,7 @@
     metadata: {}
     data: {}
     target:
-      entity_id: light.master_bathroom_fan_master_bathroom_fan_light
+      entity_id: light.master_bathroom_fan_light
   mode: single
 - id: '1763664807693'
   alias: 'Master Bathroom: Turn off fan light with double tap down'
@@ -1014,7 +1014,7 @@
     metadata: {}
     data: {}
     target:
-      entity_id: light.master_bathroom_fan_master_bathroom_fan_light
+      entity_id: light.master_bathroom_fan_light
   mode: single
 - id: '1763665342959'
   alias: 'Master Bathroom: Turn off fan with tap down'
@@ -1076,7 +1076,7 @@
     target:
       entity_id:
       - light.master_bathroom_light
-      - light.master_bathroom_fan_master_bathroom_fan_light
+      - light.master_bathroom_fan_light
   - action: fan.turn_off
     metadata: {}
     data: {}
