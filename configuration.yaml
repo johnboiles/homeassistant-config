@@ -179,6 +179,23 @@ template:
       default_entity_id: switch.hvac_fan
       name: Fan
       state: '{{ is_state_attr(''climate.heat_pump'', ''fan_mode'', ''high'') }}'
+  - switch:
+      - name: "Game Time"
+        unique_id: game_tie
+        state: >
+          {{ is_state('switch.switch_a', 'on') and is_state('switch.switch_b', 'on') }}
+        turn_on:
+          - service: switch.turn_on
+            target:
+              entity_id:
+                - switch.fawkes
+                - switch.usw_pro_24_poe_port_5_poe
+        turn_off:
+          - service: switch.turn_off
+            target:
+              entity_id:
+                - switch.fawkes
+                - switch.usw_pro_24_poe_port_5_poe
 
 # From https://gist.github.com/AdamNaj/cbf4d792a22f443fe9d354e4dca4de00
 panel_custom:
@@ -186,6 +203,17 @@ panel_custom:
     sidebar_title: Z-Wave Graph
     sidebar_icon: mdi:access-point-network
     url_path: zwave
+
+switch:
+  - platform: wake_on_lan
+    name: "Fawkes"
+    mac: D8-BB-C1-93-D0-82
+    host: 10.0.0.175
+    turn_off:
+      service: hassio.addon_stdin
+      data:
+        addon: core_rpc_shutdown
+        input: fawkes
 
 # Used for the automation that notifies every 30 min when the garage is open.
 timer:

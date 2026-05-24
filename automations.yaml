@@ -696,6 +696,11 @@
     entity_id: 660ed5dc4638269dd5f6c38123e37d11
     domain: binary_sensor
     trigger: device
+  - type: moist
+    device_id: 824d9a11e7c4fc852cb598bbad76d7a3
+    entity_id: d64c957f7e997f88e2931ee368888600
+    domain: binary_sensor
+    trigger: device
   conditions: []
   actions:
   - data:
@@ -981,7 +986,7 @@
       entity_id: switch.basement_dehumidifier_power
   mode: single
 - id: '1763664736881'
-  alias: 'Master Bathroom: Turn on fan light with double tap'
+  alias: 'Bathrooms: Turn on fan light with double tap'
   description: ''
   triggers:
   - trigger: event
@@ -990,16 +995,37 @@
       node_id: 38
       property_key: '002'
       value: KeyPressed2x
+  - trigger: event
+    event_type: zwave_js_value_notification
+    event_data:
+      node_id: 49
+      property_key: '002'
+      value: KeyPressed2x
+    enabled: false
   conditions: []
   actions:
-  - action: light.turn_on
-    metadata: {}
-    data: {}
-    target:
-      entity_id: light.master_bathroom_fan_light
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.event.data.node_id == 38 }}'
+      sequence:
+      - action: light.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: light.master_bathroom_fan_light
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.event.data.node_id == 49 }}'
+      sequence:
+      - action: light.turn_on
+        metadata: {}
+        data: {}
+        target:
+          entity_id: light.hallway_bathroom_fan_light
   mode: single
 - id: '1763664807693'
-  alias: 'Master Bathroom: Turn off fan light with double tap down'
+  alias: 'Bathrooms: Turn off fan light with double tap down'
   description: ''
   triggers:
   - trigger: event
@@ -1008,16 +1034,37 @@
       node_id: 38
       property_key: '001'
       value: KeyPressed2x
+  - trigger: event
+    event_type: zwave_js_value_notification
+    event_data:
+      node_id: 49
+      property_key: '001'
+      value: KeyPressed2x
+    enabled: false
   conditions: []
   actions:
-  - action: light.turn_off
-    metadata: {}
-    data: {}
-    target:
-      entity_id: light.master_bathroom_fan_light
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.event.data.node_id == 38 }}'
+      sequence:
+      - action: light.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: light.master_bathroom_fan_light
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.event.data.node_id == 49 }}'
+      sequence:
+      - action: light.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: light.hallway_bathroom_fan_light
   mode: single
 - id: '1763665342959'
-  alias: 'Master Bathroom: Turn off fan with tap down'
+  alias: 'Bathrooms: Turn off fan with tap down'
   description: ''
   triggers:
   - trigger: event
@@ -1026,16 +1073,37 @@
       node_id: 38
       property_key: '001'
       value: KeyPressed
+  - trigger: event
+    event_type: zwave_js_value_notification
+    event_data:
+      node_id: 49
+      property_key: '001'
+      value: KeyPressed
+    enabled: false
   conditions: []
   actions:
-  - action: fan.turn_off
-    metadata: {}
-    data: {}
-    target:
-      entity_id: fan.master_bathroom_fan
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.event.data.node_id == 38 }}'
+      sequence:
+      - action: fan.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: fan.master_bathroom_fan
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.event.data.node_id == 49 }}'
+      sequence:
+      - action: fan.turn_off
+        metadata: {}
+        data: {}
+        target:
+          entity_id: fan.hallway_bathroom_fan
   mode: single
 - id: '1763665372517'
-  alias: 'Master Bathroom: Turn on fan with tap up'
+  alias: 'Bathrooms: Turn on fan with tap up'
   description: ''
   triggers:
   - trigger: event
@@ -1044,14 +1112,36 @@
       node_id: 38
       property_key: '002'
       value: KeyPressed
+  - trigger: event
+    event_type: zwave_js_value_notification
+    event_data:
+      node_id: 49
+      property_key: '002'
+      value: KeyPressed
+    enabled: false
   conditions: []
   actions:
-  - action: fan.set_percentage
-    metadata: {}
-    data:
-      percentage: 60
-    target:
-      device_id: 516dc912426cd01b60537ddf825cd64a
+  - choose:
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.event.data.node_id == 38 }}'
+      sequence:
+      - action: fan.set_percentage
+        metadata: {}
+        data:
+          percentage: 60
+        target:
+          entity_id: fan.master_bathroom_fan
+    - conditions:
+      - condition: template
+        value_template: '{{ trigger.event.data.node_id == 49 }}'
+      sequence:
+      - action: fan.set_percentage
+        metadata: {}
+        data:
+          percentage: 60
+        target:
+          entity_id: fan.hallway_bathroom_fan
   mode: single
 - id: '1764391469249'
   alias: 'Master Bathroom: Off with no motion'
@@ -1084,12 +1174,13 @@
       entity_id: fan.master_bathroom_fan
   mode: single
 - id: '1764440161109'
-  alias: 'Master Bathroom: Fan LED On'
+  alias: 'Bathrooms: Fan LED On'
   description: ''
   triggers:
   - trigger: state
     entity_id:
     - fan.master_bathroom_fan
+    - fan.hallway_bathroom_fan
     to:
     - 'on'
   conditions: []
@@ -1097,18 +1188,20 @@
   - action: script.inovelli_led
     metadata: {}
     data:
-      entity_id: sensor.fan_electric_kwh
+      entity_id: "{{ 'sensor.hallway_bathroom_fan_electric_consumed_kwh'\n   if trigger.entity_id
+        == 'fan.hallway_bathroom_fan'\n   else 'sensor.fan_electric_kwh' }}"
       model: switch
       color: Cyan
       effect: Solid
   mode: single
 - id: '1764440217608'
-  alias: 'Master Bathroom: Fan LED Off'
+  alias: 'Bathrooms: Fan LED Off'
   description: ''
   triggers:
   - trigger: state
     entity_id:
     - fan.master_bathroom_fan
+    - fan.hallway_bathroom_fan
     to:
     - 'off'
   conditions: []
@@ -1116,7 +1209,45 @@
   - action: script.inovelli_led
     metadata: {}
     data:
-      entity_id: sensor.fan_electric_kwh
+      entity_id: "{{ 'sensor.hallway_bathroom_fan_electric_consumed_kwh'\n   if trigger.entity_id
+        == 'fan.hallway_bathroom_fan'\n   else 'sensor.fan_electric_kwh' }}"
       model: switch
       effect: 'Off'
+  mode: single
+- id: '1767569644404'
+  alias: 'Prank: Fire when door opens'
+  description: ''
+  triggers:
+  - type: opened
+    device_id: 8652182c99483bb168f60876d13584ab
+    entity_id: d685fde39e61d37cb1de651df4cee686
+    domain: binary_sensor
+    trigger: device
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 1
+  conditions: []
+  actions:
+  - action: esphome.ir_blaster_transmit_nec
+    data:
+      address: 65280
+      command: 58140
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 1
+      milliseconds: 0
+  - repeat:
+      count: 10
+      sequence:
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 0
+          milliseconds: 300
+      - action: esphome.ir_blaster_transmit_nec
+        data:
+          address: 65280
+          command: 58140
   mode: single
