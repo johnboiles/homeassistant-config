@@ -418,7 +418,7 @@
   alias: 'Notification: Smoke alarms are triggered upstairs'
   trigger:
   - platform: state
-    entity_id: binary_sensor.upstairs_smoke_alarms
+    entity_id: binary_sensor.smokealarms
     to: 'on'
   action:
   - service: notify.all_devices

@@ -5,7 +5,7 @@ binary_sensor.front_door:
   device_class: door
 binary_sensor.back_door:
   device_class: door
-binary_sensor.upstairs_smoke_alarms:
+binary_sensor.smokealarms:
   device_class: smoke
 sensor.pm25_particles:
   device_class: pm25
