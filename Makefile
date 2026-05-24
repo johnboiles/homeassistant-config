@@ -13,11 +13,11 @@ remote-test:
 .PHONY: deploy
 deploy:
 	$(info Deploying HA config to $(REMOTE_HOST).)
-	rsync -av --rsync-path="sudo rsync" $(BASE_DIR)/*.yaml $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/
-	rsync -av --rsync-path="sudo rsync" $(BASE_DIR)/scripts/*.yaml $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/scripts/
-	rsync -av --rsync-path="sudo rsync" $(BASE_DIR)/esphome/*.yaml $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/esphome/
-	rsync -av --rsync-path="sudo rsync" $(BASE_DIR)/esphome/common/*.yaml $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/esphome/common/
-	rsync -av --rsync-path="sudo rsync" $(BASE_DIR)/panels/*.html $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/panels/
+	rsync -av --no-owner --no-group --rsync-path="sudo rsync" $(BASE_DIR)/*.yaml $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/
+	rsync -av --no-owner --no-group --rsync-path="sudo rsync" $(BASE_DIR)/scripts/*.yaml $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/scripts/
+	rsync -av --no-owner --no-group --rsync-path="sudo rsync" $(BASE_DIR)/esphome/*.yaml $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/esphome/
+	rsync -av --no-owner --no-group --rsync-path="sudo rsync" $(BASE_DIR)/esphome/common/*.yaml $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/esphome/common/
+	rsync -av --no-owner --no-group --rsync-path="sudo rsync" $(BASE_DIR)/panels/*.html $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/panels/
 
 .PHONY: deploy-zwave
 deploy-zwave:
@@ -27,6 +27,7 @@ deploy-zwave:
 .PHONY: pull-remote
 pull-remote:
 	rsync -av --include='*yaml' --include='esphome' --include='scripts' --include='panels' --include='zwavegraph2.html' --include='scenes' --include='zwcfg*.xml' --exclude='*' $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/ ./
+	rsync -av --include='*.yaml' --exclude='*' $(REMOTE_HOST):$(REMOTE_CONFIG_DIR)/esphome/common/ ./esphome/common/
 
 .PHONY: deploy-scripts
 deploy-scripts:
