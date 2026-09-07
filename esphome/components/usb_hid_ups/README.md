@@ -49,6 +49,13 @@ input 50, PHY address 1). Wi-Fi/ESP-Hosted was tested during bring-up but is not
 needed in the final configuration. DHCP assigned `10.0.0.120` during testing;
 use `tripplite-ups.local` or a DHCP reservation for ongoing access.
 
+The Function EV Board configuration holds its unused C6 in reset through
+GPIO54 and enables IDF dynamic frequency scaling. Ethernet keeps the idle
+clock at 90 MHz; 360 MHz remains available for work. Automatic light sleep is
+disabled. See [power measurements](../../POWER_MEASUREMENTS.md) for the PPK2
+comparisons, wiring, and validation limits. This GPIO mapping is specific to
+the Function EV Board v1.4 and must be checked when changing boards.
+
 Plug the UPS data cable into USB-A. Use USB-to-UART for flashing and debug logs,
 or USB Power-in for a dedicated battery-backed 5 V supply. Leave the shared OTG
 USB-C port unused. Network equipment must also remain powered during outages.

@@ -8,6 +8,18 @@ esp32:
   flash_size: 16MB
   framework:
     type: esp-idf
+    sdkconfig_options:
+      # Keep 360 MHz available for work; idle at 90 MHz with Ethernet active.
+      # Automatic light sleep stays disabled so USB monitoring remains awake.
+      CONFIG_PM_ENABLE: "y"
+      CONFIG_PM_DFS_INIT_AUTO: "y"
+
+# Function EV Board v1.4: GPIO54 -> C6_EN. Ethernet does not need the C6.
+# GPIO outputs initialize low, holding the unused radio module in reset.
+output:
+  - platform: gpio
+    id: c6_enable
+    pin: GPIO54
 
 # ESP32-P4 Function EV Board v1.4 onboard IP101 Ethernet PHY.
 ethernet:
