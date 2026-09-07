@@ -1,0 +1,114 @@
+esphome:
+  name: tripplite-ups
+  friendly_name: Tripp Lite UPS
+
+esp32:
+  variant: esp32p4
+  engineering_sample: true
+  flash_size: 16MB
+  framework:
+    type: esp-idf
+
+# ESP32-P4 Function EV Board v1.4 onboard IP101 Ethernet PHY.
+ethernet:
+  type: IP101
+  mdc_pin: GPIO31
+  mdio_pin: GPIO52
+  phy_addr: 1
+  power_pin: GPIO51
+  clk:
+    pin: GPIO50
+    mode: CLK_EXT_IN
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+logger:
+  hardware_uart: UART0
+  level: DEBUG
+
+# Keep the USB host running even when HA is offline during bench testing.
+api:
+  encryption:
+    key: !secret esphome_encryption_key
+  reboot_timeout: 0s
+
+external_components:
+  - source:
+      type: local
+      path: components
+    components: [usb_hid_ups]
+
+usb_hid_ups:
+  id: ups
+
+sensor:
+  - platform: uptime
+    name: Uptime
+  - platform: template
+    name: Battery Charge
+    unit_of_measurement: "%"
+    device_class: battery
+    state_class: measurement
+    update_interval: 5s
+    lambda: |-
+      auto d = id(ups).get_data();
+      return d.connected ? d.battery_capacity : NAN;
+  - platform: template
+    name: Battery Runtime
+    unit_of_measurement: s
+    device_class: duration
+    state_class: measurement
+    update_interval: 5s
+    lambda: |-
+      auto d = id(ups).get_data();
+      return d.connected ? d.remaining_runtime_sec : NAN;
+  - platform: template
+    name: Load
+    unit_of_measurement: "%"
+    state_class: measurement
+    update_interval: 5s
+    lambda: |-
+      auto d = id(ups).get_data();
+      return d.connected ? d.load_percent : NAN;
+  - platform: template
+    name: Input Voltage
+    unit_of_measurement: V
+    device_class: voltage
+    state_class: measurement
+    update_interval: 5s
+    lambda: |-
+      auto d = id(ups).get_data();
+      return d.connected ? d.utility_voltage : NAN;
+  - platform: template
+    name: Battery Voltage
+    unit_of_measurement: V
+    device_class: voltage
+    state_class: measurement
+    update_interval: 5s
+    lambda: |-
+      auto d = id(ups).get_data();
+      return d.connected ? d.battery_voltage : NAN;
+
+binary_sensor:
+  - platform: status
+    name: Status
+  - platform: template
+    name: USB Connected
+    device_class: connectivity
+    lambda: return id(ups).get_data().connected;
+
+text_sensor:
+  - platform: template
+    name: Power Source
+    update_interval: 5s
+    lambda: |-
+      auto d = id(ups).get_data();
+      if (!d.connected || !d.ac_present_valid) return std::string("Unavailable");
+      return std::string(d.ac_present ? "Mains" : "Battery");
+  - platform: template
+    name: UPS Model
+    entity_category: diagnostic
+    update_interval: 10s
+    lambda: return std::string(id(ups).get_data().model);

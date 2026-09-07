@@ -23,3 +23,8 @@ entity_registry.yaml
 !panels
 !panels/*.html
 .DS_Store
+!esphome/components/
+!esphome/components/usb_hid_ups/
+!esphome/components/usb_hid_ups/*
+!esphome/tests/
+!esphome/tests/usb_hid_ups_scaling.cpp
