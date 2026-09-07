@@ -365,7 +365,7 @@
   description: Sends a critical notification when the power goes out.
   trigger:
   - platform: numeric_state
-    entity_id: sensor.nut_ups_input_voltage
+    entity_id: sensor.tripp_lite_ups_input_voltage
     below: '60'
   action:
   - service: notify.all_devices

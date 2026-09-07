@@ -29,11 +29,11 @@ Off-the-shelf stuff I've integrated with:
 * Amazon Alexa
 * Unifi Controller
 * Unifi Gateway (custom component)
-* Network UPS Tools (NUT)
 * TPLink outlet
 * Route53 (for updating my DNS record)
 
 Stuff I've built:
+* [ESPHome USB UPS Monitor](esphome/components/usb_hid_ups/README.md) (monitors the Tripp Lite UPS over USB and Ethernet, independently of the NAS)
 * [RTL433 MQTT](https://github.com/johnboiles/rtl-433-docker-pi) Temperature Sensors 
 * [ESPHome IR Blaster](https://github.com/johnboiles/homeassistant-config/blob/master/esphome/ir_blaster.yaml) (controls my sound bar)
 * [ESPHome Fan Controller](https://github.com/johnboiles/homeassistant-config/blob/master/esphome/basement_fan.yaml) (controls an exhaust fan in my basement)

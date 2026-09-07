@@ -64,8 +64,11 @@ For serial recovery, use `--device /dev/cu.usbserial-210 --upload_speed 115200`.
 Higher serial speeds produced transport errors with this setup.
 
 The existing `esphome_encryption_key` and `ota_password` secrets are reused.
-Add the device through Home Assistant's ESPHome integration. No NUT server or
-NAS shutdown automation is included yet.
+Add the device through Home Assistant's ESPHome integration. The existing
+`Notification: power is out` automation uses
+`sensor.tripp_lite_ups_input_voltage`, preserving its below-60 V trigger and
+critical notification actions. No NUT server or NAS shutdown automation is
+included yet.
 
 Regression check from the repository root:
 
