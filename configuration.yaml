@@ -49,6 +49,11 @@ history:
 
 input_text:
 
+input_boolean:
+  house_occupied:
+    name: House Occupied
+    icon: mdi:home-account
+
 # View all events in a logbook
 logbook:
 

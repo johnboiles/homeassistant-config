@@ -28,3 +28,10 @@ entity_registry.yaml
 !esphome/components/usb_hid_ups/*
 !esphome/tests/
 !esphome/tests/usb_hid_ups_scaling.cpp
+!packages/
+!packages/*.yaml
+!blueprints/
+!blueprints/**/
+!blueprints/**/*.yaml
+!esphome/archive/
+!esphome/archive/*.yaml

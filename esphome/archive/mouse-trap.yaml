@@ -1,0 +1,60 @@
+esphome:
+  name: mouse-trap
+  platform: ESP32
+  board: esp32cam
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  fast_connect: true
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Camera Fallback Hotspot"
+    password: !secret wifi_ap_password
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret esphome_encryption_key
+
+ota:
+  password: !secret ota_password
+
+esp32_camera:
+  external_clock:
+    pin: GPIO0
+    frequency: 20MHz
+  i2c_pins:
+    sda: GPIO26
+    scl: GPIO27
+  data_pins: [GPIO5, GPIO18, GPIO19, GPIO21, GPIO36, GPIO39, GPIO34, GPIO35]
+  vsync_pin: GPIO25
+  href_pin: GPIO23
+  pixel_clock_pin: GPIO22
+  power_down_pin: GPIO32
+  name: Mousetrap Camera
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO13
+      inverted: true
+    name: "Mousetrap Trigger"
+    filters:
+      - delayed_on: 10ms
+
+output:
+  - platform: ledc
+    pin: GPIO4
+    id: mousetrap_led
+
+light:
+  - platform: monochromatic
+    output: mousetrap_led
+    name: "Mousetrap Light"

@@ -1,0 +1,81 @@
+blueprint:
+  name: Inovelli
+  description: 'Use this blueprint to create automations based on button presses for
+    the LZW36 - Red Series Fan/Light Switch while using the OZW integration. I plan
+    on expanding this to the other supported switches as well as an option for the
+    legacy zwave integration but this is a start.
+
+    '
+  domain: automation
+  input:
+    light_switch:
+      name: Inovelli Switch
+      description: The inovelli fan/dimmer switch that will trigger the scenes
+      selector:
+        entity:
+          integration: ozw
+          domain: light
+    light_button_twice:
+      name: Light Button Twice
+      description: Pick an action for when the light button is pressed twice.
+      selector:
+        action: {}
+    light_button_thrice:
+      name: Light Button Three Times
+      description: Pick an action for when the light button is pressed three times.
+      selector:
+        action: {}
+    fan_button_twice:
+      name: Fan Button Twice
+      description: Pick an action for when the fan button is pressed twice.
+      selector:
+        action: {}
+    fan_button_thrice:
+      name: Fan Button Three Times
+      description: Pick an action for when the fan button is pressed three times.
+      selector:
+        action: {}
+  source_url: https://community.home-assistant.io/t/inovelli-lzw36-fan-dimmer-scenes/254999
+variables:
+  device: !input 'light_switch'
+  entity_node_id: '{{ state_attr(device,''node_id'') }}'
+mode: single
+trigger:
+- platform: event
+  event_type: ozw.scene_activated
+action:
+- variables:
+    node_id: '{{trigger.event.data.node_id}}'
+    scene_id: '{{ trigger.event.data.scene_id }}'
+    scene_value_id: '{{ trigger.event.data.scene_value_id }}'
+- service: ozw.set_config_parameter
+  data:
+    node_id: '{{entity_node_id}}'
+    parameter: 24
+    value: 33819041
+- service: ozw.set_config_parameter
+  data:
+    node_id: '{{entity_node_id}}'
+    parameter: 25
+    value: 33819041
+- choose:
+  - conditions:
+    - '{{ node_id == entity_node_id }}'
+    - '{{ scene_id == 2 }}'
+    - '{{ scene_value_id == 4 }}'
+    sequence: !input 'light_button_twice'
+  - conditions:
+    - '{{ node_id == entity_node_id }}'
+    - '{{ scene_id == 2 }}'
+    - '{{ scene_value_id == 5 }}'
+    sequence: !input 'light_button_thrice'
+  - conditions:
+    - '{{ node_id == entity_node_id }}'
+    - '{{ scene_id == 1 }}'
+    - '{{ scene_value_id == 4 }}'
+    sequence: !input 'fan_button_twice'
+  - conditions:
+    - '{{ node_id == entity_node_id }}'
+    - '{{ scene_id == 1 }}'
+    - '{{ scene_value_id == 5 }}'
+    sequence: !input 'fan_button_thrice'
