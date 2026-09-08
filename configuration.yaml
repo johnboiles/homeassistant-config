@@ -20,8 +20,6 @@ recorder:
 logger:
   default: warning
 
-http:
-
 ## Section: Default config
 
 # See https://www.home-assistant.io/integrations/default_config/
