@@ -58,6 +58,7 @@ usb_hid_ups:
 sensor:
   - platform: uptime
     name: Uptime
+    entity_category: diagnostic
   - platform: template
     name: Battery Charge
     unit_of_measurement: "%"
@@ -86,6 +87,7 @@ sensor:
       return d.connected ? d.load_percent : NAN;
   - platform: template
     name: Input Voltage
+    entity_category: diagnostic
     unit_of_measurement: V
     device_class: voltage
     state_class: measurement
@@ -95,6 +97,7 @@ sensor:
       return d.connected ? d.utility_voltage : NAN;
   - platform: template
     name: Battery Voltage
+    entity_category: diagnostic
     unit_of_measurement: V
     device_class: voltage
     state_class: measurement
@@ -104,6 +107,7 @@ sensor:
       return d.connected ? d.battery_voltage : NAN;
   - platform: template
     name: Output Voltage
+    entity_category: diagnostic
     unit_of_measurement: V
     device_class: voltage
     state_class: measurement
@@ -113,6 +117,7 @@ sensor:
       return id(ups).get_data().output_voltage;
   - platform: template
     name: Input Frequency
+    entity_category: diagnostic
     unit_of_measurement: Hz
     device_class: frequency
     state_class: measurement
@@ -133,29 +138,36 @@ sensor:
 binary_sensor:
   - platform: status
     name: Status
+    entity_category: diagnostic
   - platform: template
     name: USB Connected
+    entity_category: diagnostic
     device_class: connectivity
     lambda: return id(ups).get_data().connected;
   - platform: template
     name: Mains Present
+    entity_category: diagnostic
     id: ups_ac_present
     device_class: power
     icon: mdi:power-plug
   - platform: template
     name: On Battery
+    entity_category: diagnostic
     id: ups_on_battery
     icon: mdi:battery-arrow-down
   - platform: template
     name: Battery Charging
+    entity_category: diagnostic
     id: ups_charging
     device_class: battery_charging
   - platform: template
     name: Battery Fully Charged
+    entity_category: diagnostic
     id: ups_fully_charged
     icon: mdi:battery-check
   - platform: template
     name: Battery Fully Discharged
+    entity_category: diagnostic
     id: ups_fully_discharged
     device_class: problem
     icon: mdi:battery-outline
@@ -165,6 +177,7 @@ binary_sensor:
     device_class: battery
   - platform: template
     name: Replace Battery
+    entity_category: diagnostic
     id: ups_replace_battery
     device_class: problem
     icon: mdi:battery-alert
@@ -175,34 +188,41 @@ binary_sensor:
     icon: mdi:power
   - platform: template
     name: AVR Boost Active
+    entity_category: diagnostic
     id: ups_avr_boost
     icon: mdi:arrow-up-bold
   - platform: template
     name: AVR Buck Active
+    entity_category: diagnostic
     id: ups_avr_buck
     icon: mdi:arrow-down-bold
   - platform: template
     name: Input Voltage Out of Range
+    entity_category: diagnostic
     id: ups_voltage_out_of_range
     device_class: problem
     icon: mdi:sine-wave
   - platform: template
     name: Overload
+    entity_category: diagnostic
     id: ups_overload
     device_class: problem
     icon: mdi:flash-alert
   - platform: template
     name: Over Temperature
+    entity_category: diagnostic
     id: ups_over_temperature
     device_class: problem
     icon: mdi:thermometer-alert
   - platform: template
     name: Internal Fault
+    entity_category: diagnostic
     id: ups_internal_failure
     device_class: problem
     icon: mdi:alert-circle
   - platform: template
     name: Awaiting Power
+    entity_category: diagnostic
     id: ups_awaiting_power
     icon: mdi:power-plug-off
 

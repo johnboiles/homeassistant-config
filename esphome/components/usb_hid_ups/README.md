@@ -49,6 +49,12 @@ The September 7 telemetry update adds 20 entities to the original 10:
   internal fault, and awaiting power.
 - Self-test result and beeper status, read without sending any commands.
 
+The main device card keeps seven primary entities: Battery Charge, Battery
+Runtime, Output Power, Load, Power Source, Battery Low, and Shutdown Imminent.
+The other 23 monitoring entities use `entity_category: diagnostic` so detailed
+readings and health information appear in Diagnostics. Entity IDs, state
+publication, and existing automation references are preserved.
+
 The 15 binary flags publish from one snapshot every second. A missing/failed
 read invalidates the affected flags rather than retaining a healthy state.
 All dynamic readings expire after 20 seconds without a completed poll or on
