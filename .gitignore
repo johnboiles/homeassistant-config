@@ -35,3 +35,4 @@ entity_registry.yaml
 !blueprints/**/*.yaml
 !esphome/archive/
 !esphome/archive/*.yaml
+!esphome/tests/tripplite_2012_descriptor.h

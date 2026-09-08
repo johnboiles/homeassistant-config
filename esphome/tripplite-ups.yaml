@@ -102,6 +102,33 @@ sensor:
     lambda: |-
       auto d = id(ups).get_data();
       return d.connected ? d.battery_voltage : NAN;
+  - platform: template
+    name: Output Voltage
+    unit_of_measurement: V
+    device_class: voltage
+    state_class: measurement
+    accuracy_decimals: 1
+    update_interval: 5s
+    lambda: |-
+      return id(ups).get_data().output_voltage;
+  - platform: template
+    name: Input Frequency
+    unit_of_measurement: Hz
+    device_class: frequency
+    state_class: measurement
+    accuracy_decimals: 1
+    update_interval: 5s
+    lambda: |-
+      return id(ups).get_data().input_frequency;
+  - platform: template
+    name: Output Power
+    unit_of_measurement: W
+    device_class: power
+    state_class: measurement
+    accuracy_decimals: 0
+    update_interval: 5s
+    lambda: |-
+      return id(ups).get_data().output_power;
 
 binary_sensor:
   - platform: status
@@ -110,6 +137,74 @@ binary_sensor:
     name: USB Connected
     device_class: connectivity
     lambda: return id(ups).get_data().connected;
+  - platform: template
+    name: Mains Present
+    id: ups_ac_present
+    device_class: power
+    icon: mdi:power-plug
+  - platform: template
+    name: On Battery
+    id: ups_on_battery
+    icon: mdi:battery-arrow-down
+  - platform: template
+    name: Battery Charging
+    id: ups_charging
+    device_class: battery_charging
+  - platform: template
+    name: Battery Fully Charged
+    id: ups_fully_charged
+    icon: mdi:battery-check
+  - platform: template
+    name: Battery Fully Discharged
+    id: ups_fully_discharged
+    device_class: problem
+    icon: mdi:battery-outline
+  - platform: template
+    name: Battery Low
+    id: ups_battery_low_flag
+    device_class: battery
+  - platform: template
+    name: Replace Battery
+    id: ups_replace_battery
+    device_class: problem
+    icon: mdi:battery-alert
+  - platform: template
+    name: Shutdown Imminent
+    id: ups_shutdown_imminent
+    device_class: problem
+    icon: mdi:power
+  - platform: template
+    name: AVR Boost Active
+    id: ups_avr_boost
+    icon: mdi:arrow-up-bold
+  - platform: template
+    name: AVR Buck Active
+    id: ups_avr_buck
+    icon: mdi:arrow-down-bold
+  - platform: template
+    name: Input Voltage Out of Range
+    id: ups_voltage_out_of_range
+    device_class: problem
+    icon: mdi:sine-wave
+  - platform: template
+    name: Overload
+    id: ups_overload
+    device_class: problem
+    icon: mdi:flash-alert
+  - platform: template
+    name: Over Temperature
+    id: ups_over_temperature
+    device_class: problem
+    icon: mdi:thermometer-alert
+  - platform: template
+    name: Internal Fault
+    id: ups_internal_failure
+    device_class: problem
+    icon: mdi:alert-circle
+  - platform: template
+    name: Awaiting Power
+    id: ups_awaiting_power
+    icon: mdi:power-plug-off
 
 text_sensor:
   - platform: template
@@ -124,3 +219,48 @@ text_sensor:
     entity_category: diagnostic
     update_interval: 10s
     lambda: return std::string(id(ups).get_data().model);
+  - platform: template
+    name: Self Test Result
+    id: ups_self_test_result
+    entity_category: diagnostic
+    icon: mdi:clipboard-check
+    update_interval: 5s
+    lambda: |-
+      auto d = id(ups).get_data();
+      return esphome::usb_hid_ups::self_test_result_text(d.self_test_result);
+  - platform: template
+    name: Beeper Status
+    id: ups_beeper_status
+    entity_category: diagnostic
+    icon: mdi:volume-high
+    update_interval: 5s
+    lambda: |-
+      auto d = id(ups).get_data();
+      return esphome::usb_hid_ups::beeper_status_text(d.beeper_status);
+
+# Publish all status flags from one snapshot. Returning {} from a binary
+# template lambda would keep its old value; explicitly invalidate failed reads.
+interval:
+  - interval: 1s
+    then:
+      - lambda: |-
+          const auto d = id(ups).get_data();
+          auto publish = [](esphome::binary_sensor::BinarySensor *sensor, bool value, bool valid) {
+            if (valid) sensor->publish_state(value);
+            else sensor->invalidate_state();
+          };
+          publish(id(ups_ac_present), d.ac_present, d.ac_present_valid);
+          publish(id(ups_on_battery), d.on_battery, d.on_battery_valid);
+          publish(id(ups_charging), d.charging, d.charging_valid);
+          publish(id(ups_fully_charged), d.fully_charged, d.fully_charged_valid);
+          publish(id(ups_fully_discharged), d.fully_discharged, d.fully_discharged_valid);
+          publish(id(ups_battery_low_flag), d.battery_low_flag, d.battery_low_flag_valid);
+          publish(id(ups_replace_battery), d.replace_battery, d.replace_battery_valid);
+          publish(id(ups_shutdown_imminent), d.shutdown_imminent, d.shutdown_imminent_valid);
+          publish(id(ups_avr_boost), d.avr_boost, d.avr_boost_valid);
+          publish(id(ups_avr_buck), d.avr_buck, d.avr_buck_valid);
+          publish(id(ups_voltage_out_of_range), d.voltage_out_of_range, d.voltage_out_of_range_valid);
+          publish(id(ups_overload), d.overload, d.overload_valid);
+          publish(id(ups_over_temperature), d.over_temperature, d.over_temperature_valid);
+          publish(id(ups_internal_failure), d.internal_failure, d.internal_failure_valid);
+          publish(id(ups_awaiting_power), d.awaiting_power, d.awaiting_power_valid);

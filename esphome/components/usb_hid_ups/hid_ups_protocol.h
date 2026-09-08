@@ -53,6 +53,14 @@ static constexpr uint16_t PD_USAGE_CONFIG_FREQUENCY = 0x0042;
 static constexpr uint16_t PD_USAGE_CONFIG_APPARENT_POWER = 0x0043;
 static constexpr uint16_t PD_USAGE_CONFIG_ACTIVE_POWER   = 0x0044;
 static constexpr uint16_t PD_USAGE_SWITCHABLE       = 0x006B;
+static constexpr uint16_t PD_USAGE_INTERNAL_FAILURE = 0x0062;
+static constexpr uint16_t PD_USAGE_VOLTAGE_OUT_OF_RANGE = 0x0063;
+static constexpr uint16_t PD_USAGE_OVERLOAD         = 0x0065;
+static constexpr uint16_t PD_USAGE_OVER_TEMPERATURE = 0x0067;
+static constexpr uint16_t PD_USAGE_SHUTDOWN_IMMINENT = 0x0069;
+static constexpr uint16_t PD_USAGE_BOOST            = 0x006E;
+static constexpr uint16_t PD_USAGE_BUCK             = 0x006F;
+static constexpr uint16_t PD_USAGE_AWAITING_POWER   = 0x0072;
 
 // ── Power Device Page (0x84) — writable command usages ──────
 // These live in FEATURE reports and are written via SET_REPORT to
@@ -72,12 +80,12 @@ static constexpr uint16_t BAT_USAGE_CHARGING             = 0x0044;
 static constexpr uint16_t BAT_USAGE_DISCHARGING          = 0x0045;
 static constexpr uint16_t BAT_USAGE_AC_PRESENT           = 0x00D0;
 static constexpr uint16_t BAT_USAGE_BELOW_REMAINING_CAP  = 0x0042;
-static constexpr uint16_t BAT_USAGE_SHUTDOWN_IMMINENT    = 0x00D3;
+static constexpr uint16_t BAT_USAGE_FULLY_CHARGED        = 0x0046;
+static constexpr uint16_t BAT_USAGE_FULLY_DISCHARGED     = 0x0047;
 static constexpr uint16_t BAT_USAGE_REMAINING_TIME_LIMIT = 0x006A;
 static constexpr uint16_t BAT_USAGE_CAPACITY_MODE        = 0x002C;
 static constexpr uint16_t BAT_USAGE_BATTERY_PRESENT      = 0x00D2;
-static constexpr uint16_t BAT_USAGE_OVERLOAD             = 0x0065;
-static constexpr uint16_t BAT_USAGE_NEED_REPLACEMENT     = 0x006B;
+static constexpr uint16_t BAT_USAGE_NEED_REPLACEMENT     = 0x004B;
 
 // ── HID Report Descriptor item types ────────────────────────
 enum class HidItemType : uint8_t {
@@ -352,6 +360,21 @@ static bool parse_report_descriptor(const uint8_t *desc, size_t len, HidReportMa
   return !map.fields.empty();
 }
 
+// Tripp Lite protocol 2012 sends integer watts but omits the PDC power
+// exponent. Correct only this precise descriptor defect, never by magnitude.
+// Call only for a matched Tripp Lite device. See NUT PR #3581.
+static size_t fix_tripplite_power_units(HidReportMap &map) {
+  size_t corrected = 0;
+  for (auto &f : map.fields) {
+    if (f.usage_page == USAGE_PAGE_POWER_DEVICE && f.usage == PD_USAGE_ACTIVE_POWER &&
+        f.unit == 0x0000D121 && f.unit_exponent == 0) {
+      f.unit_exponent = 7;
+      ++corrected;
+    }
+  }
+  return corrected;
+}
+
 // ── Value extraction from raw report data ───────────────────
 // Extracts a field value from a raw HID report buffer.
 // The buffer should NOT include the report_id byte (already stripped).
@@ -379,6 +402,52 @@ static int32_t extract_field_value(const uint8_t *report_data, const HidField &f
 
   return (int32_t)value;
 }
+
+// A cache for ONE polling cycle. Flags sharing a report must come from the
+// same sample, including on failure. Clear between cycles; never use a cached
+// report for the read-modify-write path of a UPS command.
+class HidReportCache {
+ public:
+  void clear() { reports_.clear(); }
+
+  template<typename Reader>
+  bool read_field(const HidReportMap &map, const HidField *field, int32_t &value, Reader reader) {
+    if (!field || field->bit_size == 0 || field->bit_size > 32) return false;
+    for (const auto &r : reports_) {
+      if (r.id == field->report_id && r.type == field->report_type) {
+        if (!r.valid) return false;
+        value = extract_field_value(r.data + 1, *field);
+        return true;
+      }
+    }
+    size_t bytes = 0;
+    for (const auto &f : map.fields) {
+      if (f.report_id == field->report_id && f.report_type == field->report_type) {
+        size_t end = (f.bit_offset + f.bit_size + 7) / 8;
+        if (end > bytes) bytes = end;
+      }
+    }
+    Report report{};
+    report.id = field->report_id;
+    report.type = field->report_type;
+    // Reject oversized reports instead of truncating then reading past them.
+    report.valid = bytes > 0 && bytes + 1 <= sizeof(report.data) &&
+                   reader(report.id, report.type, report.data, bytes + 1);
+    reports_.push_back(report);
+    if (!report.valid) return false;
+    value = extract_field_value(report.data + 1, *field);
+    return true;
+  }
+
+ private:
+  struct Report {
+    uint8_t id;
+    ReportType type;
+    bool valid;
+    uint8_t data[64];
+  };
+  std::vector<Report> reports_;
+};
 
 // ── Value encoding into raw report data (inverse of extract) ──
 // Writes `value` into the field's bit range within report_data.

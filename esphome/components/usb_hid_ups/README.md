@@ -38,6 +38,65 @@ need testing. The UPS USB product string is just `Tripp Lite UPS`.
 The upstream USB stack runs independently; do not also enable ESPHome's
 `usb_host` component with this component.
 
+## Additional telemetry
+
+The September 7 telemetry update adds 20 entities to the original 10:
+
+- Output voltage, input frequency, and output power in watts (5-second publication).
+- Mains present, on battery, charging, fully charged, fully discharged, low
+  battery, replace battery, and shutdown imminent.
+- AVR boost, AVR buck, input voltage out of range, overload, over temperature,
+  internal fault, and awaiting power.
+- Self-test result and beeper status, read without sending any commands.
+
+The 15 binary flags publish from one snapshot every second. A missing/failed
+read invalidates the affected flags rather than retaining a healthy state.
+All dynamic readings expire after 20 seconds without a completed poll or on
+USB disconnect. Numeric values become NaN; text values say `Unavailable`.
+An unrecognized self-test code is shown verbatim as `Unknown (code)`; zero
+does not mean a test passed. The unit can report charging and fully charged
+simultaneously, as in Tripp Lite's own capture; this is a status flag, not a
+measurement of charge current.
+
+The original mappings for overload, replacement, and imminent shutdown were
+incorrect. Correct HID usages are `0084/0065`, `0085/004B`, and `0084/0069`.
+The shared status reports are now read once per poll, including on failures,
+so flags from one report agree and do not require separate USB transactions.
+Command read-modify-write operations never reuse that poll cache.
+
+Reference: [Tripp Lite support's SMART1500LCDXL debug capture](https://alioth-lists.debian.net/pipermail/nut-upsdev/2019-June/007443.html),
+attachment `debuglogsmart1500NUT.log.gz`. Its 662-byte descriptor reproduces
+the 58 fields parsed on this device and is retained as a regression fixture.
+Status names and read-result meanings are checked against NUT's
+[`libhid.c`](https://github.com/networkupstools/nut/blob/master/drivers/libhid.c)
+and [`usbhid-ups.c`](https://github.com/networkupstools/nut/blob/master/drivers/usbhid-ups.c).
+
+Output Power comes from the UPS's actual ActivePower report, not a load-percent
+estimate. On `09ae:2012`, an ActivePower field declaring unit `0x0000D121`
+with exponent 0 gets its exponent corrected to 7 before scaling. This is the
+specific defect fixed in [NUT PR #3581](https://github.com/networkupstools/nut/pull/3581)
+(merged August 23, 2026). Other fields, units, and valid exponents are unchanged.
+Our first live probe returned raw 120–123 at 13% load; without the correction,
+that became 0.000012–0.0000123 W. Numeric temperature is not available.
+
+Home Assistant assigned the new entities IDs starting with
+`sensor.basement_tripp_lite_ups_` / `binary_sensor.basement_tripp_lite_ups_`.
+The original entities retain their existing `tripp_lite_ups_` IDs, preserving
+the outage notification automation.
+
+Validation on September 7, 2026: ESPHome 2026.5.0 build and Ethernet OTA passed.
+All 30 entities appeared in HA. A 180-second encrypted API capture of the final
+firmware recorded output power 118–125 W, frequency 59.8–59.9 Hz, output voltage
+about 118 V, and no asserted fault flags. Self-test returned `Unknown (0)` and
+the beeper was `Enabled`. Two transient USB control-transfer errors recovered;
+there were no USB disconnects or unavailable published samples after startup.
+The host regression test passes with AddressSanitizer and UndefinedBehaviorSanitizer,
+covering report/bit selection, power scaling and its exclusions, shared report
+caching/failure recovery, and expired/disconnected status invalidation. Fault
+transitions are checked with recorded/synthetic bytes, not physical overloads,
+battery depletion, or an outage. Power consumption was not remeasured after
+this telemetry update.
+
 ## Board configuration and operation
 
 The main configuration is `esphome/tripplite-ups.yaml`. Its local component path

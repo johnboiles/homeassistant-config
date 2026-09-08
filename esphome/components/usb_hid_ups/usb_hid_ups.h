@@ -26,6 +26,7 @@
 #include <cmath>
 
 #include "hid_ups_protocol.h"
+#include "ups_data.h"
 
 namespace esphome {
 namespace usb_hid_ups {
@@ -54,24 +55,6 @@ static constexpr uint8_t USB_DT_HID_REPORT = 0x22;
 // have documented disconnect problems with infrequent host communication.
 static constexpr uint32_t POLL_INTERVAL_MS = 500;
 
-// ── Power Event States ──────────────────────────────────────
-enum class PowerState : uint8_t {
-  NORMAL = 0,
-  POWER_FAIL_GRACE,   // AC lost, waiting grace period
-  BATTERY_LOW,        // Below runtime/capacity threshold
-  SHUTDOWN_IMMINENT,  // UPS reports shutdown imminent
-};
-
-static const char *power_state_str(PowerState s) {
-  switch (s) {
-    case PowerState::NORMAL:            return "Normal";
-    case PowerState::POWER_FAIL_GRACE:  return "Power Failure";
-    case PowerState::BATTERY_LOW:       return "Battery Low";
-    case PowerState::SHUTDOWN_IMMINENT: return "Shutdown Imminent";
-    default: return "Unknown";
-  }
-}
-
 // ── UPS Commands (NUT-style instant commands) ───────────────
 // Sent from any task via queue_command(); executed on the USB task
 // as a SET_REPORT on the matching FEATURE report.
@@ -99,44 +82,6 @@ static constexpr int32_t LOAD_OFF_DELAY_S = 20;
 // test is started so it does not trigger shutdown automations. A quick
 // self-test lasts only a few seconds; this window is a safe upper bound.
 static constexpr uint32_t TEST_SUPPRESS_MS = 45000;
-
-// ── UPS Data (shared between tasks, protected by mutex) ─────
-struct UpsData {
-  // Sensor values
-  float utility_voltage = NAN;
-  float output_voltage = NAN;
-  float battery_voltage = NAN;   // PowerSummary voltage, i.e. the battery pack
-  float battery_capacity = NAN;
-  float remaining_runtime_sec = NAN;
-  float load_percent = NAN;
-  float rating_voltage = NAN;    // nominal mains voltage
-  float rating_power_va = NAN;
-  float rating_power_w = NAN;    // nameplate active power, 0 if not reported
-
-  // Binary status
-  bool ac_present = true;
-  bool on_battery = false;
-  bool charging = false;
-  bool overload = false;
-  bool battery_low_flag = false;
-  bool replace_battery = false;
-  bool shutdown_imminent = false;
-
-  // Device info
-  char model[64] = {};
-  char serial[64] = {};
-  bool connected = false;
-  bool ac_present_valid = false;
-  bool on_battery_valid = false;
-  uint32_t last_poll_ms = 0;
-
-  // State machine
-  PowerState power_state = PowerState::NORMAL;
-  uint32_t power_fail_start_ms = 0;   // millis() when AC was lost
-  bool power_fail_event_sent = false; // set after grace expires to prevent re-firing
-  char last_event[64] = "None";
-  uint32_t last_event_time = 0;
-};
 
 // ── Ring buffer debug log ──────────────────────────────────
 static constexpr size_t LOG_RING_SIZE = 8192;
@@ -180,12 +125,7 @@ class UsbHidUpsComponent : public Component {
     snapshot = data_;
     xSemaphoreGive(data_mutex_);
     // A hung USB transaction must not keep publishing old measurements.
-    if (!snapshot.connected || snapshot.last_poll_ms == 0 ||
-        (uint32_t)(esp_timer_get_time() / 1000) - snapshot.last_poll_ms > 20000) {
-      snapshot.utility_voltage = snapshot.output_voltage = snapshot.battery_voltage = NAN;
-      snapshot.battery_capacity = snapshot.remaining_runtime_sec = snapshot.load_percent = NAN;
-      snapshot.ac_present_valid = snapshot.on_battery_valid = false;
-    }
+    snapshot.expire_readings((uint32_t)(esp_timer_get_time() / 1000));
     return snapshot;
   }
 
@@ -249,6 +189,8 @@ class UsbHidUpsComponent : public Component {
   uint8_t hid_iface_num_ = 0;
   uint16_t hid_report_desc_len_ = 0;
   HidReportMap report_map_;
+  HidReportCache poll_cache_;
+  bool poll_cache_active_ = false;
   bool device_open_ = false;
   bool tripplite_2012_ = false;
   bool device_gone_ = false;
@@ -838,6 +780,10 @@ class UsbHidUpsComponent : public Component {
     free(desc_buf);
 
     if (ok) {
+      if (tripplite_2012_) {
+        size_t corrected = fix_tripplite_power_units(report_map_);
+        if (corrected) ESP_LOGI(TAG, "Corrected Tripp Lite power exponent for %u field(s)", (unsigned)corrected);
+      }
       ESP_LOGI(TAG, "Parsed %d HID fields", (int)report_map_.fields.size());
       dump_report_map_();
     }
@@ -934,6 +880,10 @@ class UsbHidUpsComponent : public Component {
                            PD_USAGE_VOLTAGE, PD_COLL_INPUT);
     dump_usage_resolution_("OutputVoltage",  USAGE_PAGE_POWER_DEVICE,
                            PD_USAGE_VOLTAGE, PD_COLL_OUTPUT);
+    dump_usage_resolution_("OutputPower", USAGE_PAGE_POWER_DEVICE,
+                           PD_USAGE_ACTIVE_POWER, PD_COLL_OUTPUT);
+    dump_usage_resolution_("InputFrequency", USAGE_PAGE_POWER_DEVICE,
+                           PD_USAGE_FREQUENCY, PD_COLL_INPUT);
     dump_usage_resolution_("BatteryVoltage", USAGE_PAGE_POWER_DEVICE,
                            PD_USAGE_VOLTAGE, tripplite_2012_ ? 0x0010 : PD_COLL_POWER_SUMMARY);
     dump_usage_resolution_("RatingVoltage",  USAGE_PAGE_POWER_DEVICE,
@@ -984,31 +934,13 @@ class UsbHidUpsComponent : public Component {
 
   // ── Read a single field value from UPS ────────────────────
   bool read_field_value_(const HidField *field, int32_t &value) {
-    if (!field) return false;
-
-    // Calculate report data size (max bit offset + size in this report)
-    size_t report_bytes = 0;
-    for (auto &f : report_map_.fields) {
-      if (f.report_id == field->report_id && f.report_type == field->report_type) {
-        size_t end = (f.bit_offset + f.bit_size + 7) / 8;
-        if (end > report_bytes) report_bytes = end;
-      }
-    }
-    if (report_bytes == 0) report_bytes = 8;
-
-    // GET_REPORT response includes report ID as first byte, so request +1
-    size_t xfer_bytes = report_bytes + 1;
-    if (xfer_bytes > 63) xfer_bytes = 63;
-
-    uint8_t report_buf[64] = {};
-    if (!read_hid_report_(field->report_id, field->report_type, report_buf, xfer_bytes))
-      return false;
-
-    // GET_REPORT always prepends the report ID byte — skip it
-    uint8_t *data = report_buf + 1;
-
-    value = extract_field_value(data, *field);
-    return true;
+    // Commands always get a fresh report; only polling shares a cache.
+    HidReportCache fresh;
+    auto &cache = poll_cache_active_ ? poll_cache_ : fresh;
+    return cache.read_field(report_map_, field, value,
+      [this](uint8_t id, ReportType type, uint8_t *buf, size_t len) {
+        return read_hid_report_(id, type, buf, len);
+      });
   }
 
   // ── Read a field and convert it to its physical value ─────
@@ -1175,10 +1107,10 @@ class UsbHidUpsComponent : public Component {
     tmp = data_;
     xSemaphoreGive(data_mutex_);
 
-    // Failed or unsupported reads are unavailable, not zero or a previous sample.
-    tmp.utility_voltage = tmp.output_voltage = tmp.battery_voltage = NAN;
-    tmp.battery_capacity = tmp.remaining_runtime_sec = tmp.load_percent = NAN;
-    tmp.ac_present_valid = tmp.on_battery_valid = false;
+    // Failed or unsupported reads are unavailable, never a previous sample.
+    tmp.invalidate_readings();
+    poll_cache_.clear();
+    poll_cache_active_ = true;
     int32_t val;
     float   fval;
 
@@ -1198,6 +1130,12 @@ class UsbHidUpsComponent : public Component {
     if (f && read_field_scaled_(f, fval)) {
       tmp.output_voltage = fval;
     }
+
+    f = report_map_.find(USAGE_PAGE_POWER_DEVICE, PD_USAGE_FREQUENCY, PD_COLL_INPUT);
+    if (f && read_field_scaled_(f, fval)) tmp.input_frequency = fval;
+
+    f = report_map_.find(USAGE_PAGE_POWER_DEVICE, PD_USAGE_ACTIVE_POWER, PD_COLL_OUTPUT);
+    if (f && read_field_scaled_(f, fval)) tmp.output_power = fval;
 
     // NUT tripplite-hid: UPS.BatterySystem.Battery.Voltage, corrected by 0.1.
     // On 09ae:2012 PowerSummary.Voltage is a mains reading, not the battery.
@@ -1229,28 +1167,34 @@ class UsbHidUpsComponent : public Component {
     f = report_map_.find(USAGE_PAGE_POWER_DEVICE, PD_USAGE_CONFIG_ACTIVE_POWER);
     if (f && read_field_scaled_(f, fval)) tmp.rating_power_w = fval;
 
-    // ── Binary status ──
+    // ── Status bits: shared reports are read once per cycle ──
+    auto read_status = [&](uint16_t page, uint16_t usage, bool &state, bool &valid) {
+      const auto *field = report_map_.find(page, usage);
+      valid = field && read_field_value_(field, val);
+      if (valid) state = val != 0;
+    };
+    read_status(USAGE_PAGE_BATTERY, BAT_USAGE_AC_PRESENT, tmp.ac_present, tmp.ac_present_valid);
+    read_status(USAGE_PAGE_BATTERY, BAT_USAGE_DISCHARGING, tmp.on_battery, tmp.on_battery_valid);
+    read_status(USAGE_PAGE_BATTERY, BAT_USAGE_CHARGING, tmp.charging, tmp.charging_valid);
+    read_status(USAGE_PAGE_BATTERY, BAT_USAGE_BELOW_REMAINING_CAP, tmp.battery_low_flag, tmp.battery_low_flag_valid);
+    read_status(USAGE_PAGE_BATTERY, BAT_USAGE_NEED_REPLACEMENT, tmp.replace_battery, tmp.replace_battery_valid);
+    read_status(USAGE_PAGE_BATTERY, BAT_USAGE_FULLY_CHARGED, tmp.fully_charged, tmp.fully_charged_valid);
+    read_status(USAGE_PAGE_BATTERY, BAT_USAGE_FULLY_DISCHARGED, tmp.fully_discharged, tmp.fully_discharged_valid);
+    read_status(USAGE_PAGE_POWER_DEVICE, PD_USAGE_SHUTDOWN_IMMINENT, tmp.shutdown_imminent, tmp.shutdown_imminent_valid);
+    read_status(USAGE_PAGE_POWER_DEVICE, PD_USAGE_OVERLOAD, tmp.overload, tmp.overload_valid);
+    read_status(USAGE_PAGE_POWER_DEVICE, PD_USAGE_BOOST, tmp.avr_boost, tmp.avr_boost_valid);
+    read_status(USAGE_PAGE_POWER_DEVICE, PD_USAGE_BUCK, tmp.avr_buck, tmp.avr_buck_valid);
+    read_status(USAGE_PAGE_POWER_DEVICE, PD_USAGE_VOLTAGE_OUT_OF_RANGE, tmp.voltage_out_of_range, tmp.voltage_out_of_range_valid);
+    read_status(USAGE_PAGE_POWER_DEVICE, PD_USAGE_OVER_TEMPERATURE, tmp.over_temperature, tmp.over_temperature_valid);
+    read_status(USAGE_PAGE_POWER_DEVICE, PD_USAGE_INTERNAL_FAILURE, tmp.internal_failure, tmp.internal_failure_valid);
+    read_status(USAGE_PAGE_POWER_DEVICE, PD_USAGE_AWAITING_POWER, tmp.awaiting_power, tmp.awaiting_power_valid);
 
-    f = report_map_.find(USAGE_PAGE_BATTERY, BAT_USAGE_AC_PRESENT);
-    if (f && read_field_value_(f, val)) { tmp.ac_present = (val != 0); tmp.ac_present_valid = true; }
+    f = report_map_.find(USAGE_PAGE_POWER_DEVICE, PD_USAGE_TEST_CMD, PD_COLL_BATTERY_SYSTEM);
+    if (f && read_field_value_(f, val)) tmp.self_test_result = val;
+    f = report_map_.find(USAGE_PAGE_POWER_DEVICE, PD_USAGE_AUDIBLE_ALARM_CTRL);
+    if (f && read_field_value_(f, val)) tmp.beeper_status = val;
 
-    f = report_map_.find(USAGE_PAGE_BATTERY, BAT_USAGE_DISCHARGING);
-    if (f && read_field_value_(f, val)) { tmp.on_battery = (val != 0); tmp.on_battery_valid = true; }
-
-    f = report_map_.find(USAGE_PAGE_BATTERY, BAT_USAGE_CHARGING);
-    if (f && read_field_value_(f, val)) tmp.charging = (val != 0);
-
-    f = report_map_.find(USAGE_PAGE_BATTERY, BAT_USAGE_OVERLOAD);
-    if (f && read_field_value_(f, val)) tmp.overload = (val != 0);
-
-    f = report_map_.find(USAGE_PAGE_BATTERY, BAT_USAGE_BELOW_REMAINING_CAP);
-    if (f && read_field_value_(f, val)) tmp.battery_low_flag = (val != 0);
-
-    f = report_map_.find(USAGE_PAGE_BATTERY, BAT_USAGE_NEED_REPLACEMENT);
-    if (f && read_field_value_(f, val)) tmp.replace_battery = (val != 0);
-
-    f = report_map_.find(USAGE_PAGE_BATTERY, BAT_USAGE_SHUTDOWN_IMMINENT);
-    if (f && read_field_value_(f, val)) tmp.shutdown_imminent = (val != 0);
+    poll_cache_active_ = false;
 
     // ── State Machine (operates on local snapshot) ──
     if (tmp.ac_present_valid && tmp.on_battery_valid) update_power_state_on_(tmp);
@@ -1301,7 +1245,7 @@ class UsbHidUpsComponent : public Component {
     }
 
     // UPS reports shutdown imminent
-    if (d.shutdown_imminent) {
+    if (d.shutdown_imminent_valid && d.shutdown_imminent) {
       if (d.power_state != PowerState::SHUTDOWN_IMMINENT) {
         d.power_state = PowerState::SHUTDOWN_IMMINENT;
         set_event_on_(d, "Shutdown Imminent");
@@ -1317,7 +1261,7 @@ class UsbHidUpsComponent : public Component {
     bool capacity_low = (d.battery_capacity > 0 &&
                          d.battery_capacity < (float)battery_low_capacity_pct_);
 
-    if (d.on_battery && (runtime_low || capacity_low || d.battery_low_flag)) {
+    if (d.on_battery && (runtime_low || capacity_low || (d.battery_low_flag_valid && d.battery_low_flag))) {
       if (d.power_state != PowerState::BATTERY_LOW &&
           d.power_state != PowerState::SHUTDOWN_IMMINENT) {
         d.power_state = PowerState::BATTERY_LOW;
